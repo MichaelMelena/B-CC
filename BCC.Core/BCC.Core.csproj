@@ -4,4 +4,11 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="CSOB\" />
+    <Folder Include="KB\" />
+    <Folder Include="CP\" />
+    <Folder Include="Raiffeisen\" />
+  </ItemGroup>
+
 </Project>
