@@ -4,11 +4,11 @@ using System.Text;
 
 namespace BCC.Core
 {
-    public class ExchangeRateTicket
+    public class ExchangeRateTicket: IComparable<ExchangeRateTicket>, IComparable<DateTime>
     {
         private List<ExchangeRateData> Data { get; set; }
 
-        public DateTime TicketDate { get; private set; }
+        public DateTime TicketDate { get; set; }
 
         public ExchangeRateTicket()
         {
@@ -26,5 +26,28 @@ namespace BCC.Core
         public void AddExchangeRateData(ExchangeRateData data){
             this.Data.Add(data);
         }
+
+        public int CompareTo(ExchangeRateTicket other)
+        {
+            return DateTime.Compare(this.TicketDate, other.TicketDate);
+        }
+
+        public int CompareTo(DateTime other)
+        {
+            return DateTime.Compare(this.TicketDate, other);
+        }
+
+        public class SortByBuy : IComparer<ExchangeRateData>
+        {
+            public int Compare(ExchangeRateData x, ExchangeRateData y)
+            {   if (x == null) return -1;
+                if (y == null) return 1; 
+                double  difference = (x.Buy - y.Buy);
+                if (difference < 1e-10) return 0;
+                else if (difference > 0) return 1;
+                else return -1;
+            }
+        }
+
     }
 }
