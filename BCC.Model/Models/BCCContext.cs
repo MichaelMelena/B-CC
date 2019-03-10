@@ -16,6 +16,7 @@ namespace BCC.Model.Models
         }
 
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Visit> Visit { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,7 +34,7 @@ namespace BCC.Model.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.Name)
-                    .HasName("PK__User__72E12F1A40118123");
+                    .HasName("PK__User__72E12F1AF46DFACE");
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
@@ -44,6 +45,13 @@ namespace BCC.Model.Models
                     .HasColumnName("password")
                     .HasMaxLength(30)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Visit>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Count).HasColumnName("count");
             });
         }
     }

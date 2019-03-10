@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
+using BCC.Model.Models;
 
 namespace Web.Controllers
 {
@@ -12,7 +13,12 @@ namespace Web.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            BCCContext context = new BCCContext();
+            Visit visit = context.Visit.First<Visit>();
+            visit.Count += 1;
+            context.SaveChanges();
+            ViewData["visit"] = visit.Count;
+            return View(visit);
         }
 
         public IActionResult Privacy()

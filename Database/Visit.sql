@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Visit]
+(
+	[Id] INT NOT NULL PRIMARY KEY,
+	[count] INT NOT NULL DEFAULT 0
+)
