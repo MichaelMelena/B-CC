@@ -15,6 +15,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\BCC.Core\BCC.Core.csproj" />
     <ProjectReference Include="..\BCC.Model\BCC.Model.csproj" />
   </ItemGroup>
 

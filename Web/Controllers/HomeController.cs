@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 using BCC.Model.Models;
-
+using BCC.Core.CNB;
 namespace Web.Controllers
 {
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
+            CNBank bank = new CNBank();
+            bank.DownloadTicketForDate(DateTime.Now);
             BCCContext context = new BCCContext();
             Visit visit = context.Visit.First<Visit>();
             visit.Count += 1;

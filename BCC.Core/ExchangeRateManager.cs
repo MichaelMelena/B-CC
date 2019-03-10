@@ -25,7 +25,7 @@ namespace BCC.Core
             throw new NotImplementedException();
         }
 
-        private void SaveExchageRateData(AExchangeRateData data){
+        private void SaveExchageRateData(ExchangeRateData data){
             throw new NotImplementedException();
         }
 

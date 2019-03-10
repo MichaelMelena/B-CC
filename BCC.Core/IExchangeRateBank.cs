@@ -10,7 +10,7 @@ namespace BCC.Core
 
         ExchangeRateTicket DownloadTicketForDate(DateTime date);
 
-        List<ExchangeRateTicket> DownloadTicketForInterva(DateTime start, DateTime end);
+        List<ExchangeRateTicket> DownloadTicketForInterval(DateTime start, DateTime end);
 
         List<ExchangeRateTicket> DownloadAllTickets(); 
     }
