@@ -1,11 +1,12 @@
 ﻿CREATE TABLE [dbo].[user]
 (
-	[id] INT NOT NULL PRIMARY KEY, 
+	[id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, 
     [username] VARCHAR(20) NOT NULL,
 	[email] VARCHAR(50) NOT NULL,
-	[password] VARCHAR(256) NOT NULL,
-	[updated] TIMESTAMP NULL,
-	[created] TIMESTAMP NOT NULL
+	[password] VARCHAR(64) NOT NULL,
+	[updated] DATETIME NULL,
+	[created] DATETIME NOT NULL DEFAULT GETUTCDATE(),
+	[last_login] DATETIME NULL
 )
 GO
 
@@ -18,12 +19,12 @@ AS
     if (select count(*) from inserted) <> 0 and (select count(*) from deleted) = 0 --insert
 	begin
 		SELECT @id = [id] FROM inserted;		
-		UPDATE [user] SET [created] = CURRENT_TIMESTAMP, [updated] = CURRENT_TIMESTAMP WHERE [id]= @id;
+		UPDATE [user] SET [created] = GETUTCDATE(), [updated] = GETUTCDATE() WHERE [id]= @id;
 	end
 	
 	if (select count(*) from inserted) <> 0 and (select count(*) from deleted) <> 0 --update
 	begin		
 		SELECT @id = [id] FROM inserted;		
-		UPDATE [user] SET [updated] = CURRENT_TIMESTAMP WHERE [id] = @id;		
+		UPDATE [user] SET [updated] = GETUTCDATE() WHERE [id] = @id;		
 	end
 GO

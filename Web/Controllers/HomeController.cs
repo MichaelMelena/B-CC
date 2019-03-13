@@ -13,14 +13,7 @@ namespace Web.Controllers
     {
         public IActionResult Index()
         {
-            CNBank bank = new CNBank();
-            bank.DownloadTicketForDate(DateTime.Now);
-            BCCContext context = new BCCContext();
-            Visit visit = context.Visit.First<Visit>();
-            visit.Count += 1;
-            context.SaveChanges();
-            ViewData["visit"] = visit.Count;
-            return View(visit);
+            return View();
         }
 
         public IActionResult Privacy()
