@@ -36,10 +36,10 @@ IF NOT EXISTS(SELECT * FROM [dbo].[bank] WHERE [name] = N'Raiffeisen Bank') BEGI
 END
 GO
 
-IF NOT EXISTS(SELECT * FROM [dbo].[bank] WHERE [name] = N'Česká spořitelna') BEGIN
+IF NOT EXISTS(SELECT * FROM [dbo].[bank] WHERE [name] = N'Česká pojišťovna') BEGIN
 	INSERT [dbo].[bank]([name], [short_Name], [description]) VALUES(
-		N'Česká spořitelna',
-		N'ČS',
+		N'Česká pojišťovna',
+		N'ČP',
 		null
 	)
 END
