@@ -1,13 +1,38 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
 namespace BCC.Model.Models
 {
     public partial class BCCContext : DbContext
     {
+        private static string ConnectionString;
+        private static IConfiguration Configuration;
+        static  BCCContext()
+        {
+
+            var builder = new ConfigurationBuilder()
+                .AddXmlFile(".\\App.config");
+
+            Configuration = builder.Build();
+
+            string databaseEnv = Environment.GetEnvironmentVariable("DATABSE_ENV") ?? "Local";
+            switch (databaseEnv)
+            {
+                case "Local":
+                    ConnectionString = Configuration.GetValue<string>("connectionStrings:add:bccLocal:connectionString");
+                    break;
+                case "Development":
+                    ConnectionString = Configuration.GetValue<string>("connectionStrings:add:bccDevelopment:connectionString");
+                    break;
+            }
+        }
+
         public BCCContext()
         {
+
         }
 
         public BCCContext(DbContextOptions<BCCContext> options)
@@ -21,13 +46,13 @@ namespace BCC.Model.Models
         public virtual DbSet<Ticket> Ticket { get; set; }
         public virtual DbSet<TrackedCurrency> TrackedCurrency { get; set; }
         public virtual DbSet<User> User { get; set; }
-
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data source=localhost;Initial Catalog=BCC;Trusted_Connection=True;User Id=bcc;Password=bcc");
+                string connectionString = Configuration.GetValue<string>("connectionStrings:add:bccLocal:connectionString");
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
 

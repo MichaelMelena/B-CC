@@ -74,9 +74,10 @@
     <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Database.publish.xml" />
+    <None Include="DatabaseLocalhost.publish.xml" />
     <None Include="Scripts\Post-Deployment\currency_metadata_insert.sql" />
     <None Include="Scripts\Post-Deployment\user_insert.sql" />
+    <None Include="DatabaseProduction.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
