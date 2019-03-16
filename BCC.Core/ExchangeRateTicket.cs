@@ -8,6 +8,11 @@ namespace BCC.Core
     {
         private List<ExchangeRateData> Data { get; set; }
 
+        /// <summary>
+        /// Enables to set ticket date only if it is null (can be set only once)
+        /// </summary>
+
+
         public DateTime TicketDate { get; set; }
 
         public ExchangeRateTicket()
@@ -25,6 +30,10 @@ namespace BCC.Core
         
         public void AddExchangeRateData(ExchangeRateData data){
             this.Data.Add(data);
+        }
+        public ExchangeRateData[] GetExchangeRateData()
+        {
+            return this.Data.ToArray();
         }
 
         public int CompareTo(ExchangeRateTicket other)

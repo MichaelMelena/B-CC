@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Globalization;
 using System.Linq;
+using BCC.Model.Models;
 
 namespace BCC.Core.CNB
 {
@@ -16,7 +17,8 @@ namespace BCC.Core.CNB
         private readonly string URL_FOR_YEAR_TICKET = "http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/rok.txt";
 
         private readonly DateTime MIN_DATE = new DateTime(year: 1992, month: 1, day: 1);
-
+        
+     
         #region Helper methods
         private void ValidateDate(DateTime date) {
             if (date < this.MIN_DATE || date > DateTime.Now)
@@ -75,10 +77,39 @@ namespace BCC.Core.CNB
 
         public List<ExchangeRateTicket> DownloadTicketForInterval(DateTime start, DateTime end)
         {
-            throw new NotImplementedException();
+            ValidateDate(start);
+            ValidateDate(end);
+            int[] years = YearsInterval(start, end);
+            List<ExchangeRateTicket> tickets = new List<ExchangeRateTicket>(years.Length * 50);
+            foreach(int year in years)
+            {
+                DateTime date = new DateTime(year, 1, 1);
+                List<ExchangeRateTicket> yearTickets = DownloadYearTicket(date);
+                tickets.AddRange(yearTickets);
+            }
+            //TODO: finish
+            return null;
         }
         #endregion
 
+        /// <summary>
+        /// Takes two date and return array of years included in both dates
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns>Array containing year in interval</returns>
+        public static int[] YearsInterval(DateTime start , DateTime end)
+        {
+            if (end.Year < start.Year) throw new CNBInvalidDate($"start: {start}, end: {start}");
+
+            int difference = start.Year - end.Year;
+            int[] array = new int[difference+1];
+            for (int index=0; index < difference + 1;index++)
+            {
+                array[index] = start.Year + index;
+            }
+            return array;
+        }
         #region DayTicket
 
 
@@ -93,13 +124,13 @@ namespace BCC.Core.CNB
             string[] body = lines.ToList().GetRange(2, lines.Length-2).ToArray();
 
             ExchangeRateTicket ticket = new ExchangeRateTicket();
-            this.parseDayTicketHeader(header, ref ticket);
+            this.ParseDayTicketHeader(header, ref ticket);
             this.ParseDayTicketBody(body, ref ticket);
 
             return ticket;
         }
 
-        private void parseDayTicketHeader(string[] header, ref ExchangeRateTicket ticket) {
+        private void ParseDayTicketHeader(string[] header, ref ExchangeRateTicket ticket) {
             string[] firstLine = header[0].Split(' ', StringSplitOptions.RemoveEmptyEntries);
             string[] headers = header[1].Split('|', StringSplitOptions.RemoveEmptyEntries);
 
@@ -178,8 +209,31 @@ namespace BCC.Core.CNB
             }
             return ticket;
         }
-
+        
         #endregion
+
+        public void  GetCurrencyInfo()
+        {
+            ExchangeRateTicket ticket =  DownloadTodaysTicket();
+            using(BCCContext context = new BCCContext())
+            {
+                context.CurrencyMetadata.RemoveRange(context.CurrencyMetadata);
+                context.SaveChanges();
+                ExchangeRateData[] data = ticket.GetExchangeRateData();
+                foreach(ExchangeRateData row  in data)
+                {
+                    CurrencyMetadata currencyMetadata = new CurrencyMetadata()
+                    {
+                        IsoName = row.IsoName,
+                        Quantity = row.Quantity,
+                        Name = row.Name
+                    };
+                    context.Add(currencyMetadata);
+                }
+                context.SaveChanges();
+            }
+        }
+        
 
         private struct YearCurrencyInfo
         {

@@ -4,8 +4,10 @@ using System.Text;
 
 namespace BCC.Core
 {
-    interface IExchangeRateBank
+    public interface IExchangeRateBank
     {
+
+     
         ExchangeRateTicket DownloadTodaysTicket();
 
         ExchangeRateTicket DownloadTicketForDate(DateTime date);
@@ -13,5 +15,7 @@ namespace BCC.Core
         List<ExchangeRateTicket> DownloadTicketForInterval(DateTime start, DateTime end);
 
         List<ExchangeRateTicket> DownloadAllTickets(); 
+        
+        //get currency info
     }
 }

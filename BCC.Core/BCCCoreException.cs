@@ -11,5 +11,11 @@ namespace BCC.Core
 
         public BCCCoreException(string message, Exception innerException) : base(message, innerException) { }
     }
+
+    class BCCERMNullReference:BCCCoreException
+    {
+        public BCCERMNullReference():base() { }
+    }
+
     
 }

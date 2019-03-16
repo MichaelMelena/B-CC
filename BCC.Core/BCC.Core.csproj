@@ -11,4 +11,8 @@
     <Folder Include="Raiffeisen\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BCC.Model\BCC.Model.csproj" />
+  </ItemGroup>
+
 </Project>
