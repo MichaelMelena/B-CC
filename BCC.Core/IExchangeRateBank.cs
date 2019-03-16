@@ -14,8 +14,10 @@ namespace BCC.Core
 
         List<ExchangeRateTicket> DownloadTicketForInterval(DateTime start, DateTime end);
 
-        List<ExchangeRateTicket> DownloadAllTickets(); 
-        
-        //get currency info
+        List<ExchangeRateTicket> DownloadAllTickets();
+
+        List<ICurrencyMetada> DownloadCurrencyMetada();
+
+       
     }
 }

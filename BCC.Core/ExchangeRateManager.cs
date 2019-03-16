@@ -97,18 +97,56 @@ namespace BCC.Core
                     context.Ticket.Add(ticket);
                     context.SaveChanges();
                 }
-                ExchangeRateData[] eRData = eRTicket.GetExchangeRateData();
-                foreach (ExchangeRateData data in eRData)
+                ICurrencyData[] eRData = eRTicket.GetExchangeRateData();
+                foreach (ICurrencyData data in eRData)
                 {
                     Currency currency = new Currency();
                     currency.TicketId = ticket.Id;
-                    currency.IsoName = data.IsoName;
-                    currency.Buy = (float)data.Buy;
-                    currency.Sell =(float?)data.Sell;
-                    context.Add(currency);
+                    currency.IsoName = data.ISOName;
+                    currency.Buy = data.Buy;
+                    currency.Sell =data.Sell;
+                    if (context.Currency.Where(x=> x.IsoName == currency.IsoName && x.TicketId == currency.TicketId) == null)
+                    {
+                        context.Add(currency);
+                    }
                 }
                 context.SaveChanges();
             }
+        }
+
+        public void DownloadCurrencyMetada()
+        {
+            using(BCCContext context = new BCCContext())
+            {
+                foreach (KeyValuePair<string, IExchangeRateBank> pair in Banks)
+                {
+                    List<ICurrencyMetada> metaData = pair.Value.DownloadCurrencyMetada();
+                    foreach( ICurrencyData meta in metaData)
+                    {
+                        CurrencyMetadata ret = context.CurrencyMetadata.Where(x => x.IsoName == meta.ISOName).FirstOrDefault();
+                        if (ret == null)
+                        {
+                            ret = new CurrencyMetadata()
+                            {
+                                IsoName = meta.ISOName,
+                                Name = meta.Name,
+                                Country = meta.Country,
+                                Quantity = meta.Quantity
+                            };
+                        }
+                        else
+                        {
+                            ret.Name = meta.Name;
+                            ret.Country = meta.Country;
+                            ret.Quantity = meta.Quantity;
+                        }
+
+                    }
+                    context.SaveChanges();
+                   
+                }
+            }
+          
         }
 
         public void DownloadTicketsForDate(DateTime date) {
@@ -123,7 +161,7 @@ namespace BCC.Core
             throw new NotImplementedException();
         }
 
-        private void SaveExchageRateData(ExchangeRateData data){
+        private void SaveExchageRateData(ICurrencyData data){
             throw new NotImplementedException();
         }
 

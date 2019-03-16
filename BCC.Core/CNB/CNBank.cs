@@ -9,6 +9,7 @@ namespace BCC.Core.CNB
 {
     public class CNBank : IExchangeRateBank
     {
+        
         public CNBank(){
 
         }
@@ -143,13 +144,13 @@ namespace BCC.Core.CNB
             foreach(string line in body)
             {
                 string[] sections = line.Split('|', StringSplitOptions.RemoveEmptyEntries);
-                string name = sections[0];
-                string shortName = sections[1];
+                string country = sections[0];
+                string name = sections[1];
                 int quantity = int.Parse(sections[2]);
                 string isoName = sections[3];
-                double buy = Double.Parse(sections[4], CultureInfo.GetCultureInfo("cs-CZ"));
+                float buy = float.Parse(sections[4], CultureInfo.GetCultureInfo("cs-CZ"));
 
-                ExchangeRateData data = new ExchangeRateData(buy, null, quantity, name, shortName, isoName);
+                ICurrencyData data = new ERDataBase(isoName, name,country, quantity, buy, null );
                 ticket.AddExchangeRateData(data);
             }
         }
@@ -166,45 +167,46 @@ namespace BCC.Core.CNB
             string header = lines[0];
             string[] body = lines.ToList().GetRange(1, lines.Length - 1).ToArray();
             
-            List<YearCurrencyInfo> currencyInfos = this.ParseYearHeader(header);
-            List<ExchangeRateTicket> tickets = this.ParseYearBody(body,ref currencyInfos);
+            List<ICurrencyMetada> metadata = this.ParseYearHeader(header);
+            List<ExchangeRateTicket> tickets = this.ParseYearBody(body,ref metadata);
             return tickets;
         }
-        private List<YearCurrencyInfo> ParseYearHeader(string text)
+        private List<ICurrencyMetada> ParseYearHeader(string text)
         {
             string[] header = text.Split(new char[] { '|', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            List<YearCurrencyInfo> currencyInfos = new List<YearCurrencyInfo>(header.Length - 1);
+            List<ICurrencyMetada> currencyInfos = new List<ICurrencyMetada>(header.Length - 1);
             for (int i = 1; i < header.Length; i += 2)
             {
                 int quntity = int.Parse(header[i]);
                 string isoName = header[i + 1];
-                currencyInfos.Add(new YearCurrencyInfo(quntity, isoName));
+                currencyInfos.Add(new ERMetadataBase(isoName, null, null, quntity));
             }
             return currencyInfos;
         }
 
-        private List<ExchangeRateTicket> ParseYearBody(string[] body,ref List<YearCurrencyInfo> currencyInfos)
+        private List<ExchangeRateTicket> ParseYearBody(string[] body,ref List<ICurrencyMetada> metadata)
         {
             List<ExchangeRateTicket> tickets = new List<ExchangeRateTicket>(body.Length);
             foreach (string line in body)
             {
                 string[] sections = line.Split('|');
                 DateTime date = DateTime.ParseExact(sections[0], "dd.MM.yyyy", CultureInfo.CurrentCulture);
-                ExchangeRateTicket ticket = this.ParseYearExchangeRateData(sections, currencyInfos);
+                ExchangeRateTicket ticket = this.ParseYearExchangeRateData(sections, metadata);
                 ticket.TicketDate = date;
                 tickets.Add(ticket);
             }
             return tickets;
         }
         
-        private ExchangeRateTicket ParseYearExchangeRateData(string[] section, List<YearCurrencyInfo> currencyInfos)
+        private ExchangeRateTicket ParseYearExchangeRateData(string[] section, List<ICurrencyMetada> currencyInfos)
         {
             ExchangeRateTicket ticket = new ExchangeRateTicket();
             for (int i = 1; i < section.Length; i++)
             {
-                double buy = Double.Parse(section[i], CultureInfo.GetCultureInfo("cs-CZ"));
-                YearCurrencyInfo currencyInfo = currencyInfos[i - 1];
-                ExchangeRateData data = new ExchangeRateData(buy, null, currencyInfo.Quantity, null, null, currencyInfo.IsoName);
+                float buy = float.Parse(section[i], CultureInfo.GetCultureInfo("cs-CZ"));
+                ICurrencyMetada metada = currencyInfos[i - 1];
+
+                ERDataBase data = new ERDataBase(metada, buy, null);
                 ticket.AddExchangeRateData(data);
             }
             return ticket;
@@ -212,38 +214,19 @@ namespace BCC.Core.CNB
         
         #endregion
 
-        public void  GetCurrencyInfo()
+       
+        public List<ICurrencyMetada> DownloadCurrencyMetada()
         {
-            ExchangeRateTicket ticket =  DownloadTodaysTicket();
-            using(BCCContext context = new BCCContext())
-            {
-                context.CurrencyMetadata.RemoveRange(context.CurrencyMetadata);
-                context.SaveChanges();
-                ExchangeRateData[] data = ticket.GetExchangeRateData();
-                foreach(ExchangeRateData row  in data)
-                {
-                    CurrencyMetadata currencyMetadata = new CurrencyMetadata()
-                    {
-                        IsoName = row.IsoName,
-                        Quantity = row.Quantity,
-                        Name = row.Name
-                    };
-                    context.Add(currencyMetadata);
-                }
-                context.SaveChanges();
-            }
-        }
-        
+            ExchangeRateTicket ticket = DownloadTodaysTicket();    
+            ICurrencyData[] data = ticket.GetExchangeRateData();
 
-        private struct YearCurrencyInfo
-        {
-            public YearCurrencyInfo(int quantity, string isoName)
-            {
-                this.Quantity = quantity;
-                this.IsoName = isoName;
-            }
-            public int Quantity { get; private set; }
-            public string IsoName { get; private set; }
+            List<ICurrencyMetada> metaData = new List<ICurrencyMetada>(data.Length);
+            metaData.AddRange(data);
+           
+            return metaData;
+            
         }
+
+       
     } 
 }
