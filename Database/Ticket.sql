@@ -1,16 +1,16 @@
 ﻿CREATE TABLE [dbo].[ticket]
 (
 	[id] INT IDENTITY (1,1) CONSTRAINT pk_ticket PRIMARY KEY,
-	[bank_id] INT NOT NULL,
+	[bank_short_name] VARCHAR(10) NOT NULL,
 	[date] DATETIME NOT NULL,
 	[updated] DATETIME NULL,
 	[created] DATETIME NOT NULL DEFAULT GETUTCDATE(),
 	CONSTRAINT [unique_bank_and_date] UNIQUE NONCLUSTERED
     (
-        [bank_id], [date]
+        [bank_short_name], [date]
     ),
-	CONSTRAINT [fk_ticket_bank_id] FOREIGN KEY([bank_id])
-		REFERENCES [bank]([id])
+	CONSTRAINT [fk_ticket_bank_short_name] FOREIGN KEY([bank_short_name])
+		REFERENCES [bank]([short_name])
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 )

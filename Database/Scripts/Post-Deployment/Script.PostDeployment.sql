@@ -12,3 +12,4 @@ Post-Deployment Script Template
 :r .\bank_insert.sql
 :r .\currency_metadata_insert.sql
 :r .\user_insert.sql
+:r .\bank_connector_insert.sql
