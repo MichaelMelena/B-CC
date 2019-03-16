@@ -1,70 +1,41 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
 
 namespace BCC.Model.Models
 {
     public partial class BCCContext : DbContext
     {
-        private static string ConnectionString;
-        private static IConfiguration Configuration;
-        static  BCCContext()
-        {
-
-            var builder = new ConfigurationBuilder()
-                .AddXmlFile(".\\App.config");
-
-            Configuration = builder.Build();
-
-            string databaseEnv = Environment.GetEnvironmentVariable("DATABSE_ENV") ?? "Local";
-            switch (databaseEnv)
-            {
-                case "Local":
-                    ConnectionString = Configuration.GetValue<string>("connectionStrings:add:bccLocal:connectionString");
-                    break;
-                case "Development":
-                    ConnectionString = Configuration.GetValue<string>("connectionStrings:add:bccDevelopment:connectionString");
-                    break;
-            }
-        }
-
-        public BCCContext()
-        {
-
-        }
-
-        public BCCContext(DbContextOptions<BCCContext> options)
-            : base(options)
-        {
-        }
-
+       
         public virtual DbSet<Bank> Bank { get; set; }
+        public virtual DbSet<BankConnector> BankConnector { get; set; }
         public virtual DbSet<Currency> Currency { get; set; }
         public virtual DbSet<CurrencyMetadata> CurrencyMetadata { get; set; }
         public virtual DbSet<Ticket> Ticket { get; set; }
         public virtual DbSet<TrackedCurrency> TrackedCurrency { get; set; }
         public virtual DbSet<User> User { get; set; }
-        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                string connectionString = Configuration.GetValue<string>("connectionStrings:add:bccLocal:connectionString");
-                optionsBuilder.UseSqlServer(connectionString);
-            }
-        }
 
+      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.2-servicing-10034");
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
 
             modelBuilder.Entity<Bank>(entity =>
             {
+                entity.HasKey(e => e.ShortName)
+                    .HasName("PK__bank__2711634E90F0C8ED");
+
                 entity.ToTable("bank");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.HasIndex(e => e.Name)
+                    .HasName("UQ__bank__72E12F1B5E12C886")
+                    .IsUnique();
+
+                entity.Property(e => e.ShortName)
+                    .HasColumnName("short_name")
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Created)
                     .HasColumnName("created")
@@ -81,14 +52,57 @@ namespace BCC.Model.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ShortName)
-                    .HasColumnName("short_Name")
-                    .HasMaxLength(20)
+                entity.Property(e => e.Updated)
+                    .HasColumnName("updated")
+                    .HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<BankConnector>(entity =>
+            {
+                entity.ToTable("bank_connector");
+
+                entity.HasIndex(e => e.Name)
+                    .HasName("UQ__bank_con__72E12F1B4D10F66B")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.BankShortName)
+                    .IsRequired()
+                    .HasColumnName("bank_short_name")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Created)
+                    .HasColumnName("created")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getutcdate())");
+
+                entity.Property(e => e.DllName)
+                    .IsRequired()
+                    .HasColumnName("dll_name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Enabled)
+                    .IsRequired()
+                    .HasColumnName("enabled")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Updated)
                     .HasColumnName("updated")
                     .HasColumnType("datetime");
+
+                entity.HasOne(d => d.BankShortNameNavigation)
+                    .WithMany(p => p.BankConnector)
+                    .HasForeignKey(d => d.BankShortName)
+                    .HasConstraintName("fk_bank_connector_bank");
             });
 
             modelBuilder.Entity<Currency>(entity =>
@@ -112,7 +126,7 @@ namespace BCC.Model.Models
                 entity.HasOne(d => d.IsoNameNavigation)
                     .WithMany(p => p.Currency)
                     .HasForeignKey(d => d.IsoName)
-                    .HasConstraintName("fk_currency_iso_name");
+                    .HasConstraintName("fk_currency_to_iso_name");
             });
 
             modelBuilder.Entity<CurrencyMetadata>(entity =>
@@ -161,13 +175,17 @@ namespace BCC.Model.Models
             {
                 entity.ToTable("ticket");
 
-                entity.HasIndex(e => new { e.BankId, e.Date })
+                entity.HasIndex(e => new { e.BankShortName, e.Date })
                     .HasName("unique_bank_and_date")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.BankId).HasColumnName("bank_id");
+                entity.Property(e => e.BankShortName)
+                    .IsRequired()
+                    .HasColumnName("bank_short_name")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Created)
                     .HasColumnName("created")
@@ -182,10 +200,10 @@ namespace BCC.Model.Models
                     .HasColumnName("updated")
                     .HasColumnType("datetime");
 
-                entity.HasOne(d => d.Bank)
+                entity.HasOne(d => d.BankShortNameNavigation)
                     .WithMany(p => p.Ticket)
-                    .HasForeignKey(d => d.BankId)
-                    .HasConstraintName("fk_ticket_bank_id");
+                    .HasForeignKey(d => d.BankShortName)
+                    .HasConstraintName("fk_ticket_bank_short_name");
             });
 
             modelBuilder.Entity<TrackedCurrency>(entity =>
