@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="CSOB\" />
-    <Folder Include="KB\" />
     <Folder Include="CP\" />
     <Folder Include="Raiffeisen\" />
   </ItemGroup>
