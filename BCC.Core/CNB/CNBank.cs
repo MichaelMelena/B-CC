@@ -32,6 +32,7 @@ namespace BCC.Core.CNB
             string responseText = null;
             using (WebClient webClient = new WebClient())
             {
+                
                 responseText = webClient.DownloadString(url);
             }
             return responseText;
@@ -218,13 +219,7 @@ namespace BCC.Core.CNB
         public List<ICurrencyMetada> DownloadCurrencyMetada()
         {
             ExchangeRateTicket ticket = DownloadTodaysTicket();    
-            ICurrencyData[] data = ticket.GetExchangeRateData();
-
-            List<ICurrencyMetada> metaData = new List<ICurrencyMetada>(data.Length);
-            metaData.AddRange(data);
-           
-            return metaData;
-            
+            return ticket.GetExchangeRateData().ToList<ICurrencyMetada>();
         }
 
        
