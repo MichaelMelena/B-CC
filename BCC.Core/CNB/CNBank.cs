@@ -89,8 +89,9 @@ namespace BCC.Core.CNB
                 List<ExchangeRateTicket> yearTickets = DownloadYearTicket(date);
                 tickets.AddRange(yearTickets);
             }
+            List<ExchangeRateTicket> ticketInterval = tickets.Where(x => x.TicketDate >= start && x.TicketDate <= end).ToList();
             //TODO: finish
-            return null;
+            return ticketInterval;
         }
         #endregion
 
