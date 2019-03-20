@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BCC.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web
 {
@@ -30,8 +32,25 @@ namespace Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
+            
+            services.AddSingleton(typeof(IExchangeRateManager), typeof(ExchangeRateManager));
+            string enviroment = Environment.GetEnvironmentVariable("DATABSE_ENV");
+            string connectionString = null;
+            switch (enviroment)
+            {
+                case "Development":
+                    connectionString = Configuration.GetConnectionString("bccDevelopment");
+                    break;
+                case "Production":
+                    connectionString = Configuration.GetConnectionString("bccDevelopment");
+                    break;
+                default:
+                    //"Local"
+                    connectionString = Configuration.GetConnectionString("bccLocal");
+                    break;
+            }
+            
+            services.AddDbContext<BCC.Model.Models.BCCContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -59,6 +78,7 @@ namespace Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.ApplicationServices.GetService<IExchangeRateManager>();
         }
     }
 }

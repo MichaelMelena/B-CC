@@ -30,7 +30,4 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-
-  <!--Override After Publish to support ClickOnce AfterPublish. Target replaces the untransformed config file copied to the deployment directory with the transformed one.-->
-  
 </Project>
