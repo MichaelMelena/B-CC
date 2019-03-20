@@ -12,7 +12,7 @@ namespace BCC.Model.Models
         private static string ConnectionString;
         private static IConfiguration Configuration;
         public BCCContext()
-        {
+        { 
             var builder = new ConfigurationBuilder()
                       .AddXmlFile(".\\App.config");
 
@@ -33,11 +33,16 @@ namespace BCC.Model.Models
         public BCCContext(DbContextOptions<BCCContext> options)
             : base(options)
         {
+
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = Configuration.GetValue<string>("connectionStrings:add:bccLocal:connectionString");
-            optionsBuilder.UseSqlServer(connectionString);
+            if (!optionsBuilder.IsConfigured)
+            {
+                string connectionString = Configuration.GetValue<string>("connectionStrings:add:bccLocal:connectionString");
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+            
         }
     }
 }
