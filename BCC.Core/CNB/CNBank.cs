@@ -49,7 +49,8 @@ namespace BCC.Core.CNB
         }
         #endregion
 
-        #region Interface implementation
+        #region Interface methods
+
         public ExchangeRateTicket DownloadTodaysTicket()
         {
             DateTime date = DateTime.Now;
@@ -74,7 +75,7 @@ namespace BCC.Core.CNB
 
         public List<ExchangeRateTicket> DownloadAllTickets()
         {
-            throw new NotImplementedException();
+           return DownloadTicketForInterval(this.MIN_DATE, DateTime.Now);
         }
 
         public List<ExchangeRateTicket> DownloadTicketForInterval(DateTime start, DateTime end)
@@ -90,7 +91,6 @@ namespace BCC.Core.CNB
                 tickets.AddRange(yearTickets);
             }
             List<ExchangeRateTicket> ticketInterval = tickets.Where(x => x.TicketDate >= start && x.TicketDate <= end).ToList();
-            //TODO: finish
             return ticketInterval;
         }
         #endregion
