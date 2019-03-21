@@ -1,0 +1,29 @@
+﻿@model IEnumerable<BCC.Core.ExchangeRateTicket>
+
+<div class=" row">
+
+    <div class="col">ISO Name</div>
+    <div class="col">Name</div>
+    <div class="col">Country</div>
+    <div class="col">Quantity</div>
+    <div class="col">Buy</div>
+    <div class="col">Sell</div>
+</div>
+@foreach (var ticket in Model)
+{
+<div class="row">
+    <div class="col">@ticket.TicketDate.ToString()</div>
+    
+    @Html.DisplayFor(modelItem => ticket.TicketDate)
+    @foreach (BCC.Core.ICurrencyData data in ticket.GetExchangeRateData())
+    {
+        <div class="col">@data.ISOName</div>
+        <div class="col">@data.Name</div>
+        <div class="col">@data.Country</div>
+        <div class="col">@data.Quantity</div>
+        <div class="col">@data.Buy</div>
+        <div class="col">@data.Sell</div>
+    }
+</div>
+}
+    

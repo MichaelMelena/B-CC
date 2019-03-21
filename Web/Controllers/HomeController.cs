@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 using BCC.Model.Models;
-using BCC.Core.CNB;
+using BCC.Core;
 namespace Web.Controllers
 {
     public class HomeController : Controller
     {
+       
+        public HomeController()
+        {
+           
+        }
         public IActionResult Index()
         {
+           
             return View();
         }
 
