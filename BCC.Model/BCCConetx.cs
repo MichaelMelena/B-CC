@@ -18,7 +18,7 @@ namespace BCC.Model.Models
 
             Configuration = builder.Build();
 
-            string databaseEnv = Environment.GetEnvironmentVariable("DATABSE_ENV") ?? "Development";
+            string databaseEnv = Environment.GetEnvironmentVariable("DATABSE_ENV") ?? "Local";
             switch (databaseEnv)
             {
                 case "Local":

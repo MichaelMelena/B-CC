@@ -6,7 +6,5 @@ namespace BCC.Core
 {
     public interface IExchangeRateManager
     {
-        void DownloadTodaysTicket();
-
     }
 }
