@@ -13,7 +13,7 @@ namespace BCC.Core
 
         DataTable GetBestOfDateTableData(DateTime date);
 
-        DataTable GetRecomendationTableData();
+        DataTable GetRecomendationTableData(DateTime date);
 
         DataTable GetTicketTableData(string bankName,DateTime date);
 

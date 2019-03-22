@@ -51,16 +51,9 @@ namespace Web
                     break;
             }
             
-            services.AddDbContext<BCC.Model.Models.BCCContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
-
-            
-            services.AddTransient<IPresentationManager, PresentationManger>();
-            services.AddTransient<IExchangeRateManager, ExchangeRateManager>();
-
-            
-            
+            services.AddDbContext<BCC.Model.Models.BCCContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
+            services.AddScoped<IPresentationManager, PresentationManger>();
             services.AddSingleton<Microsoft.Extensions.Hosting.IHostedService, BankManager>();
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
