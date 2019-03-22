@@ -6,7 +6,8 @@
 	[quantity] INT DEFAULT 1 NOT NULL,
 	[description] Text NULL DEFAULT NULL,
 	[updated] DATETIME NULL,
-	[created] DATETIME NOT NULL DEFAULT GETUTCDATE()
+	[created] DATETIME NOT NULL DEFAULT GETUTCDATE(),
+	CONSTRAINT [Check_positive_quantity] CHECK ([quantity] >= 1)
 );
 GO
 
