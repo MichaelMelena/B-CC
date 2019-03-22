@@ -34,7 +34,7 @@ namespace BCC.Core
             Name = metaData.Name;
             Country = metaData.Country;
             Quantity = metaData.Quantity;
-            Buy = Buy;
+            Buy = buy;
             Sell = sell;
         }
         public ICurrencyMetada GetMetadata()

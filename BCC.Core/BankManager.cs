@@ -20,6 +20,8 @@ namespace BCC.Core
         /// </summary>
         private readonly int INITIAL_BANKS_SIZE = 4;
 
+        private readonly int TICKET_HISTORY_LENGTH = 7;
+
         private readonly BCCContext _context;
 
         private readonly int TASK_DELAY = 60000;
@@ -58,7 +60,7 @@ namespace BCC.Core
         private bool IsFirstTimeSetup()
         {
             
-            if (true)//_context.Ticket.ToList().Count < 14)
+            if (_context.Ticket.ToList().Count < 50)
             {
                 _context.Ticket.RemoveRange(_context.Ticket);
                 _context.SaveChanges();
@@ -101,7 +103,7 @@ namespace BCC.Core
                 {
                     try
                     {
-                        List<ExchangeRateTicket> tickets = bank.DownloadTicketForInterval(DateTime.Now.AddDays(-30), DateTime.Now.AddDays(-1));
+                        List<ExchangeRateTicket> tickets = bank.DownloadTicketForInterval(DateTime.Now.AddDays(-TICKET_HISTORY_LENGTH), DateTime.Now.AddDays(-1));
                         foreach(ExchangeRateTicket ticket in tickets)
                         {
                             SaveERTciket(_context, ticket,bankName);
