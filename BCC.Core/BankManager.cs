@@ -57,12 +57,61 @@ namespace BCC.Core
 
         private bool IsFirstTimeSetup()
         {
+            if (_context.Ticket.ToList().Count < 14)
+            {
+                _context.Ticket.RemoveRange(_context.Ticket);
+                return true;
+            }
             return false;
         }
 
         private void FirstTimeSetup()
         {
-            throw new NotImplementedException();
+
+            foreach (string bankName in Banks.Keys)
+            {
+                IExchangeRateBank bank;
+                if (Banks.TryGetValue(bankName, out bank))
+                {
+                   
+                    try
+                    {
+                        List<ICurrencyMetada> metadata = bank.DownloadCurrencyMetada();
+                        foreach (ICurrencyMetada meta in metadata)
+                        {
+
+                            SaveBankCurrencyMetada(_context, meta);
+                        }
+                    }
+                    catch (BCCCoreException ex)
+                    {
+                        //TODO: MM add logging
+                    }
+                    
+                    
+                }
+            }
+
+            foreach (string bankName in Banks.Keys)
+            {
+                IExchangeRateBank bank;
+                if (Banks.TryGetValue(bankName, out bank))
+                {
+                    try
+                    {
+                        List<ExchangeRateTicket> tickets = bank.DownloadTicketForInterval(DateTime.Now.AddDays(-30), DateTime.Now.AddDays(-1));
+                        foreach(ExchangeRateTicket ticket in tickets)
+                        {
+                            SaveERTciket(_context, ticket,bankName);
+                        }
+                    }
+                    catch (BCCCoreException)
+                    {
+                        //TODO: MM add logging
+                    }
+                }
+            }
+               
         }
 
      
@@ -113,7 +162,6 @@ namespace BCC.Core
                 }
                 context.SaveChanges();
             }
-
         }
 
         #endregion
@@ -126,19 +174,23 @@ namespace BCC.Core
             CurrencyMetadata ret = context.CurrencyMetadata.Where(x => x.IsoName == metaData.ISOName).FirstOrDefault();
             if (ret == null)
             {
+                
+                if (string.IsNullOrWhiteSpace(metaData.ISOName)) return;
+                if (metaData.Quantity < 1) return;
                 ret = new CurrencyMetadata()
                 {
                     IsoName = metaData.ISOName,
                     Name = metaData.Name,
-                    Country = metaData.Country,
-                    Quantity = metaData.Quantity
+                    Quantity = metaData.Quantity,
+                    Country = metaData.Country
                 };
+                context.CurrencyMetadata.Add(ret);
+                context.SaveChanges();
             }
             else
             {
-                ret.Name = metaData.Name;
-                ret.Country = metaData.Country;
-                ret.Quantity = metaData.Quantity;
+                if (string.IsNullOrWhiteSpace(ret.Name) && !string.IsNullOrWhiteSpace(metaData.Name)) ret.Name = metaData.Name;
+                if (string.IsNullOrWhiteSpace(ret.Country) && !string.IsNullOrWhiteSpace(ret.Country)) ret.Country = metaData.Country;
             }
         }
 
