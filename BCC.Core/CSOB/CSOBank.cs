@@ -312,6 +312,11 @@ namespace BCC.Core.CSOB
                 return null;
             }
         }
+
+        public bool TodaysTicketIsAvailable()
+        {
+            return (DateTime.Now.Hour > 6 ); //should be zero
+        }
         #endregion
 
         #region DayTicket

@@ -149,6 +149,11 @@ namespace BCC.Core.KB
                 return null;
             }
         }
+
+        public bool TodaysTicketIsAvailable()
+        {
+            return (DateTime.Now.Hour > 6);
+        }
         #endregion
 
         #region DayTicket
@@ -174,5 +179,7 @@ namespace BCC.Core.KB
             List<ICurrencyMetada> metaData = new List<ICurrencyMetada>(data.Length);
             return metaData;
         }
+
+        
     }
 }
