@@ -81,13 +81,17 @@ namespace BCC.Core
             try
             {
                 Ticket ticket = context.Ticket.FirstOrDefault(x => x.BankShortName == bankName && x.Date.Day == DateTime.Now.Day && x.Date.Month == DateTime.Now.Month && x.Date.Year == DateTime.Now.Year);
-                if (ticket == null)
+                if (ticket == null  )
                 {
                     IExchangeRateBank bank;
                     if (Banks.TryGetValue(bankName, out bank))
                     {
-                        ExchangeRateTicket erTicket = bank.DownloadTodaysTicket();
-                        SaveERTciket(context, erTicket, bankName);
+                        if (bank.TodaysTicketIsAvailable())
+                        {
+                            ExchangeRateTicket erTicket = bank.DownloadTodaysTicket();
+                            SaveERTciket(context, erTicket, bankName);
+                        }
+                       
                     }
                 }
             }
@@ -153,8 +157,7 @@ namespace BCC.Core
                     Date = eRTicket.TicketDate
                 };
                 context.Ticket.Add(ticket);
-                context.SaveChanges();
-                // TODO: MM odstranit pokud neni potreba context.SaveChanges();
+                context.SaveChanges();             
             }
             ICurrencyData[] eRData = eRTicket.GetExchangeRateData();
             foreach (ICurrencyData data in eRData)
