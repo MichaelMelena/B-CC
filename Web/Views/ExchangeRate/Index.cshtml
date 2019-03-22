@@ -7,7 +7,10 @@
 <div><canvas id="lineChart"></canvas></div>
 <canvas id="myChart" width="400" height="400"></canvas>
 
-<div class="container" id="myTable"></div>
+<div class="container"  id="buyTable"></div>
+<div class="container" id="sellTable"></div>
+<div class="container" id="bestTable"></div>
+<div class="container" id="ticketTable"></div>
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -53,15 +56,48 @@
         url: '/ExchangeRate/BuyTable',
         cache: false,
         success: function (result) {
-            $("#myTable").html(result);
+            $("#buyTable").html(result);
         },
         error: function (xhr, status, error) {
             Console.log(error);
-            // DEBUG alert(status + '\r\n' + error + '\r\n' + xhr.responseText);
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/ExchangeRate/SellTable',
+        cache: false,
+        success: function (result) {
+            $("#sellTable").html(result);
+        },
+        error: function (xhr, status, error) {
+            Console.log(error);
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: '/ExchangeRate/BestOfDateTable',
+        cache: false,
+        success: function (result) {
+            $("#bestTable").html(result);
+        },
+        error: function (xhr, status, error) {
+            Console.log(error);
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: '/ExchangeRate/TicketTable?bankName=CNB',
+        cache: false,
+        success: function (result) {
+            $("#ticketTable").html(result);
+        },
+        error: function (xhr, status, error) {
+            Console.log(error);
         }
     });
 </script>
-@Url.RouteUrl("BuyTable")
 
 
 
