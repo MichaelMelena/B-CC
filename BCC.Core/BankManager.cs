@@ -20,7 +20,7 @@ namespace BCC.Core
         /// </summary>
         private readonly int INITIAL_BANKS_SIZE = 4;
 
-        private readonly int TICKET_HISTORY_LENGTH = 7;
+        private readonly int TICKET_HISTORY_LENGTH = 14;
 
         private readonly BCCContext _context;
 
@@ -53,14 +53,13 @@ namespace BCC.Core
            
             
             //tries to populate database with 20 exchange rate tickets for each bank
-            bool isFirstTime = IsFirstTimeSetup();
-            if (isFirstTime) FirstTimeSetup();
+            
         }
 
         private bool IsFirstTimeSetup()
         {
             
-            if (_context.Ticket.ToList().Count < 50)
+            if (_context.Ticket.ToList().Count <=0)
             {
                 _context.Ticket.RemoveRange(_context.Ticket);
                 _context.SaveChanges();
@@ -261,12 +260,22 @@ namespace BCC.Core
         #region BackgroundService
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            try
+            {
+                bool isFirstTime = IsFirstTimeSetup();
+                if (isFirstTime) FirstTimeSetup();
+            }
+            catch(BCCCoreException ex)
+            {
+                //TODO: MM add logging
+            }
+
             Assembly assembly = Assembly.GetExecutingAssembly();
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
-
+                    
 
                     //reacts to changes in connector config
                     ConnectorMaintainance(_context, assembly);
