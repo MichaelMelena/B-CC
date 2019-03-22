@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BCC.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace Web
 {
@@ -33,7 +34,7 @@ namespace Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             
-            services.AddSingleton(typeof(IExchangeRateManager), typeof(ExchangeRateManager));
+            services.AddSingleton(typeof(IBankManager), typeof(BankManager));
             string enviroment = Environment.GetEnvironmentVariable("DATABSE_ENV");
             string connectionString = null;
             switch (enviroment)
@@ -50,12 +51,15 @@ namespace Web
                     break;
             }
             
-            services.AddDbContext<BCC.Model.Models.BCCContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+            services.AddDbContext<BCC.Model.Models.BCCContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
+            services.AddScoped<IPresentationManager, PresentationManger>();
+            services.AddSingleton<Microsoft.Extensions.Hosting.IHostedService, BankManager>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app,Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -77,8 +81,11 @@ namespace Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "ExchangeRate",
+                    template: "{controller=ExchangeRate}/{action=Index}/{id?}");
             });
-            app.ApplicationServices.GetService<IExchangeRateManager>();
+          
         }
     }
 }

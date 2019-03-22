@@ -51,6 +51,12 @@ namespace BCC.Core.CNB
 
         #region Interface methods
 
+        public bool TodaysTicketIsAvailable()
+        {
+            //TODO: MM could cause potential isssue because of different time on server
+            return (DateTime.Now.Hour > 14); 
+        }
+
         public ExchangeRateTicket DownloadTodaysTicket()
         {
             DateTime date = DateTime.Now;

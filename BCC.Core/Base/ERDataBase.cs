@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BCC.Core
 {
-    class ERDataBase : ICurrencyData
+    public class ERDataBase : ICurrencyData
     {
         public string ISOName { get; protected set; }
 

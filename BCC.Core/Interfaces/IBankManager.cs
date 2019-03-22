@@ -4,9 +4,8 @@ using System.Text;
 
 namespace BCC.Core
 {
-    public interface IExchangeRateManager
+    public interface IBankManager
     {
-        void DownloadTodaysTicket();
-
+       
     }
 }
