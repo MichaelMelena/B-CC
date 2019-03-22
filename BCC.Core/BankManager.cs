@@ -57,9 +57,11 @@ namespace BCC.Core
 
         private bool IsFirstTimeSetup()
         {
-            if (_context.Ticket.ToList().Count < 14)
+            
+            if (true)//_context.Ticket.ToList().Count < 14)
             {
                 _context.Ticket.RemoveRange(_context.Ticket);
+                _context.SaveChanges();
                 return true;
             }
             return false;

@@ -5,6 +5,16 @@
     "iisExpress": {
       "applicationUrl": "http://localhost:52638",
       "sslPort": 44355
+    },
+    "Kestrel": {
+      "Endpoints": {
+        "Http": {
+          "Url": "http://localhost:50000"
+        },
+        "HttpsDefaultCert": {
+          "Url": "https://localhost:50001"
+        }
+      }
     }
   },
   "profiles": {

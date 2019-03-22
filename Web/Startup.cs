@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BCC.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Web
 {
@@ -85,7 +86,14 @@ namespace Web
                     name: "ExchangeRate",
                     template: "{controller=ExchangeRate}/{action=Index}/{id?}");
             });
-          
+
+            if (env.IsProduction())
+            {
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
+            }
         }
     }
 }
