@@ -5,17 +5,40 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <Configurations>Debug;Release</Configurations>
     <StartupObject>Web.Program</StartupObject>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Authors>Michael Melena, František Vančát</Authors>
+    <RepositoryUrl>https://github.com/MichaelMelena/B-CC</RepositoryUrl>
+    <RepositoryType>Git repository</RepositoryType>
+    <PackageProjectUrl>http://82.208.16.130</PackageProjectUrl>
+    <Product>Bank Currency Checker</Product>
+    <NeutralLanguage></NeutralLanguage>
   </PropertyGroup>
 
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <ProjectReference Include="..\BCC.Core\BCC.Core.csproj" />
     <ProjectReference Include="..\BCC.Model\BCC.Model.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

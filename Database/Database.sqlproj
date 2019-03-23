@@ -57,14 +57,34 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\Pre-Deployment" />
+    <Folder Include="Scripts\Post-Deployment" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="User.sql" />
+    <Build Include="CurrencyMetadata.sql" />
+    <Build Include="Currency.sql" />
+    <Build Include="Ticket.sql" />
+    <Build Include="Bank.sql" />
+    <Build Include="TrackedCurrency.sql" />
+    <None Include="Scripts\Post-Deployment\bank_insert.sql" />
+    <Build Include="BankConnector.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Database.publish.xml" />
+    <None Include="DatabaseLocalhost.publish.xml" />
+    <None Include="Scripts\Post-Deployment\currency_metadata_insert.sql" />
+    <None Include="Scripts\Post-Deployment\user_insert.sql" />
+    <None Include="DatabaseProduction.publish.xml" />
+    <None Include="Scripts\Post-Deployment\bank_connector_insert.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Scripts\Pre-Deployment\Script.PreDeployment.sql" />
   </ItemGroup>
 </Project>
