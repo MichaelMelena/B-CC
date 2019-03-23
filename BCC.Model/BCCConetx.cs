@@ -14,7 +14,7 @@ namespace BCC.Model.Models
         public BCCContext()
         { 
             var builder = new ConfigurationBuilder()
-                      .AddXmlFile(".\\App.config");
+                      .AddXmlFile("./App.config");
 
             Configuration = builder.Build();
 

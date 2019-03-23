@@ -13,9 +13,11 @@ namespace BCC.Core.KB
 
         }
 
+        // konstanty
         private readonly string URL_CURRENT_DAY = "https://api.kb.cz/openapi/v1/exchange-rates";
         private readonly string URL_SPECIFIC_DATE = "https://api.kb.cz/openapi/v1/exchange-rates?ratesValidityDate=";
         private readonly DateTime MIN_DATE = new DateTime(year: 2010, month: 5, day: 26);
+        // 6am - It's the first hour in the day which has upadated ticket for that day. 5am gets you ticket from previous day.
 
         #region Helper methods
         // Validates if date is in interval <minimal date - today date>
@@ -47,7 +49,9 @@ namespace BCC.Core.KB
             }
             return true;
         }
+        #endregion
 
+        #region JSON
         private class ExchangeRateKB
         {
             public string currencyISO { get; set; }
@@ -77,7 +81,7 @@ namespace BCC.Core.KB
             string jsonInput = null;
             if (DownloadTicketText(URL_CURRENT_DAY, out jsonInput))
             {
-                ExchangeRateTicket ticketOutput = this.ParseDayTicket(jsonInput);
+                ExchangeRateTicket ticketOutput = this.ParseDayTicket(jsonInput, DateTime.Today);
                 return ticketOutput;
             }
             else
@@ -95,7 +99,7 @@ namespace BCC.Core.KB
             string urlEnding = date.ToString("yyyy-MM-dd") + "T06:00:00.00Z"; //T06 = 6am - It's the first hour in the day which has upadated ticket for that day. 5am gets you ticket from previous day.
             if (DownloadTicketText(URL_SPECIFIC_DATE + urlEnding, out jsonInput))
             {
-                ExchangeRateTicket ticketOutput = this.ParseDayTicket(jsonInput);
+                ExchangeRateTicket ticketOutput = this.ParseDayTicket(jsonInput, date);
                 return ticketOutput;
             }
             else
@@ -149,11 +153,16 @@ namespace BCC.Core.KB
                 return null;
             }
         }
+
+        public bool TodaysTicketIsAvailable()
+        {
+            return (DateTime.Now.Hour > 6);
+        }
         #endregion
 
         #region DayTicket
         // Converting of raw data to managable form
-        private ExchangeRateTicket ParseDayTicket(string text)
+        private ExchangeRateTicket ParseDayTicket(string text, DateTime date)
         {
             List<RootObject> obj = JsonConvert.DeserializeObject<List<RootObject>>(text);
             ExchangeRateTicket ticket = new ExchangeRateTicket();
@@ -163,6 +172,7 @@ namespace BCC.Core.KB
                 data.Add(new ERDataBase(cur.currencyISO, cur.currencyFullName, cur.country, cur.currencyUnit, cur.cashBuy, cur.cashSell));
                 ticket.AddExchangeRateData(data[data.Count - 1]);
             }
+            ticket.TicketDate = date;
             return ticket;
         }
         #endregion

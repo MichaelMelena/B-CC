@@ -5,6 +5,14 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <Configurations>Debug;Release</Configurations>
     <StartupObject>Web.Program</StartupObject>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Authors>Michael Melena, František Vančát</Authors>
+    <RepositoryUrl>https://github.com/MichaelMelena/B-CC</RepositoryUrl>
+    <RepositoryType>Git repository</RepositoryType>
+    <PackageProjectUrl>http://82.208.16.130</PackageProjectUrl>
+    <Product>Bank Currency Checker</Product>
+    <NeutralLanguage></NeutralLanguage>
   </PropertyGroup>
 
 

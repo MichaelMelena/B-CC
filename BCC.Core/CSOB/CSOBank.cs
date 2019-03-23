@@ -216,7 +216,7 @@ namespace BCC.Core.CSOB
             string input = null;
             if (DownloadXMLText(url, out input))
             {
-                ExchangeRateTicket ticket = ParseDayTicket(input);
+                ExchangeRateTicket ticket = ParseDayTicket(input, date);
                 if(ticket != null) return ticket;
                 else new CSOBInvalidData("This ticket doesn't exist.");
                 return null;
@@ -235,7 +235,7 @@ namespace BCC.Core.CSOB
             string input = null;
             if (DownloadXMLText(url, out input))
             {
-                ExchangeRateTicket ticket = ParseDayTicket(input);
+                ExchangeRateTicket ticket = ParseDayTicket(input, date);
                 if (ticket != null) return ticket;
                 else new CSOBInvalidData("This ticket doesn't exist.");
                 return null;
@@ -261,7 +261,7 @@ namespace BCC.Core.CSOB
                     url = String.Format("{0}{1}{2}", URL_FRONT, start.ToString("yyyy-MM-dd"), URL_END);
                     if (DownloadXMLText(url, out input))
                     {
-                        tickets.Add(ParseDayTicket(input));
+                        tickets.Add(ParseDayTicket(input, start));
                     }
                     else
                     {
@@ -294,7 +294,7 @@ namespace BCC.Core.CSOB
                     url = String.Format("{0}{1}{2}", URL_FRONT, start.ToString("yyyy-MM-dd"), URL_END);
                     if (DownloadXMLText(url, out input))
                     {
-                        tickets.Add(ParseDayTicket(input));
+                        tickets.Add(ParseDayTicket(input, start));
                     }
                     else
                     {
@@ -312,11 +312,16 @@ namespace BCC.Core.CSOB
                 return null;
             }
         }
+
+        public bool TodaysTicketIsAvailable()
+        {
+            return (DateTime.Now.Hour > 6 ); //should be zero
+        }
         #endregion
 
         #region DayTicket
         // Converting of raw data to managable form
-        private ExchangeRateTicket ParseDayTicket(string text)
+        private ExchangeRateTicket ParseDayTicket(string text, DateTime date)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(text);
             ExchangeRate er = null;
@@ -334,6 +339,7 @@ namespace BCC.Core.CSOB
                     data.Add(new ERDataBase(cur.ID, null, cur.Country, cur.quota, (float)cur.FXcashless.Buy, (float)cur.FXcashless.Sale));
                     ticket.AddExchangeRateData(data[data.Count - 1]);
                 }
+                ticket.TicketDate = date;
                 return ticket;
             }
             else

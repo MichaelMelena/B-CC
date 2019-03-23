@@ -20,6 +20,8 @@ namespace BCC.Core
         /// </summary>
         private readonly int INITIAL_BANKS_SIZE = 4;
 
+        private readonly int TICKET_HISTORY_LENGTH = 14;
+
         private readonly BCCContext _context;
 
         private readonly int TASK_DELAY = 60000;
@@ -51,18 +53,68 @@ namespace BCC.Core
            
             
             //tries to populate database with 20 exchange rate tickets for each bank
-            bool isFirstTime = IsFirstTimeSetup();
-            if (isFirstTime) FirstTimeSetup();
+            
         }
 
         private bool IsFirstTimeSetup()
         {
+            
+            if (_context.Ticket.ToList().Count <=0)
+            {
+                _context.Ticket.RemoveRange(_context.Ticket);
+                _context.SaveChanges();
+                return true;
+            }
             return false;
         }
 
         private void FirstTimeSetup()
         {
-            throw new NotImplementedException();
+
+            foreach (string bankName in Banks.Keys)
+            {
+                IExchangeRateBank bank;
+                if (Banks.TryGetValue(bankName, out bank))
+                {
+                   
+                    try
+                    {
+                        List<ICurrencyMetada> metadata = bank.DownloadCurrencyMetada();
+                        foreach (ICurrencyMetada meta in metadata)
+                        {
+
+                            SaveBankCurrencyMetada(_context, meta);
+                        }
+                    }
+                    catch (BCCCoreException ex)
+                    {
+                        //TODO: MM add logging
+                    }
+                    
+                    
+                }
+            }
+
+            foreach (string bankName in Banks.Keys)
+            {
+                IExchangeRateBank bank;
+                if (Banks.TryGetValue(bankName, out bank))
+                {
+                    try
+                    {
+                        List<ExchangeRateTicket> tickets = bank.DownloadTicketForInterval(DateTime.Now.AddDays(-TICKET_HISTORY_LENGTH), DateTime.Now.AddDays(-1));
+                        foreach(ExchangeRateTicket ticket in tickets)
+                        {
+                            SaveERTciket(_context, ticket,bankName);
+                        }
+                    }
+                    catch (BCCCoreException)
+                    {
+                        //TODO: MM add logging
+                    }
+                }
+            }
+               
         }
 
      
@@ -113,7 +165,6 @@ namespace BCC.Core
                 }
                 context.SaveChanges();
             }
-
         }
 
         #endregion
@@ -126,19 +177,23 @@ namespace BCC.Core
             CurrencyMetadata ret = context.CurrencyMetadata.Where(x => x.IsoName == metaData.ISOName).FirstOrDefault();
             if (ret == null)
             {
+                
+                if (string.IsNullOrWhiteSpace(metaData.ISOName)) return;
+                if (metaData.Quantity < 1) return;
                 ret = new CurrencyMetadata()
                 {
                     IsoName = metaData.ISOName,
                     Name = metaData.Name,
-                    Country = metaData.Country,
-                    Quantity = metaData.Quantity
+                    Quantity = metaData.Quantity,
+                    Country = metaData.Country
                 };
+                context.CurrencyMetadata.Add(ret);
+                context.SaveChanges();
             }
             else
             {
-                ret.Name = metaData.Name;
-                ret.Country = metaData.Country;
-                ret.Quantity = metaData.Quantity;
+                if (string.IsNullOrWhiteSpace(ret.Name) && !string.IsNullOrWhiteSpace(metaData.Name)) ret.Name = metaData.Name;
+                if (string.IsNullOrWhiteSpace(ret.Country) && !string.IsNullOrWhiteSpace(ret.Country)) ret.Country = metaData.Country;
             }
         }
 
@@ -205,12 +260,22 @@ namespace BCC.Core
         #region BackgroundService
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            try
+            {
+                bool isFirstTime = IsFirstTimeSetup();
+                if (isFirstTime) FirstTimeSetup();
+            }
+            catch(BCCCoreException ex)
+            {
+                //TODO: MM add logging
+            }
+
             Assembly assembly = Assembly.GetExecutingAssembly();
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
-
+                    
 
                     //reacts to changes in connector config
                     ConnectorMaintainance(_context, assembly);
