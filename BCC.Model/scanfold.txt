@@ -1,1 +1,1 @@
-﻿Scaffold-DbContext "Data source=localhost;Initial Catalog=BCC;Trusted_Connection=True;User Id=bcc;Password=bcc" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force
+﻿Scaffold-DbContext "Data source=localhost;Initial Catalog=BCC;Trusted_Connection=False;User Id=bcc;Password=bcc" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force

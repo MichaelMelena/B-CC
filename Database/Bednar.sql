@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[bednar]
+(
+	[id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	[date] DATETIME DEFAULT GETUTCDATE(),
+	[json] TEXT NOT NULL DEFAULT '',
+)

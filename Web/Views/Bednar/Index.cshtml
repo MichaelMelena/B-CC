@@ -1,0 +1,23 @@
+﻿@model List<BCC.Model.Models.Bednar>
+@{
+    ViewData["Title"] = "View";
+}
+<div class="container-fluid">
+    @foreach (BCC.Model.Models.Bednar item in Model)
+    {
+        <div class="row">
+            <div class="col-1">
+                @item.Id
+            </div>
+            <div class="col-1">
+                @item.Date.GetValueOrDefault().ToLongTimeString()
+            </div>
+            <div class="col">
+                @item.Json
+            </div>
+        </div>
+    }
+</div>
+
+
+
