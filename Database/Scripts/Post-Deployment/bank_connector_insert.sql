@@ -24,7 +24,7 @@ IF NOT EXISTS(SELECT * FROM [dbo].[bank_connector] WHERE [bank_short_name] = 'CS
 	INSERT [dbo].[bank_connector]([name], [bank_short_name], [dll_name], [enabled]) VALUES(
 		N'CSOB konektor',
 		N'CSOB',
-		'BCC.Core.CNB.CSOBank',
+		'BCC.Core.CSOB.CSOBank',
 		1
 	)
 END
