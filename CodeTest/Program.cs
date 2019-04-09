@@ -1,48 +1,26 @@
 ﻿using System;
 using System.Text;
 using System.Reflection;
-using BCC.Core.CNB;
+using BCC.Core.RB;
 using BCC.Core;
 using System.IO;
+using System.Collections.Generic;
 
 namespace CodeTest
 {
     class Program
     {
-        
         static void Main(string[] args)
         {
-            //new CNBank().GetCurrencyInfo();
-            ExchangeRateManager.Instance.DownloadTodaysTicket();
-        }
-        private static int[] YearsInterval(DateTime start, DateTime end)
-        {
-
-            int difference = end.Year - start.Year;
-            int[] array = new int[difference + 1];
-            for (int index = 0; index < difference + 1; index++)
-            {
-                array[index] = start.Year + index;
-            }
-            return array;
-        }
-        private static void ReflectionExample()
-        {
-            var currnet = Assembly.GetExecutingAssembly();
-            var dir = Directory.GetCurrentDirectory();
-            Assembly assembly = Assembly.LoadFrom($"{dir}\\BCC.Core.dll");
-            Type type = assembly.GetType("BCC.Core.CNB.CNBank");
-            IExchangeRateBank myClass = (IExchangeRateBank)Activator.CreateInstance(type);
-            ExchangeRateTicket ticket = myClass.DownloadTodaysTicket();
+            DateTime dt1 = new DateTime(2019, 01, 01);
+            DateTime dtE1 = new DateTime(2017, 10, 23);
+            DateTime dtE2 = new DateTime(2020, 12, 20);
+            DateTime dt2 = new DateTime(2019, 02, 03);
+            ExchangeRateTicket ticket = new RBank().DownloadTodaysTicket();
+            ExchangeRateTicket ticket1 = new RBank().DownloadTicketForDate(dt1);
+            List<ExchangeRateTicket> ticket2 = new RBank().DownloadTicketForInterval(dt1, dt2);
+            List<ExchangeRateTicket> ticket3 = new RBank().DownloadAllTickets();
             Console.ReadKey();
-        }
-    }
-    public class MyClass
-    {
-        public string Text { get; set; }
-        public MyClass()
-        {
-            Text = "hello reflection";
         }
     }
 }

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\BCC.Model\BCC.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BCC\Core\" />
+  </ItemGroup>
+
 </Project>

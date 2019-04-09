@@ -15,20 +15,12 @@ namespace BCC.Core.RB
         {
         }
 
-        Regex reg = new Regex("(</td><td class=\"value\">)[^<]*(<span class=\"tendency\">)[^<]*(</span>)[^<]*(</td>)[^<]*(</tr>)[^<]*(</tbody>)"+
-            "[^<]*(</table>)[^<]*(</div>)[^<]*(<div class=\"table-accordion-wrapper hidden\"[^d]*data-time=[^>]*>)[^<]*(<div class=\"accordion-heading\">)"+
-        "[^<]*(<div class=\"flag\" style=\"background-image:[^>]*>)[^<]*(</div>)[^<]*(<div class=\"name\">)(?<country>[^<]*)(</div>)[^<]*"+
-        "(</div><table class=\"table\"><tbody><tr><td class=\"key\">)[^<]*<div class=\"row-thick\">Počet</div>[^<]*(</td>)[^<]*(<td class=\"value\">)[^<]*"+
-        "(<div class=\"form-field\">)[^<]*(<input type=\"text\" value=\")(?<quantity>\\d*)[^<]*(\" name=\"count\" data-value=\"\\d*\">)[^<]*"+
-        "(</div>)[^<]*(</td>)[^<]*(</tr>)[^<]*(<tr>)[^<]*(<td class=\"key\">)[^<]*(<div class=\"row-thick\">Kód</div>)[^<]* (</td>)[^<]*"+
-        "(<td class=\"value\" data-value=\"\\w{3}\">)(?<iso>\\w{3})(</td></tr><tr><td class=\"key\">)[^<]*(<div class=\"row-thin\">Devizy</div>)[^<]*"+
-        "(<div class=\"row-thick\">Nákup</div>)[^<]*(</td><td class=\"value\" data-value=\")(\\d{1,3}\\.\\d{3})(\">)(?<buy>\\d{1,3}\\.\\d{3})"+
-        "(</td></tr><tr><td class=\"key\">)[^<]*(<div class=\"row-thin\">Devizy</div>)[^<]*<div class=\"row-thick\">Prodej</div>[^<]*"+
-        "</td><td class=\"value\" data-value=\"(\\d{1,3}\\.\\d{3})\">(?<sell>\\d{1,3}\\.\\d{3})</td></tr><tr><td class=\"key\">[^<]*"+
-        "<div class=\"row-thin\">Valuty</div>[^<]*<div class=\"row-thick\">Nákup</div>[^<]*</td><td class=\"value\" data-value=\"(\\d{1,3}\\.\\d{3})"+
-        "\">(\\d{1,3}\\.\\d{3})</td></tr><tr><td class=\"key\">[^<]*<div class=\"row-thin\">Valuty</div>[^<]*<div class=\"row-thick\">Prodej</div>[^<]*"+
-        "</td><td class=\"value\" data-value=\"(\\d{1,3}\\.\\d{3})\">(\\d{1,3}\\.\\d{3})</td></tr><tr><td class=\"key\">[^<]*<div class=\"row-thick\">Střed</div>[^<]*"+
-        "</td><td class=\"value\" data-value=\"(\\d{1,3}\\.\\d{3})\">(\\d{1,3}\\.\\d{3})</td></tr><tr><td class=\"key\">[^<]*<div class=\"row-thick\">Změna</div>[^<]*");
+        Regex reg = new Regex(
+                "<input type=\"text\" value=\"(?<quantity>\\d*)\" name=\"count\" data-value=\"\\d*\" /> </div> </td>[^<]*" +
+                "<td class=\"code\" data-value=\"\\w{3}\">(?<iso>\\w{3})</td>[^<]*" +
+                "<td class=\"value\" data-value=\"\\d*\\.\\d*\">(?<buy>\\d*\\.\\d*)</td>[^<]*" +
+                "<td class=\"value\" data-value=\"\\d*\\.\\d*\">(?<sell>\\d*\\.\\d*)</td>[^<]*"
+            );
 
         private readonly string URL = "https://www.rb.cz/informacni-servis/kurzovni-listek?date=";
         private DateTime min_date = DateTime.Today.AddDays(-181);
@@ -185,18 +177,14 @@ namespace BCC.Core.RB
             ExchangeRateTicket ticket = new ExchangeRateTicket();
             List<ICurrencyData> data = new List<ICurrencyData>();
             Match match = reg.Match(text);
-            int index = 0;
+            string entryMatch = null;
             for (int i = 0; i < reg.Matches(text).Count; i++)
             {
-                data.Add(new ERDataBase(match.Groups["iso"].Value, null, match.Groups["country"].Value, int.Parse(match.Groups["quantity"].Value), float.Parse(match.Groups["buy"].Value), float.Parse(match.Groups["sell"].Value)));
+                if (i == 0) entryMatch = match.Groups["iso"].Value;
+                else if (match.Groups["iso"].Value == entryMatch) break;
+                data.Add(new ERDataBase(match.Groups["iso"].Value, null, null, int.Parse(match.Groups["quantity"].Value), float.Parse(match.Groups["buy"].Value, System.Globalization.CultureInfo.InvariantCulture), float.Parse(match.Groups["sell"].Value, System.Globalization.CultureInfo.InvariantCulture)));
                 ticket.AddExchangeRateData(data[data.Count - 1]);
-                while(true)
-                {
-                    index = match.Index;
-                    match = match.NextMatch();
-                    if (match.Success) break;
-                    if (match.Index < index) break;
-                }
+                match = match.NextMatch();
             }
             ticket.TicketDate = date;
             return ticket;
