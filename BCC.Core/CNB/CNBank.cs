@@ -4,40 +4,58 @@ using System.Net;
 using System.Globalization;
 using System.Linq;
 using BCC.Model.Models;
+using BCC.Core.Base;
 
 namespace BCC.Core.CNB
 {
-    public class CNBank : IExchangeRateBank
+    public class CNBank : ABank, IExchangeRateBank
     {
-        
         public CNBank(){
 
         }
+
+        /// <summary>
+        /// URL used to downloads ticket for specified date
+        /// </summary>
         private readonly string URL_FOR_DAY_TICKET = "http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/denni_kurz.txt";
 
+        /// <summary>
+        /// URL used to download tickets for specified year
+        /// </summary>
         private readonly string URL_FOR_YEAR_TICKET = "http://www.cnb.cz/cs/financni_trhy/devizovy_trh/kurzy_devizoveho_trhu/rok.txt";
 
+        /// <summary>
+        /// Minimal date for which currency ticket can be downloaded
+        /// </summary>
         private readonly DateTime MIN_DATE = new DateTime(year: 1992, month: 1, day: 1);
         
      
         #region Helper methods
+
+        /// <summary>
+        /// Validates date
+        /// </summary>
+        /// <param name="date"> date to be validated</param>
         private void ValidateDate(DateTime date) {
             if (date < this.MIN_DATE || date > DateTime.Now)
             {
                 new CNBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maxium is {DateTime.Now}");
             }
         }
-        private string DownloadTicketText(string url)
-        {
-            string responseText = null;
-            using (WebClient webClient = new WebClient())
-            {
-                
-                responseText = webClient.DownloadString(url);
-            }
-            return responseText;
-        }
 
+        /// <summary>
+        /// Download strin for url
+        /// </summary>
+        /// <param name="url">url for endpoint</param>
+        /// <exception cref="CNBDownloadException"/>
+        /// <returns>Returns string response for specified url</returns>
+      
+        /// <summary>
+        /// Download currency ticket for year specified by date
+        /// </summary>
+        /// <param name="date">Target year for ticket</param>
+        /// <exception cref="CNBDownloadException"/>
+        /// <returns></returns>
         public List<ExchangeRateTicket> DownloadYearTicket(DateTime date)
         {
             this.ValidateDate(date);
@@ -51,12 +69,22 @@ namespace BCC.Core.CNB
 
         #region Interface methods
 
+        /// <summary>
+        /// Check if today new ticket is availaible
+        /// </summary>
+        /// <returns></returns>
         public bool TodaysTicketIsAvailable()
         {
             //TODO: MM could cause potential isssue because of different time on server
             return (DateTime.Now.Hour > 14); 
         }
 
+
+        /// <summary>
+        /// Download currency ticket for todays date
+        /// </summary>
+        /// <exception cref="CNBDownloadException"/>
+        /// <returns>currency ticket to todays date</returns>
         public ExchangeRateTicket DownloadTodaysTicket()
         {
             DateTime date = DateTime.Now;
@@ -69,6 +97,11 @@ namespace BCC.Core.CNB
             return ticket;
         }
 
+        /// <summary>
+        /// Download currency ticket for specified data
+        /// </summary>
+        /// <param name="date">target currency ticket date</param>
+        /// <returns>Currency ticket or null if there is no ticket</returns>
         public ExchangeRateTicket DownloadTicketForDate(DateTime date)
         {
             this.ValidateDate(date);
@@ -79,16 +112,28 @@ namespace BCC.Core.CNB
             return ticket;
         }
 
+        /// <summary>
+        /// Download all the availaible tickets for this bank
+        /// </summary>
+        /// <exception cref="CNBDownloadException"/>
+        /// <returns>List of currency tickets</returns>
         public List<ExchangeRateTicket> DownloadAllTickets()
         {
            return DownloadTicketForInterval(this.MIN_DATE, DateTime.Now);
         }
 
+        /// <summary>
+        /// Downloads all availaible tickets in specified interval
+        /// </summary>
+        /// <param name="start">start date</param>
+        /// <param name="end">end ticket</param>
+        /// <exception cref="CNBDownloadException"/>
+        /// <returns>List of currency tickets for interval</returns>
         public List<ExchangeRateTicket> DownloadTicketForInterval(DateTime start, DateTime end)
         {
             ValidateDate(start);
             ValidateDate(end);
-            int[] years = YearsInterval(start, end);
+            int[] years = YearsInterval(start, end).ToArray();
             List<ExchangeRateTicket> tickets = new List<ExchangeRateTicket>(years.Length * 50);
             foreach(int year in years)
             {
@@ -107,17 +152,17 @@ namespace BCC.Core.CNB
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns>Array containing year in interval</returns>
-        public static int[] YearsInterval(DateTime start , DateTime end)
+        public static List<int> YearsInterval(DateTime start , DateTime end)
         {
             if (end.Year < start.Year) throw new CNBInvalidDate($"start: {start}, end: {start}");
 
-            int difference = start.Year - end.Year;
+            int difference = Math.Abs(start.Year - end.Year);
             int[] array = new int[difference+1];
             for (int index=0; index < difference + 1;index++)
             {
                 array[index] = start.Year + index;
             }
-            return array;
+            return array.ToList();
         }
         #region DayTicket
 
@@ -127,7 +172,7 @@ namespace BCC.Core.CNB
         {
             string[] lines = text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
             if (lines.Length < 2)
-                throw new CNBInvalidData(message: "Invalid number of lines");
+                throw new CNBTicketParseException(message: "Invalid number of lines");
 
             string[] header = lines.ToList().GetRange(0, 2).ToArray();
             string[] body = lines.ToList().GetRange(2, lines.Length-2).ToArray();
@@ -170,7 +215,7 @@ namespace BCC.Core.CNB
         private List<ExchangeRateTicket> ParseYearTicket(string text){
             string[] lines = text.Split('\n', StringSplitOptions.RemoveEmptyEntries);
             if (lines.Length < 2)
-                throw new CNBInvalidData(message: "Invalid number of lines");
+                throw new CNBTicketParseException(message: "Invalid number of lines");
 
             string header = lines[0];
             string[] body = lines.ToList().GetRange(1, lines.Length - 1).ToArray();
@@ -179,6 +224,7 @@ namespace BCC.Core.CNB
             List<ExchangeRateTicket> tickets = this.ParseYearBody(body,ref metadata);
             return tickets;
         }
+
         private List<ICurrencyMetada> ParseYearHeader(string text)
         {
             string[] header = text.Split(new char[] { '|', ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -222,13 +268,16 @@ namespace BCC.Core.CNB
         
         #endregion
 
-       
+        /// <summary>
+        /// Downloads currency metadata for currency
+        /// </summary>
+        /// <exception cref="CNBDownloadException"/>
+        /// <returns>List of currency metadata</returns>
         public List<ICurrencyMetada> DownloadCurrencyMetada()
         {
             ExchangeRateTicket ticket = DownloadTodaysTicket();    
             return ticket.GetExchangeRateData().ToList<ICurrencyMetada>();
         }
 
-       
     } 
 }

@@ -18,6 +18,8 @@ namespace BCC.Core
 
         List<ICurrencyMetada> DownloadCurrencyMetada();
 
+
+
         bool TodaysTicketIsAvailable();
 
        
