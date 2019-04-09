@@ -4,7 +4,7 @@ using System.Net;
 using System.Globalization;
 using System.Linq;
 using BCC.Model.Models;
-using BCC.Core.Base;
+using BCC.Core.Abstract;
 
 namespace BCC.Core.CNB
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Net;
-namespace BCC.Core.Base
+namespace BCC.Core.Abstract
 {
     public class ABank : IDisposable
     {

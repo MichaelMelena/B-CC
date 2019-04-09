@@ -5,10 +5,11 @@ using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using BCC.Core.Abstract;
 
 namespace BCC.Core.CSOB
 {
-    public class CSOBank : IExchangeRateBank
+    public class CSOBank :ABank, IExchangeRateBank
     {
         public CSOBank()
         {
@@ -27,23 +28,27 @@ namespace BCC.Core.CSOB
                 new CSOBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maximum is {DateTime.Today}");
             }
         }
-        
-        public static bool DownloadXMLText(string url, out string input)
+
+       
+
+        public bool DownloadXMLText(string url, out string input)
         {
             try
             {
-                using (WebClient wc = new WebClient())
-                {
-                    input = wc.DownloadString(url);
-                }
+                input = this.DownloadTicketText(url);
             }
-            catch(WebException ex)
+            catch(BCCWebclientException ex)
             {
-                using (StreamReader sr = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream()))
+                if  (ex.InnerException!= null && ex.InnerException.GetType() == typeof(WebException))
                 {
-                    input = sr.ReadToEnd();
+                    using (StreamReader sr = new StreamReader(((HttpWebResponse)((WebException)ex.InnerException).Response).GetResponseStream()))
+                    {
+                        input = sr.ReadToEnd();
+                    }
+                    return false;
                 }
-                return false;
+                //TODO: Add logging here
+                input = "Unnexpected Exception";
             }
             return true;
         }
@@ -53,7 +58,6 @@ namespace BCC.Core.CSOB
         [System.ComponentModel.DesignerCategoryAttribute("code")]
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
         [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-
         public partial class ExchangeRate
         {
             private ExchangeRateCountry[] countryField;
