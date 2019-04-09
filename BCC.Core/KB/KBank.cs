@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Net;
 using Newtonsoft.Json;
 using System.IO;
+using BCC.Core.Abstract;
 
 namespace BCC.Core.KB
 {
-    public class KBank : IExchangeRateBank
+    public class KBank :ABank, IExchangeRateBank
     {
         public KBank()
         {
@@ -34,18 +35,20 @@ namespace BCC.Core.KB
         {
             try
             {
-                using (WebClient client = new WebClient())
-                {
-                    jsonInput = client.DownloadString(url);
-                }
+                jsonInput= this.DownloadTicketText(url);
             }
-            catch(WebException ex)
+            catch (BCCWebclientException ex)
             {
-                using (StreamReader sr = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream()))
+                if (ex.InnerException != null && ex.InnerException.GetType() == typeof(WebException))
                 {
-                    jsonInput = sr.ReadToEnd();
+                    using (StreamReader sr = new StreamReader(((HttpWebResponse)((WebException)ex.InnerException).Response).GetResponseStream()))
+                    {
+                        jsonInput = sr.ReadToEnd();
+                    }
+                    return false;
                 }
-                return false;
+                //TODO: Add logging here
+                jsonInput = "Unnexpected Exception";
             }
             return true;
         }
