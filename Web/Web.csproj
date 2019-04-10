@@ -13,6 +13,7 @@
     <PackageProjectUrl>http://82.208.16.130</PackageProjectUrl>
     <Product>Bank Currency Checker</Product>
     <NeutralLanguage></NeutralLanguage>
+    <UserSecretsId>8c8125ff-0ae4-4939-8ee2-15fbf3b50005</UserSecretsId>
   </PropertyGroup>
 
 

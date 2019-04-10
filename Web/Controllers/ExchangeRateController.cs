@@ -63,7 +63,8 @@ namespace Web.Controllers
             return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
         }
 
-        public PartialViewResult TicketTable(string bankName, [FromQuery]DateTime tableDate)
+        
+        public PartialViewResult TicketTable([FromBody]string bankName, [FromQuery]DateTime tableDate)
         {
             if (tableDate == null) tableDate = DateTime.Now;
             if (string.IsNullOrWhiteSpace(bankName)) bankName = "CNB";
@@ -76,7 +77,7 @@ namespace Web.Controllers
         {
             return PartialView();
         }
-        [HttpGet]
+
         public ContentResult CurrencyGraph(string currency)
         {
             string json = _presentationManager.GetBuyDateGraph("AUD", new DateTime(2019, 3, 21));

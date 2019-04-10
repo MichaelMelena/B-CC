@@ -6,6 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text.RegularExpressions;
+using BCC.Core;
 
 namespace BCC.Core.RB
 {
@@ -197,6 +198,11 @@ namespace BCC.Core.RB
             ICurrencyData[] data = ticket.GetExchangeRateData();
             List<ICurrencyMetada> metaData = new List<ICurrencyMetada>(data.Length);
             return metaData;
+        }
+
+        public bool TodaysTicketIsAvailable()
+        {
+            return (DateTime.Now.Hour > 6);//TODO: not a valid value just placeholder
         }
     }
 }
