@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using System.Text;
+
 
 namespace BCC.Core
 {
@@ -16,9 +18,9 @@ namespace BCC.Core
 
         List<ExchangeRateTicket> DownloadAllTickets();
 
-        List<ICurrencyMetada> DownloadCurrencyMetada();
+        List<ICurrencyMetada> DownloadCurrencyMetadata();
 
-
+        void SetLogger(ILoggerFactory loggerFactory);
 
         bool TodaysTicketIsAvailable();
 

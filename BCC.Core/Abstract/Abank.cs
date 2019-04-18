@@ -1,11 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
 using System.Net;
+using  Microsoft.Extensions.Logging;
+using BCC.Core.Extensions;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace BCC.Core.Abstract
 {
-    public class ABank : IDisposable
+    
+    public class ABank <T>: IDisposable
     {
+        
+        protected ILogger<T> Logger { get; set; }
+       
         protected IWebClient _webClient;
         public IWebClient BankWebClient {
             get {
@@ -20,26 +29,35 @@ namespace BCC.Core.Abstract
             _webClient.Dispose();
         }
 
+
+        /// <summary>
+        /// Returns not null response from requested url
+        /// </summary>
+        /// <param name="url">Requsted url</param>
+        /// <returns>Reutrns <c>string</c> content obtained from specified url</returns>
+        /// <exception cref="BCCWebclientException"></exception>
         protected virtual string DownloadTicketText(string url)
         {
             try
-            {   
-                string responseText = null;
-                BankWebClient.DownloadString(url);
-                if (responseText == null) throw new BCCWebclientException($"For url: {url}: response text is NULL");
-                return responseText;
-            }
-            catch (ArgumentNullException ex)
             {
-                throw new BCCWebclientException($"For url: {url}", ex);
+                string responseText = BankWebClient.DownloadString(url);
+                return (responseText != null)? responseText : throw new BCCWebclientException($"Request returned null for url: '{url}'");
             }
             catch (WebException ex)
             {
-                throw new BCCWebclientException($"For url: {url}", ex);
+                using (StreamReader sr = new StreamReader(((HttpWebResponse)(ex).Response).GetResponseStream()))
+                {
+                    var message = sr.ReadToEnd();
+                    throw new BCCWebclientException(message, ex);
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new BCCWebclientException("Url is null", ex);
             }
             catch (NotSupportedException ex)
             {
-                throw new BCCWebclientException($"For url: {url}", ex);
+                throw new BCCWebclientException("Invallid operation was called on web-client", ex);
             }
         }
     }

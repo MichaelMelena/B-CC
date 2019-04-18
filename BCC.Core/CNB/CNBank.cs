@@ -5,14 +5,16 @@ using System.Globalization;
 using System.Linq;
 using BCC.Model.Models;
 using BCC.Core.Abstract;
+using Microsoft.Extensions.Logging;
 
 namespace BCC.Core.CNB
 {
-    public class CNBank : ABank, IExchangeRateBank
+    public class CNBank : ABank<CNBank>, IExchangeRateBank
     {
         public CNBank(){
 
         }
+
 
         /// <summary>
         /// URL used to downloads ticket for specified date
@@ -29,7 +31,6 @@ namespace BCC.Core.CNB
         /// </summary>
         private readonly DateTime MIN_DATE = new DateTime(year: 1992, month: 1, day: 1);
         
-     
         #region Helper methods
 
         /// <summary>
@@ -42,14 +43,7 @@ namespace BCC.Core.CNB
                 new CNBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maxium is {DateTime.Now}");
             }
         }
-
-        /// <summary>
-        /// Download strin for url
-        /// </summary>
-        /// <param name="url">url for endpoint</param>
-        /// <exception cref="CNBDownloadException"/>
-        /// <returns>Returns string response for specified url</returns>
-      
+     
         /// <summary>
         /// Download currency ticket for year specified by date
         /// </summary>
@@ -59,9 +53,8 @@ namespace BCC.Core.CNB
         public List<ExchangeRateTicket> DownloadYearTicket(DateTime date)
         {
             this.ValidateDate(date);
-            string dateString = date.ToString("yyyy");
-            string url = $"{this.URL_FOR_YEAR_TICKET}?rok={dateString}";
-            string text = this.DownloadTicketText(url);
+            string url = $"{this.URL_FOR_YEAR_TICKET}?rok={date.ToString("yyyy")}";
+            string text = DownloadTicketText(url);
             List<ExchangeRateTicket> tickets = this.ParseYearTicket(text);
             return tickets;
         }
@@ -87,14 +80,8 @@ namespace BCC.Core.CNB
         /// <returns>currency ticket to todays date</returns>
         public ExchangeRateTicket DownloadTodaysTicket()
         {
-            DateTime date = DateTime.Now;
-            this.ValidateDate(date);
-            string dateString = date.ToString("dd.MM.yyyy");
-            string url = $"{this.URL_FOR_DAY_TICKET}?date={dateString}";
-
-            string text = this.DownloadTicketText(url);
-            ExchangeRateTicket ticket = this.ParseDayTicket(text);
-            return ticket;
+            //TODO: may be required to add check if ticket is availaible
+           return DownloadTicketForDate(DateTime.Now);
         }
 
         /// <summary>
@@ -133,6 +120,7 @@ namespace BCC.Core.CNB
         {
             ValidateDate(start);
             ValidateDate(end);
+            if (start > end) throw new CNBInvalidDate($"Start date: {start.ToShortTimeString()} is after end date: {end.ToShortTimeString()}");
             int[] years = YearsInterval(start, end).ToArray();
             List<ExchangeRateTicket> tickets = new List<ExchangeRateTicket>(years.Length * 50);
             foreach(int year in years)
@@ -145,6 +133,11 @@ namespace BCC.Core.CNB
             return ticketInterval;
         }
         #endregion
+
+        public void  SetLogger(ILoggerFactory loggerFactory)
+        {
+            Logger = loggerFactory.CreateLogger<CNBank>();
+        }
 
         /// <summary>
         /// Takes two date and return array of years included in both dates
@@ -192,9 +185,9 @@ namespace BCC.Core.CNB
             ticket.TicketDate = ticketDate;
         }
 
-        private void ParseDayTicketBody(string[] body,ref ExchangeRateTicket ticket)
+        private void ParseDayTicketBody(string[] body, ref ExchangeRateTicket ticket)
         {
-            foreach(string line in body)
+            foreach (string line in body)
             {
                 string[] sections = line.Split('|', StringSplitOptions.RemoveEmptyEntries);
                 string country = sections[0];
@@ -202,13 +195,10 @@ namespace BCC.Core.CNB
                 int quantity = int.Parse(sections[2]);
                 string isoName = sections[3];
                 float buy = float.Parse(sections[4], CultureInfo.GetCultureInfo("cs-CZ"));
-
-                ICurrencyData data = new ERDataBase(isoName, name,country, quantity, buy, null );
+                ICurrencyData data = new ERDataBase(isoName, name, country, quantity, buy, null);
                 ticket.AddExchangeRateData(data);
             }
         }
-
-
         #endregion
 
         #region Year ticket
@@ -268,16 +258,12 @@ namespace BCC.Core.CNB
         
         #endregion
 
-        /// <summary>
-        /// Downloads currency metadata for currency
-        /// </summary>
-        /// <exception cref="CNBDownloadException"/>
-        /// <returns>List of currency metadata</returns>
-        public List<ICurrencyMetada> DownloadCurrencyMetada()
+        public List<ICurrencyMetada> DownloadCurrencyMetadata()
         {
             ExchangeRateTicket ticket = DownloadTodaysTicket();    
             return ticket.GetExchangeRateData().ToList<ICurrencyMetada>();
         }
 
+        
     } 
 }
