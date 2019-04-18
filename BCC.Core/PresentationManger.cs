@@ -6,15 +6,19 @@ using BCC.Model.Models;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Dynamic;
+using Microsoft.Extensions.Logging;
 
 namespace BCC.Core
 {
     public class PresentationManger : IPresentationManager
     {
+
         private readonly BCCContext _context;
-        public PresentationManger(BCCContext context)
+        private readonly ILogger<PresentationManger> _logger;
+        public PresentationManger(BCCContext context,ILogger<PresentationManger> logger)
         {
-            this._context = context;
+            _context = context;
+            _logger = logger;
         }
 
         #region Interface methods
@@ -203,7 +207,6 @@ namespace BCC.Core
                     ).ToList();
             if (tickets.Count <= 0)
             {
-                //TODO: ADD table with text that data dont exist
                 return ErrorTable(tableName, "There is no ticket for this date");
 
             }
@@ -306,7 +309,6 @@ namespace BCC.Core
             if (tickets.Count <= 0)
             {
                 err = true;
-                //TODO: ADD table with text that data dont exist
                 return ErrorTable(tableName, "There is no ticket for this date");
             }
 
