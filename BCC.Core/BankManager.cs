@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Threading;
-using BCC.Core.CNB;
 using BCC.Model.Models;
 using System.Reflection;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using  BCC.Core.Utils;
 
 namespace BCC.Core
 {
@@ -22,7 +23,7 @@ namespace BCC.Core
 
         private readonly int TICKET_HISTORY_LENGTH = 14;
 
-        private readonly BCCContext _context;
+       
 
         private readonly int TASK_DELAY = 60000;
 
@@ -40,17 +41,28 @@ namespace BCC.Core
         #region Properties
 
         private IDictionary<string,IExchangeRateBank> Banks { get; set; }
+        private readonly ILogger<BankManager> logger;
+        private readonly IServiceScopeFactory serviceScopeFactory;
+        private readonly ILoggerFactory loggerFactory; 
         #endregion
 
-        public BankManager(IServiceProvider serviceProvider)
+        public BankManager(IServiceScopeFactory serviceScopeFactory,ILoggerFactory loggerFactory, ILogger<BankManager> logger)
         {
-            _context = new BCCContext();
+            this.serviceScopeFactory = serviceScopeFactory;
+            this.logger = logger;
+            this.loggerFactory = loggerFactory;
             this.Banks = new ConcurrentDictionary<string, IExchangeRateBank>(BANKS_CONCURENCY_LEVEL, INITIAL_BANKS_SIZE);
 
 
             Assembly assembly = Assembly.GetExecutingAssembly();
-            ConnectorMaintainance(_context, assembly);
-           
+
+            using (var scope = new DbScope(this.serviceScopeFactory))
+            {
+                ConnectorMaintenance(scope.Context, assembly);
+            }
+            
+
+            this.logger.LogDebug("BankManager was initiated");
             
             //tries to populate database with 20 exchange rate tickets for each bank
             
@@ -58,62 +70,68 @@ namespace BCC.Core
 
         private bool IsFirstTimeSetup()
         {
-            
-            if (_context.Ticket.ToList().Count <=0)
+            using (var scope = new DbScope(serviceScopeFactory))
             {
-                _context.Ticket.RemoveRange(_context.Ticket);
-                _context.SaveChanges();
-                return true;
+                if (scope.Context.Ticket.ToList().Count <= 0)
+                {
+                    scope.Context.Ticket.RemoveRange(scope.Context.Ticket);
+                    scope.Context.SaveChanges();
+                    return true;
+                }
+                return false;
             }
-            return false;
+           
         }
 
         private void FirstTimeSetup()
         {
-
-            foreach (string bankName in Banks.Keys)
+            using (var scope = new  DbScope(serviceScopeFactory))
             {
-                IExchangeRateBank bank;
-                if (Banks.TryGetValue(bankName, out bank))
+                foreach (string bankName in Banks.Keys)
                 {
-                   
-                    try
+                    IExchangeRateBank bank;
+                    if (Banks.TryGetValue(bankName, out bank))
                     {
-                        List<ICurrencyMetada> metadata = bank.DownloadCurrencyMetada();
-                        foreach (ICurrencyMetada meta in metadata)
-                        {
 
-                            SaveBankCurrencyMetada(_context, meta);
-                        }
-                    }
-                    catch (BCCCoreException ex)
-                    {
-                        //TODO: MM add logging
-                    }
-                    
-                    
-                }
-            }
-
-            foreach (string bankName in Banks.Keys)
-            {
-                IExchangeRateBank bank;
-                if (Banks.TryGetValue(bankName, out bank))
-                {
-                    try
-                    {
-                        List<ExchangeRateTicket> tickets = bank.DownloadTicketForInterval(DateTime.Now.AddDays(-TICKET_HISTORY_LENGTH), DateTime.Now.AddDays(-1));
-                        foreach(ExchangeRateTicket ticket in tickets)
+                        try
                         {
-                            SaveERTciket(_context, ticket,bankName);
+                            List<ICurrencyMetada> metadata = bank.DownloadCurrencyMetadata();
+                            foreach (ICurrencyMetada meta in metadata)
+                            {
+
+                                SaveBankCurrencyMetadata(scope.Context, meta);
+                            }
                         }
-                    }
-                    catch (BCCCoreException)
-                    {
-                        //TODO: MM add logging
+                        catch (BCCCoreException ex)
+                        {
+                           logger.LogDebug(ex,$"Failed downloading/processing currency metadata for Bank: {bankName}");
+                        }
+
+
                     }
                 }
+
+                foreach (string bankName in Banks.Keys)
+                {
+                    IExchangeRateBank bank;
+                    if (Banks.TryGetValue(bankName, out bank))
+                    {
+                        try
+                        {
+                            List<ExchangeRateTicket> tickets = bank.DownloadTicketForInterval(DateTime.Now.AddDays(-TICKET_HISTORY_LENGTH), DateTime.Now.AddDays(-1));
+                            foreach (ExchangeRateTicket ticket in tickets)
+                            {
+                                SaveERTicket(scope.Context, ticket, bankName);
+                            }
+                        }
+                        catch (BCCCoreException ex)
+                        {
+                            logger.LogError(ex,$"Error occured for Bank: {bank}");
+                        }
+                    }
+                }
             }
+           
                
         }
 
@@ -141,7 +159,7 @@ namespace BCC.Core
                         if (bank.TodaysTicketIsAvailable())
                         {
                             ExchangeRateTicket erTicket = bank.DownloadTodaysTicket();
-                            SaveERTciket(context, erTicket, bankName);
+                            SaveERTicket(context, erTicket, bankName);
                         }
                        
                     }
@@ -149,7 +167,7 @@ namespace BCC.Core
             }
             catch (BCCCoreException ex)
             {
-                //TODO: MM add logging
+                logger.LogError(ex, $"Failed to download today's ticket for Bank: {bankName}");
             }
         }
 
@@ -158,10 +176,10 @@ namespace BCC.Core
             IExchangeRateBank bank;
             if (Banks.TryGetValue(bankName, out bank))
             {
-                List<ICurrencyMetada> metaData = bank.DownloadCurrencyMetada();
+                List<ICurrencyMetada> metaData = bank.DownloadCurrencyMetadata();
                 foreach (ICurrencyData meta in metaData)
                 {
-                    SaveBankCurrencyMetada(context, meta);
+                    SaveBankCurrencyMetadata(context, meta);
                 }
                 context.SaveChanges();
             }
@@ -172,9 +190,9 @@ namespace BCC.Core
 
         #region DB Save
 
-        private void SaveBankCurrencyMetada(BCCContext context, ICurrencyMetada metaData)
+        private void SaveBankCurrencyMetadata(BCCContext context, ICurrencyMetada metaData)
         {
-            CurrencyMetadata ret = context.CurrencyMetadata.Where(x => x.IsoName == metaData.ISOName).FirstOrDefault();
+            CurrencyMetadata ret = context.CurrencyMetadata.FirstOrDefault(x => x.IsoName == metaData.ISOName);
             if (ret == null)
             {
                 
@@ -199,11 +217,11 @@ namespace BCC.Core
 
         #endregion
 
-        private void SaveERTciket(BCCContext context, ExchangeRateTicket eRTicket, string bankName)
+        private void SaveERTicket(BCCContext context, ExchangeRateTicket eRTicket, string bankName)
         {
             if (eRTicket == null || bankName == null) throw new BCCERMNullReference();
 
-            Ticket ticket = context.Ticket.Where(x => x.Date == eRTicket.TicketDate && x.BankShortName == bankName).FirstOrDefault();
+            Ticket ticket = context.Ticket.FirstOrDefault(x => x.Date == eRTicket.TicketDate && x.BankShortName == bankName);
             if (ticket == null)
             {
                 ticket = new Ticket()
@@ -232,7 +250,7 @@ namespace BCC.Core
 
 
 
-        private void ConnectorMaintainance(BCCContext context, Assembly assembly)
+        private void ConnectorMaintenance(BCCContext context, Assembly assembly)
         {
             List<BankConnector> connectors = context.BankConnector.ToList();
             foreach (BankConnector connector in connectors)
@@ -252,6 +270,8 @@ namespace BCC.Core
                     {   //add bank to active banks
                         Type type = assembly.GetType(connector.DllName);
                         IExchangeRateBank bank = (IExchangeRateBank)Activator.CreateInstance(type);
+                        bank.SetLogger(loggerFactory);
+
                         Banks.Add(connector.BankShortName, bank);
                     }
                 }
@@ -267,29 +287,31 @@ namespace BCC.Core
             }
             catch(BCCCoreException ex)
             {
-                //TODO: MM add logging
+                logger.LogDebug(ex,$"Failed on first time setup");
             }
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             while (!stoppingToken.IsCancellationRequested)
             {
-                try
+                using (var scope = new DbScope(serviceScopeFactory))
                 {
-                    
-
-                    //reacts to changes in connector config
-                    ConnectorMaintainance(_context, assembly);
-                    foreach (string bankName in Banks.Keys)
+                    try
                     {
-                        DownloadTodaysBankTicket(bankName, _context);
+                        //reacts to changes in connector config
+                        ConnectorMaintenance(scope.Context, assembly);
+                        foreach (string bankName in Banks.Keys)
+                        {
+                            //TODO: MM tickets can be downloaded asynchronously
+                            DownloadTodaysBankTicket(bankName, scope.Context);
+                        }
                     }
+                    catch (BCCCoreException ex)
+                    {
+                        logger.LogDebug(ex,$"Failure on one of the Banks");
+                    }
+                }
+                await Task.Delay(TASK_DELAY, _stoppingCts.Token);
 
-                    await Task.Delay(TASK_DELAY, _stoppingCts.Token);
-                }
-                catch (BCCCoreException ex)
-                {
-                    //TODO: MM add logging
-                }
             }
             _executingTask = Task.CompletedTask;
             return;
@@ -340,5 +362,7 @@ namespace BCC.Core
 
 
         #endregion
+
+       
     }
 }
