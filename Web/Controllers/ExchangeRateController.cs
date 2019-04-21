@@ -7,19 +7,25 @@ using BCC.Model.Models;
 using BCC.Core;
 using System.Data;
 using System.Reflection;
+using  Microsoft.Extensions.Logging;
 
 
 namespace Web.Controllers
 {
     public class ExchangeRateController : Controller
     {
+        #region Dependencies
         private readonly BCCContext _context;
         private readonly IPresentationManager _presentationManager;
+        private readonly ILogger<ExchangeRateController> _logger;
+        #endregion
+
         private readonly string _version;
-        public ExchangeRateController(BCCContext context, IPresentationManager presentationManager)
+        public ExchangeRateController(BCCContext context, IPresentationManager presentationManager, ILogger<ExchangeRateController> logger)
         {
-            this._context = context;
-            this._presentationManager = presentationManager;
+            _logger = logger;
+            _context = context;
+           _presentationManager = presentationManager;
             _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
