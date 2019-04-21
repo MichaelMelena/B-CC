@@ -29,39 +29,9 @@ namespace Web.Controllers
             ViewBag.title = "Exchange Rates";
             return View();
         }
-        public IActionResult BankTickets()
-        {
-            ViewBag.version = _version;
-            return View(viewName: "~/Views/ExchangeRate/BankTickets.cshtml");
-        }
-
-        public IActionResult BestTickets()
-        {
-            ViewBag.version = _version;
-            return View(viewName: "~/Views/ExchangeRate/BestTickets.cshtml");
-        }
-
-        public IActionResult Recommendations()
-        {
-            ViewBag.version = _version;
-            return View(viewName: "~/Views/ExchangeRate/Recommendations.cshtml");
-        }
-
-        public IActionResult Wholesales()
-        {
-            ViewBag.version = _version;
-            return View(viewName: "~/Views/ExchangeRate/Wholesales.cshtml");
-        }
-        #region Partial views
-
-        public PartialViewResult TicketPanel()
-        {
-            var availaibleBanks = _context.BankConnector.Where(x => x.Enabled == true).ToList();
-            return PartialView(viewName: "~/Views/ExchangeRate/TicketPanel.cshtml",model: availaibleBanks);
-        }
 
         public PartialViewResult BuyTable([FromQuery]DateTime tableDate)
-        { 
+        {
             if (tableDate == DateTime.MinValue) tableDate = DateTime.Now;
 
             DataTable table =  _presentationManager.GetBuyTableData(date: tableDate);
@@ -114,7 +84,5 @@ namespace Web.Controllers
            
             return Content(content: json, contentType: "application/json");
         }
-
-        #endregion
     }
 }

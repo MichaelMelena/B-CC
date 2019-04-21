@@ -1,42 +1,27 @@
 ﻿@model System.Data.DataTable
-@{ 
-    var guid = Guid.NewGuid();
-}
-    <div class="container" id="@guid.ToString()">
-        <div class="row">
-            <div class="col-10"> 
-                <h2>@Model.TableName</h2>
-            </div>
-            <div class="col-2 d-flex justify-content-end p-2">
-                <div class="btn btn-outline-danger" onclick="$('#@guid').remove();">X</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            @foreach (System.Data.DataColumn collumn in Model.Columns)
-                            {
-                                <th class="border exchangeItem"><strong>@collumn.ColumnName</strong></th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (System.Data.DataRow row in Model.Rows)
-                        {
-                            <tr class="border">
-                                @foreach (var item in row.ItemArray)
-                                {
-                                    <td class="border exchangeItem">@item.ToString()</td>
-                                }
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+
+
+    <div class="row">
+        <div class="col">
+            <h2>@Model.TableName</h2>
         </div>
     </div>
+    <div class="row border">
+        @foreach (System.Data.DataColumn collumn in Model.Columns)
+        {
+            <div class="col border"><strong>@collumn.ColumnName</strong></div>
+        }
+
+    </div>
+    @foreach (System.Data.DataRow row in Model.Rows)
+    {
+        <div class="row border">
+            @foreach (var item in row.ItemArray)
+            {
+                <div class="col border">@item.ToString()</div>
+            }
+        </div>
+    }
 
 
-
+    
