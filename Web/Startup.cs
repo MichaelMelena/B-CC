@@ -88,6 +88,12 @@ namespace Web
                 routes.MapRoute(
                     name: "ExchangeRate",
                     template: "{controller=ExchangeRate}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "TicketTable",
+                    template: "{controller=TicketTable}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "TicketGraph",
+                    template: "{controller=TicketGraph}/{action=Index}/{id?}");
             });
 
             if (env.IsProduction())

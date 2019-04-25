@@ -4,28 +4,34 @@
 }
 
 @section title{
-<h1>
-    Wholesales
-</h1>
+<div class="row">
+    <div class="col justify-content-center d-flex ">
+        <h1>Wholesales</h1>
+    </div>
+</div>
 }
 
 
 @section content{
-<div class="row mt-3">
-    <div class="col justify-content-center d-flex">
-        <div class="btn btn-outline-dark  w-50 "  id="buyBtn">Buy</div>
+    <div class="row mt-3 d-flex justify-content-center">
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-4 col-md-4 col-lg-2">
+            <div class="btn btn-outline-dark w-100" id="buyBtn">Buy</div>
+        </div>
+        <div class="mt-2 justify-content-center d-flex col-12 col-sm-4 col-md-4 col-lg-2">
+            <div class="btn btn-outline-dark w-100" id="sellBtn">Sell</div>
+        </div>
+        <div class=" mt-2 d-flex  col-12 col-sm-6 col-md-5 col-lg-3">
+            <a class="btn btn-outline-dark w-100" href="#buyContainer">Go to buy</a>
+        </div>
+        <div class=" mt-2 justify-content-center d-flex  col-12 col-sm-6 col-md-5 col-lg-3">
+            <a class="btn btn-outline-dark w-100" href="#sellContainer">Go to sell</a>
+        </div>
     </div>
-    <div class="col justify-content-center d-flex">
-        <div class="btn btn-outline-dark w-50" id="sellBtn">Sell</div>
-    </div>
-</div>
 
 <div class="row mt-5">
     <div class="col">
-        <div class="container tbl" id="buyContainer">
-            <div class="row">
-
-            </div>
+        <div class="d-flex flex-wrap justify-content-around"  id="buyContainer">
+            
         </div>
     </div>
 </div>
@@ -33,7 +39,7 @@
 
 <div class="row mt-5">
     <div class="col">
-        <div class="container tbl" id="sellContainer">
+        <div class="d-flex flex-wrap justify-content-around" id="sellContainer">
             
         </div>
     </div>
@@ -44,25 +50,25 @@
 @section Scripts{
    <script>
        $(window).ready(function () {
-
-           $('#buyBtn').click(function () {
-               $.get({
-                   url: "/ExchangeRate/BuyTable",
-                   data: {
-                       tableDate: $('#panelDatePicker').val()
-                   },
-                   success: function (result) {
-                       $('#buyContainer').append(result).fadeIn(300,"linear");
-                   },
-                   error: function (err) {
-                       console.log(`failed to get a buy ticket:\n${err}`);
-                    }
-
+           let buyContainer = $('#buyContainer');
+           let sellContainer = $('#sellContainer');
+           let ticketPanel = $('#ticketPanel');
+           App.getTicketPanel(false, ticketPanel, function () {
+               App.setDatePickerDefaultDate(new Date(), $('#panelDatePicker'));
+               $('#panelDeleteAll').click(function () {
+                   buyContainer.html("");
+                   sellContainer.html("");
                });
            });
+
+           $('#buyBtn').click(function () {
+               App.getBuyTicket(buyContainer, $('#panelDatePicker').val());
+           })
+
+           $('#sellBtn').click(function () {
+               App.getSellTicket(sellContainer, $('#panelDatePicker').val());
+           });
           
-
-
         });
    </script>
  }

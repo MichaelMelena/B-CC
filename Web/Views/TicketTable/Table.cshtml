@@ -2,13 +2,13 @@
 @{ 
     var guid = Guid.NewGuid();
 }
-    <div class="container" id="@guid.ToString()">
+    <div class=""  id="@guid.ToString()">
         <div class="row">
             <div class="col-10"> 
                 <h2>@Model.TableName</h2>
             </div>
             <div class="col-2 d-flex justify-content-end p-2">
-                <div class="btn btn-outline-danger" onclick="$('#@guid').remove();">X</div>
+                <div class="btn btn-outline-danger justify-content-center align-items-center d-flex"  style="width: 20pt; height: 20pt;" onclick="$('#@guid').remove();">X</div>
             </div>
         </div>
         <div class="row">

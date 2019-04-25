@@ -25,7 +25,7 @@ namespace Web.Controllers
         {
             _logger = logger;
             _context = context;
-           _presentationManager = presentationManager;
+            _presentationManager = presentationManager;
             _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
@@ -60,67 +60,25 @@ namespace Web.Controllers
         }
         #region Partial views
 
-        public PartialViewResult TicketPanel()
+        [HttpGet]
+        public PartialViewResult TicketPanel([FromQuery] bool includeBank = false)
         {
-            var availaibleBanks = _context.BankConnector.Where(x => x.Enabled == true).ToList();
-            return PartialView(viewName: "~/Views/ExchangeRate/TicketPanel.cshtml",model: availaibleBanks);
+            ViewBag.includeBank = includeBank;
+            List<BankConnector> availaibleBanks = null;
+            if (includeBank) {
+                availaibleBanks = _context.BankConnector.Where(x => x.Enabled == true).ToList();
+            }
+            return PartialView(viewName: "~/Views/ExchangeRate/TicketPanel.cshtml", model: availaibleBanks);
         }
-
-        public PartialViewResult BuyTable([FromQuery]DateTime tableDate)
-        { 
-            if (tableDate == DateTime.MinValue) tableDate = DateTime.Now;
-
-            DataTable table =  _presentationManager.GetBuyTableData(date: tableDate);
-
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
-        }
-
-        public PartialViewResult SellTable([FromQuery]DateTime tableDate)
+        
+       [HttpGet]
+       public IActionResult CurrencyDifference()
         {
-            if (tableDate == DateTime.MinValue) tableDate = DateTime.Now;
-            DataTable table = _presentationManager.GetSellTableData(tableDate);
-
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
+            ViewBag.version = _version;
+            return View(viewName: "~/Views/ExchangeRate/CurrencyDifference.cshtml");
         }
-
-        public PartialViewResult BestOfDateTable([FromQuery]DateTime tableDate)
-        {
-            if (tableDate == DateTime.MinValue) tableDate = DateTime.Now;
-            DataTable table = _presentationManager.GetBestOfDateTableData(tableDate);
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
-        }
-
-        public PartialViewResult RecomendationTable([FromQuery]DateTime tableDate)
-        {
-            
-            if (tableDate == DateTime.MinValue) tableDate = DateTime.Now;
-
-            DataTable table = _presentationManager.GetRecomendationTableData(tableDate);
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
-        }
+        #endregion
 
         
-        public PartialViewResult TicketTable([FromBody]string bankName, [FromQuery]DateTime tableDate)
-        {
-            if (tableDate == null) tableDate = DateTime.Now;
-            if (string.IsNullOrWhiteSpace(bankName)) bankName = "CNB";
-
-            DataTable table = _presentationManager.GetTicketTableData(bankName, tableDate);
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
-        }
-
-        public PartialViewResult CurrencyChangeTable(string bankName)
-        {
-            return PartialView();
-        }
-
-        public ContentResult CurrencyGraph(string currency)
-        {
-            string json = _presentationManager.GetBuyDateGraph("AUD", new DateTime(2019, 3, 21));
-           
-            return Content(content: json, contentType: "application/json");
-        }
-
-        #endregion
     }
 }
