@@ -6,10 +6,13 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text.RegularExpressions;
+using BCC.Core;
+using Microsoft.Extensions.Logging;
+using BCC.Core.Abstract;
 
 namespace BCC.Core.RB
 {
-    public class RBank : IExchangeRateBank
+    public class RBank : ABank<RBank>, IExchangeRateBank
     {
         public RBank()
         {
@@ -61,6 +64,12 @@ namespace BCC.Core.RB
         #endregion
 
         #region Interface implementation
+
+        public void SetLogger(ILoggerFactory loggerFactory)
+        {
+            Logger = loggerFactory.CreateLogger<RBank>();
+        }
+
         public ExchangeRateTicket DownloadTodaysTicket()
         {
             RefreshMinDate();
@@ -191,12 +200,18 @@ namespace BCC.Core.RB
         }
         #endregion
 
-        public List<ICurrencyMetada> DownloadCurrencyMetada()
+        public List<ICurrencyMetada> DownloadCurrencyMetadata()
         {
             ExchangeRateTicket ticket = DownloadTodaysTicket();
             ICurrencyData[] data = ticket.GetExchangeRateData();
             List<ICurrencyMetada> metaData = new List<ICurrencyMetada>(data.Length);
             return metaData;
         }
+
+        public bool TodaysTicketIsAvailable()
+        {
+            return (DateTime.Now.Hour > 6);//TODO: not a valid value just placeholder
+        }
+
     }
 }

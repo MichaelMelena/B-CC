@@ -1,0 +1,48 @@
+﻿@{
+
+    Layout = "~/Views/ExchangeRate/_TicketLayout.cshtml";
+}
+
+@section title{
+    <div class="row">
+        <div class="col justify-content-center d-flex ">
+            <h1>Recommendations</h1>
+        </div>
+    </div>
+}
+@section content{
+    <div class="row mt-3 d-flex justify-content-center">
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+            <div class="btn btn-outline-dark w-100" id="addRecommendationBtn">Add Recommendation</div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col">
+            <div class="d-flex flex-wrap justify-content-around" id="recommendationContainer">
+
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    <script>
+       $(window).ready(function () {
+           let container = $('#recommendationContainer');
+           let ticketPanel = $('#ticketPanel');
+           App.getTicketPanel(false, ticketPanel, function () {
+               App.setDatePickerDefaultDate(new Date(), $('#panelDatePicker'));
+               $('#panelDeleteAll').click(function () {
+                   container.html("");
+               });
+           });
+
+           $('#addRecommendationBtn').click(function () {
+               //App.getBuyTicket(buyContainer, panelDatePicker);
+               App.getRecommendationTicket(container, $('#panelDatePicker').val());
+           })
+
+        });
+    </script>
+}

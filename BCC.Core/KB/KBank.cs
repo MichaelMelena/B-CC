@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Net;
 using Newtonsoft.Json;
 using System.IO;
+using BCC.Core.Abstract;
+using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace BCC.Core.KB
 {
-    public class KBank : IExchangeRateBank
+    public class KBank :ABank<KBank>, IExchangeRateBank
     {
         public KBank()
         {
@@ -25,29 +28,8 @@ namespace BCC.Core.KB
         {
             if (date < this.MIN_DATE || date > DateTime.Today)
             {
-                new KBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maximum is {DateTime.Now}");
+                throw new KBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maximum is {DateTime.Now} (Current time)");
             }
-        }
-
-        // Downloads ticket using URL in Json format
-        private bool DownloadTicketText(string url, out string jsonInput)
-        {
-            try
-            {
-                using (WebClient client = new WebClient())
-                {
-                    jsonInput = client.DownloadString(url);
-                }
-            }
-            catch(WebException ex)
-            {
-                using (StreamReader sr = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream()))
-                {
-                    jsonInput = sr.ReadToEnd();
-                }
-                return false;
-            }
-            return true;
         }
         #endregion
 
@@ -75,38 +57,27 @@ namespace BCC.Core.KB
         #endregion
 
         #region Interface implementation
+
+        public void SetLogger(ILoggerFactory loggerFactory)
+        {
+            Logger = loggerFactory.CreateLogger<KBank>();
+        }
         // Gets the ticket for this day
         public ExchangeRateTicket DownloadTodaysTicket()
         {
-            string jsonInput = null;
-            if (DownloadTicketText(URL_CURRENT_DAY, out jsonInput))
-            {
-                ExchangeRateTicket ticketOutput = this.ParseDayTicket(jsonInput, DateTime.Today);
-                return ticketOutput;
-            }
-            else
-            {
-                new KBInvalidDate(jsonInput);
-                return null;
-            }
+            string jsonInput = DownloadTicketText(URL_CURRENT_DAY);
+            ExchangeRateTicket ticketOutput = this.ParseDayTicket(jsonInput, DateTime.Today);
+            return ticketOutput;
         }
 
         // Gets the ticket for a specific day
         public ExchangeRateTicket DownloadTicketForDate(DateTime date)
         {
             ValidateDate(date);
-            string jsonInput = null;
             string urlEnding = date.ToString("yyyy-MM-dd") + "T06:00:00.00Z"; //T06 = 6am - It's the first hour in the day which has upadated ticket for that day. 5am gets you ticket from previous day.
-            if (DownloadTicketText(URL_SPECIFIC_DATE + urlEnding, out jsonInput))
-            {
-                ExchangeRateTicket ticketOutput = this.ParseDayTicket(jsonInput, date);
-                return ticketOutput;
-            }
-            else
-            {
-                new KBInvalidDate(jsonInput);
-                return null;
-            }
+            string jsonInput = DownloadTicketText($"{URL_SPECIFIC_DATE}{urlEnding}");
+            ExchangeRateTicket ticketOutput = this.ParseDayTicket(jsonInput, date);
+            return ticketOutput;
         }
 
         // Get tickets in interval
@@ -114,46 +85,25 @@ namespace BCC.Core.KB
         {
             ValidateDate(start);
             ValidateDate(end);
+            if (start > end) throw new KBInvalidDate($"Start date: {start.ToShortTimeString()} is after end date: {end.ToShortTimeString()}");
             List<ExchangeRateTicket> tickets = new List<ExchangeRateTicket>();
-            if (DateTime.Compare(start, end) < 0)
+            for (; start <= end; start = start.AddDays(1))
             {
-                while (true)
-                {
-                    tickets.Add(DownloadTicketForDate(start));
-                    start = start.AddDays(1);
-                    if (DateTime.Compare(start, end) > 0) break;
-                }
-                return tickets;
+                tickets.Add(DownloadTicketForDate(start));
             }
-            else
-            {
-                new KBInvalidDate($"Invalid dates. First date is newer than the second one.");
-                return null;
-            }
+            return tickets;
         }
 
         // Get all tickets
         public List<ExchangeRateTicket> DownloadAllTickets()
         {
-            DateTime start = MIN_DATE;
-            List<ExchangeRateTicket> tickets = new List<ExchangeRateTicket>();
-            if (DateTime.Compare(start, DateTime.Today) < 0)
-            {
-                while (true)
-                {
-                    tickets.Add(DownloadTicketForDate(start));
-                    start = start.AddDays(1);
-                    if (DateTime.Compare(start, DateTime.Today) > 0) break;
-                }
-                return tickets;
-            }
-            else
-            {
-                new KBInvalidDate($"Invalid dates. First date is newer than the second one.");
-                return null;
-            }
+            return DownloadTicketForInterval(MIN_DATE, DateTime.Now);
         }
- 
+
+        public bool TodaysTicketIsAvailable()
+        {
+            return (DateTime.Now.Hour > 6);
+        }
         #endregion
 
         #region DayTicket
@@ -173,12 +123,11 @@ namespace BCC.Core.KB
         }
         #endregion
 
-        public List<ICurrencyMetada> DownloadCurrencyMetada()
+        public List<ICurrencyMetada> DownloadCurrencyMetadata()
         {
             ExchangeRateTicket ticket = DownloadTodaysTicket();
-            ICurrencyData[] data = ticket.GetExchangeRateData();
-            List<ICurrencyMetada> metaData = new List<ICurrencyMetada>(data.Length);
-            return metaData;
+            return ticket.GetExchangeRateData().ToList<ICurrencyMetada>();
         }
+
     }
 }

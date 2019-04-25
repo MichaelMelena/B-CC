@@ -9,6 +9,12 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BCC.Core;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Logging.Configuration;
+using NLog.Extensions.Logging;
 
 namespace Web
 {
@@ -30,13 +36,34 @@ namespace Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
+            services.AddSingleton(typeof(IBankManager), typeof(BankManager));
+            string enviroment = Environment.GetEnvironmentVariable("DATABSE_ENV");
+            string connectionString = null;
+            switch (enviroment)
+            {
+                case "Development":
+                    connectionString = Configuration.GetConnectionString("bccDevelopment");
+                    break;
+                case "Production":
+                    connectionString = Configuration.GetConnectionString("bccDevelopment");
+                    break;
+                default:
+                    //"Local"
+                    connectionString = Configuration.GetConnectionString("bccLocal");
+                    break;
+            }
+            
+            services.AddDbContext<BCC.Model.Models.BCCContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
+            services.AddScoped<IPresentationManager, PresentationManger>();
+            services.AddHostedService<BankManager>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app,Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -58,7 +85,24 @@ namespace Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "ExchangeRate",
+                    template: "{controller=ExchangeRate}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "TicketTable",
+                    template: "{controller=TicketTable}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "TicketGraph",
+                    template: "{controller=TicketGraph}/{action=Index}/{id?}");
             });
+
+            if (env.IsProduction())
+            {
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
+            }
         }
     }
 }

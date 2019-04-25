@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-namespace BCC.Core.CNB
+using System.Net;
+namespace BCC.Core
 {
-    class CNBData
+    public class WebClientWraper: WebClient , IWebClient 
     {
         
     }

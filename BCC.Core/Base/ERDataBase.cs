@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BCC.Core
 {
-    class ERDataBase : ICurrencyData
+    public class ERDataBase : ICurrencyData
     {
         public string ISOName { get; protected set; }
 
@@ -34,7 +34,7 @@ namespace BCC.Core
             Name = metaData.Name;
             Country = metaData.Country;
             Quantity = metaData.Quantity;
-            Buy = Buy;
+            Buy = buy;
             Sell = sell;
         }
         public ICurrencyMetada GetMetadata()

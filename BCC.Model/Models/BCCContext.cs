@@ -6,7 +6,7 @@ namespace BCC.Model.Models
 {
     public partial class BCCContext : DbContext
     {
-       
+    
         public virtual DbSet<Bank> Bank { get; set; }
         public virtual DbSet<BankConnector> BankConnector { get; set; }
         public virtual DbSet<Currency> Currency { get; set; }
@@ -15,7 +15,7 @@ namespace BCC.Model.Models
         public virtual DbSet<TrackedCurrency> TrackedCurrency { get; set; }
         public virtual DbSet<User> User { get; set; }
 
-      
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
@@ -23,12 +23,12 @@ namespace BCC.Model.Models
             modelBuilder.Entity<Bank>(entity =>
             {
                 entity.HasKey(e => e.ShortName)
-                    .HasName("PK__bank__2711634E90F0C8ED");
+                    .HasName("PK__bank__2711634E792CA35D");
 
                 entity.ToTable("bank");
 
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__bank__72E12F1B5E12C886")
+                    .HasName("UQ__bank__72E12F1BFA76A70C")
                     .IsUnique();
 
                 entity.Property(e => e.ShortName)
@@ -62,7 +62,7 @@ namespace BCC.Model.Models
                 entity.ToTable("bank_connector");
 
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__bank_con__72E12F1B4D10F66B")
+                    .HasName("UQ__bank_con__72E12F1B0F06963E")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -127,6 +127,11 @@ namespace BCC.Model.Models
                     .WithMany(p => p.Currency)
                     .HasForeignKey(d => d.IsoName)
                     .HasConstraintName("fk_currency_to_iso_name");
+
+                entity.HasOne(d => d.Ticket)
+                    .WithMany(p => p.Currency)
+                    .HasForeignKey(d => d.TicketId)
+                    .HasConstraintName("fk_currency_to_ticket_di");
             });
 
             modelBuilder.Entity<CurrencyMetadata>(entity =>

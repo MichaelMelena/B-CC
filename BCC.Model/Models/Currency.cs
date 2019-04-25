@@ -11,5 +11,6 @@ namespace BCC.Model.Models
         public float? Sell { get; set; }
 
         public virtual CurrencyMetadata IsoNameNavigation { get; set; }
+        public virtual Ticket Ticket { get; set; }
     }
 }
