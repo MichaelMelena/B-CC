@@ -165,7 +165,7 @@ namespace BCC.Core.KB
             List<ICurrencyData> data = new List<ICurrencyData>();
             foreach (var cur in obj[0].exchangeRates)
             {
-                data.Add(new ERDataBase(cur.currencyISO, cur.currencyFullName, cur.country, cur.currencyUnit, cur.cashBuy, cur.cashSell));
+                data.Add(new ERDataBase(cur.currencyISO, cur.currencyFullName, cur.country, cur.currencyUnit, cur.noncashBuy, cur.noncashSell));
                 ticket.AddExchangeRateData(data[data.Count - 1]);
             }
             ticket.TicketDate = date;

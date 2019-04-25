@@ -9,7 +9,7 @@ namespace BCC.Core
         private List<ICurrencyData> Data { get; set; }
 
         public DateTime TicketDate { get; set; }
-
+        
         public ExchangeRateTicket()
         {
             Data = new List<ICurrencyData>();

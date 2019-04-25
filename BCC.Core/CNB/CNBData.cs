@@ -6,5 +6,6 @@ namespace BCC.Core.CNB
 {
     class CNBData
     {
+        
     }
 }
