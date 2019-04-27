@@ -80,37 +80,40 @@ namespace Web.Controllers
 
             //List<Ticket> tickets = _context.Ticket.Where(x => x.Date.Year >= start.Year && x.Date.Month >= start.Month && x.Date.Day >= start.Day && x.Date.Year <= end.Year && x.Date.Month <= end.Month && x.Date.Day <= end.Day).ToList();
             
-            var tickets = _context.Ticket.Where(x => x.Date >= start && x.Date <= end).ToList();
-            tickets.Sort(new TicketDateComparer());
-            List<string> bankNames = tickets.Select(x => x.BankShortName).Distinct().ToList();
-            Dictionary<string, List<double>> dataset = new Dictionary<string, List<double>>();
+           
+            var bankNames = _context.BankConnector.Select(x => x.BankShortName).ToList();
+            var dataset = new Dictionary<string, Dictionary<string,double>>();
             HashSet<DateTime> labels = new HashSet<DateTime>();
             foreach (string name in bankNames)
             {
-                dataset.Add(name, new List<double>());
-            }
-            foreach(Ticket ticket in tickets)
-            {
-                Currency selectedCurrency = _context.Currency.FirstOrDefault(x => x.TicketId == ticket.Id && x.IsoName == currency.ToUpperInvariant());
-                if(selectedCurrency != null)
+                dataset.Add(name, new Dictionary<string, double>());
+                var tickets = _context.Ticket.Where(x => x.Date >= start && x.Date <= end && x.BankShortName == name).ToList();
+                tickets.Sort(new TicketDateComparer());
+                foreach (var ticket in tickets)
                 {
-                    if (isBuy)
+                    Currency selectedCurrency = _context.Currency.FirstOrDefault(x => x.TicketId == ticket.Id && x.IsoName == currency.ToUpperInvariant());
+                    if (selectedCurrency != null)
                     {
-                        dataset[ticket.BankShortName].Add(selectedCurrency.Buy);
-                        labels.Add(ticket.Date);
-                    }
-                    else
-                    {
-                        if (selectedCurrency.Sell.HasValue)
+                        if (isBuy)
                         {
-                            dataset[ticket.BankShortName].Add(selectedCurrency.Sell.Value);
-                            labels.Add(ticket.Date);
+                            dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"),selectedCurrency.Buy);
+                            
+                        }
+                        else
+                        {
+                            if (selectedCurrency.Sell.HasValue)
+                            {
+                                dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"), selectedCurrency.Sell.Value);
+                               
+                            }
                         }
                     }
+                    labels.Add(ticket.Date);
                 }
-                
             }
-            return new JsonResult(new { labels, dataset });
+            var labelList = labels.ToList();
+            labelList.Sort();
+            return new JsonResult(new { labels=labelList, dataset,currency,isBuy,start,end });
         }
         private bool IsDateInValid(ref DateTime date)
         {

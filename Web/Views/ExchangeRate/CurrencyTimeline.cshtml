@@ -25,11 +25,17 @@
         </div>
 
         <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
-            <select class=" form-control w-100">
+            <select class="form-control w-100" id="currencySelect">
                 @foreach (BCC.Model.Models.CurrencyMetadata item in Model)
                 {
                     <option value="@item.IsoName">@item.IsoName</option>
                 }
+            </select>
+        </div>
+        <div class="col-5 mt-2 justify-content-center d-flex">
+            <select class="form-control w-100" id="isBuySelect">
+                    <option value="true">Buy</option>
+                    <option value="false">Sell</option>
             </select>
         </div>
         <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
@@ -52,15 +58,20 @@
     <script>
         $(window).ready(function () {
             let container = $('#currencyTimelineContainer');
+            let currencySelect = $('#currencySelect');
+            let startDatePicker = $('#panelDatePickerStart');
+            let endDatePicker = $('#panelDatePickerEnd');
             let date = new Date();
+
+
             App.setDatePickerDefaultDate(new Date(date.getUTCFullYear(), date.getMonth(), date.getDate() - 7), $('#panelDatePickerStart'));
-            App.setDatePickerDefaultDate(new Date(), $('#panelDatePickerEnd'));
+            App.setDatePickerDefaultDate(new Date(), endDatePicker);
             $('#panelDeleteAll').click(function () {
                 container.html("");
             });
             $('#addCurrencyTimelineBtn').click(function () {
                 //$('#panelDatePicker').val()
-                App.getPriceTimelineGraph(container, $('#panelDatePickerStart').val(), $('#panelDatePickerEnd').val(), "AUD", true);
+                App.getPriceTimelineGraph(container, startDatePicker.val(), endDatePicker.val(), currencySelect.val(), $('#isBuySelect').val());
             })
         });
     </script>

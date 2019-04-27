@@ -212,7 +212,7 @@ App.createBankPriceGraph = function (targetElement,graphData) {
         datasets.push(
             {
                 label: graphData.bankNames[i],
-                backgroundColor: App.COLORS[i],
+                backgroundColor: App.RGBACOLORS[i],
                 borderColor: App.COLORS[i],
                 borderWidth: 1,
                 data: [Math.round( graphData.bankValues[i]*10000)/10000]
@@ -256,27 +256,44 @@ App.createBankPriceGraph = function (targetElement,graphData) {
 }
 
 App.createBankPriceTimelineGraph = function (targetElement, graphData) {
+    let startDate = new Date(graphData.start);
+    let endDate = new Date(graphData.end);
+    let datasets = [];
+    let i = 0;
+    for (let key in graphData.dataset) {
+        datasets.push(
+            {
+                label: key,
+                backgroundColor: App.RGBACOLORS[i],
+                borderColor: App.COLORS[i],
+                borderWidth: 1,
+                data: [],
+                fill: false
+            }
+        );
+        i += 1;
+    }
+
+    for (let label of graphData.labels) {
+        let labelDate = new Date(label);
+        let formatedDate = App.getFormatedDate(labelDate);
+        for (let dataset of datasets) {
+            if (graphData.dataset[dataset.label][formatedDate] === undefined) {
+                dataset.data.push(Number.NaN);
+            }
+            else {
+
+                dataset.data.push(Math.round(graphData.dataset[dataset.label][formatedDate]*10000)/10000);
+            }
+        }
+        
+    }
 
     let labels = [];
     for (let j = 0; j < graphData.labels.length; j++) {
         labels.push(App.PrettyPrintDate(new Date(graphData.labels[j])));
     }
 
-    let i = 0;
-    let datasets = [];
-    for (let key in graphData.dataset) {
-        datasets.push(
-            {
-                label: key,
-                backgroundColor: App.COLORS[i],
-                borderColor: App.COLORS[i],
-                borderWidth: 1,
-                data: graphData.dataset[key],
-                fill: false
-            }
-        );
-        i += 1;
-    }
 
     let barChartData = {
         labels: labels,
@@ -301,7 +318,7 @@ App.createBankPriceTimelineGraph = function (targetElement, graphData) {
             },
             title: {
                 display: true,
-                text: 'Timeline'
+                text: ` ${graphData.currency} ${graphData.isBuy ? "buy" : "sell"} price from ${App.PrettyPrintDate(startDate)} to ${App.PrettyPrintDate(endDate)}`
             }
         }
     });
@@ -332,6 +349,19 @@ App.COLORS = [
     '#58595b',
     '#8549ba'
 ];
+App.RGBACOLORS = [
+    'rgba(77, 201, 246, 0.5)',
+    'rgba(246, 112, 25, 0.5)',
+    'rgba(245, 55, 148, 0.5)',
+    'rgba(83, 123, 196, 0.5)',
+    'rgba(172, 194, 54, 0.5)',
+    'rgba(22, 106, 143, 0.5)',
+    'rgba(0, 169, 80, 0.5)',
+    'rgba(88, 89, 91, 0.5)',
+    'rgba(133, 73, 186, 0.5)'
+
+
+]
  App.generateId = function () {
     // Math.random should be unique because of its seeding algorithm.
     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
