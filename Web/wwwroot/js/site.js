@@ -131,12 +131,22 @@ App.getBestTicket = function (targetElement, date) {
     });
 }
 
-App.toggleGraphSize = function () {
-    let canvasParent = $(this).find('canvas').parent();
+App.toggleGraphSize = function (thisButton,canvasParent) {
+    
     if (canvasParent.width() > App.SamllGraphWidth) {
         canvasParent.width(App.SamllGraphWidth);
+        $(thisButton).html('&uarr;');
     } else {
-        canvasParent.width(Math.round($(window).innerWidth() * 0.85));
+        let newWidth = Math.round($(window).innerWidth() * 0.85);
+        if (newWidth > App.SamllGraphWidth) {
+            canvasParent.width(Math.round($(window).innerWidth() * 0.85));
+            $(thisButton).html('&darr;');
+        } else {
+            canvasParent.width(App.SamllGraphWidth);
+            $(thisButton).html('&uarr;');
+        }
+       
+        
     }
    
 }
@@ -150,28 +160,22 @@ App.UpateGraphSize = function (chartParent) {
     }
 }
 
-App.getBankPriceDifferenceGraph = function (targetElement, date, currency, isBuy) {
-
+App.graphFactory = function (url,targetElement, data, createFunction) {
     $.get({
         url: `/${App.GraphController}/GetGraph`,
         success: function (content) {
             $.get({
-                url: `/${App.GraphController}/CurrencyPriceGraphData`,
-                data: {
-                    currency: currency,
-                    isBuy: isBuy,
-                    tableDate: date
-                },
+                url: url,
+                data: data,
                 success: function (data) {
                     var elements = $(content);
-                    elements.click(App.toggleGraphSize);
                     var chr = elements.find('canvas');
                     $(window).resize(function () { App.UpateGraphSize(chr.parent()); });
                     targetElement.append(elements);
-                    App.createBankPriceDifferenceGraph(chr[0], data, isBuy)
+                    createFunction(chr[0], data);
                 },
                 error: function (err) {
-                    console.log(`failed to get a sell ticket:\n${err}`);
+                    console.log(`failed to get a graph data:\n${err}`);
                 }
 
             });
@@ -180,12 +184,29 @@ App.getBankPriceDifferenceGraph = function (targetElement, date, currency, isBuy
             console.log(`failed to get a empty graph:\n${err}`);
         }
     });
-   
 }
 
-App.createBankPriceDifferenceGraph = function (targetElement,graphData,isBuy) {
+App.getBankPriceGraph = function (targetElement, date, currency, isBuy) {
+    App.graphFactory(`/${App.GraphController}/CurrencyPriceGraphData` ,targetElement, {
+        graphDate: date,
+        currency: currency,
+        isBuy: isBuy
+    }, App.createBankPriceGraph);
+}
+App.getPriceTimelineGraph = function (targetElement, startDate, endDate, currency, isBuy) {
+    App.graphFactory(`/${App.GraphController}/CurrencyTimelineGraphData`, targetElement, {
+        start: startDate,
+        end: endDate,
+        currency: currency,
+        isBuy: isBuy
+    }, App.createBankPriceTimelineGraph);
+}
+
+App.createBankPriceGraph = function (targetElement,graphData) {
 
     let datasets = [];
+    
+   
     let date = new Date(graphData.date);
     for ( let i = 0; i < graphData.bankNames.length; i++) {
         datasets.push(
@@ -210,6 +231,7 @@ App.createBankPriceDifferenceGraph = function (targetElement,graphData,isBuy) {
         type: 'bar',
         data: barChartData,
         options: {
+            spanGaps: false,
             scales: {
                 yAxes: [{
                     ticks: {
@@ -221,13 +243,65 @@ App.createBankPriceDifferenceGraph = function (targetElement,graphData,isBuy) {
                 }]
             },
             responsive: true,
-            responsiveAnimationDuration: 800,
+            responsiveAnimationDuration: 1000,
             legend: {
                 position: 'top',
             },
             title: {
                 display: true,
-                text: `${App.PrettyPrintDate(date)} ${graphData.currency} ${isBuy ? "buy" : "sell"} price `
+                text: `${App.PrettyPrintDate(date)} ${graphData.currency} ${graphData.isBuy ? "buy" : "sell"} price `
+            }
+        }
+    });
+}
+
+App.createBankPriceTimelineGraph = function (targetElement, graphData) {
+
+    let labels = [];
+    for (let j = 0; j < graphData.labels.length; j++) {
+        labels.push(App.PrettyPrintDate(new Date(graphData.labels[j])));
+    }
+
+    let i = 0;
+    let datasets = [];
+    for (let key in graphData.dataset) {
+        datasets.push(
+            {
+                label: key,
+                backgroundColor: App.COLORS[i],
+                borderColor: App.COLORS[i],
+                borderWidth: 1,
+                data: graphData.dataset[key],
+                fill: false
+            }
+        );
+        i += 1;
+    }
+
+    let barChartData = {
+        labels: labels,
+        datasets: datasets
+    }
+    let chart = new Chart(targetElement, {
+        type: 'line',
+        data: barChartData,
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        id: 'price',
+                        type: 'linear'
+                    }
+                }]
+            },
+            responsive: true,
+            responsiveAnimationDuration: 1000,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Timeline'
             }
         }
     });

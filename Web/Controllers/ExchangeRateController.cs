@@ -38,7 +38,8 @@ namespace Web.Controllers
         public IActionResult BankTickets()
         {
             ViewBag.version = _version;
-            return View(viewName: "~/Views/ExchangeRate/BankTickets.cshtml");
+            List<BankConnector> banks = _context.BankConnector.ToList();
+            return View(viewName: "~/Views/ExchangeRate/BankTickets.cshtml", model: banks);
         }
 
         public IActionResult BestTickets()
@@ -60,22 +61,22 @@ namespace Web.Controllers
         }
         #region Partial views
 
-        [HttpGet]
-        public PartialViewResult TicketPanel([FromQuery] bool includeBank = false)
-        {
-            ViewBag.includeBank = includeBank;
-            List<BankConnector> availaibleBanks = null;
-            if (includeBank) {
-                availaibleBanks = _context.BankConnector.Where(x => x.Enabled == true).ToList();
-            }
-            return PartialView(viewName: "~/Views/ExchangeRate/TicketPanel.cshtml", model: availaibleBanks);
-        }
+      
         
        [HttpGet]
-       public IActionResult CurrencyDifference()
+       public IActionResult CurrencyPrice()
         {
             ViewBag.version = _version;
-            return View(viewName: "~/Views/ExchangeRate/CurrencyDifference.cshtml");
+            
+            List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
+            return View(viewName: "~/Views/ExchangeRate/CurrencyPrice.cshtml", model: meta);
+        }
+
+        [HttpGet]
+        public IActionResult CurrencyTimeline()
+        {
+            List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
+            return View(viewName: "~/Views/ExchangeRate/CurrencyTimeline.cshtml", model: meta);
         }
         #endregion
 

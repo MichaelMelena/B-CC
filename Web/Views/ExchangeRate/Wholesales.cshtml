@@ -1,74 +1,71 @@
 ﻿@{
 
-    Layout = "~/Views/ExchangeRate/_TicketLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section title{
 <div class="row">
     <div class="col justify-content-center d-flex ">
         <h1>Wholesales</h1>
     </div>
 </div>
-}
 
-
-@section content{
-    <div class="row mt-3 d-flex justify-content-center">
-        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-4 col-md-4 col-lg-2">
-            <div class="btn btn-outline-dark w-100" id="buyBtn">Buy</div>
-        </div>
-        <div class="mt-2 justify-content-center d-flex col-12 col-sm-4 col-md-4 col-lg-2">
-            <div class="btn btn-outline-dark w-100" id="sellBtn">Sell</div>
-        </div>
-        <div class=" mt-2 d-flex  col-12 col-sm-6 col-md-5 col-lg-3">
-            <a class="btn btn-outline-dark w-100" href="#buyContainer">Go to buy</a>
-        </div>
-        <div class=" mt-2 justify-content-center d-flex  col-12 col-sm-6 col-md-5 col-lg-3">
-            <a class="btn btn-outline-dark w-100" href="#sellContainer">Go to sell</a>
-        </div>
+<div class="row mt-3 d-flex justify-content-center">
+    <div class="col-5 mt-2 justify-content-center d-flex">
+        <input id="panelDatePicker" class="form-control" type="date" />
     </div>
+    <div class="mt-2 justify-content-center d-flex  col-12 col-sm-4 col-md-4 col-lg-2">
+        <div class="btn btn-outline-dark w-100" id="buyBtn">Buy</div>
+    </div>
+    <div class="mt-2 justify-content-center d-flex col-12 col-sm-4 col-md-4 col-lg-2">
+        <div class="btn btn-outline-dark w-100" id="sellBtn">Sell</div>
+    </div>
+    <div class=" mt-2 d-flex  col-12 col-sm-6 col-md-5 col-lg-3">
+        <a class="btn btn-outline-dark w-100" href="#buyContainer">Go to buy</a>
+    </div>
+    <div class=" mt-2 justify-content-center d-flex  col-12 col-sm-6 col-md-5 col-lg-3">
+        <a class="btn btn-outline-dark w-100" href="#sellContainer">Go to sell</a>
+    </div>
+    <div class="col-lg-2 col-md-3 justify-content-center d-flex ">
+        <div id="panelDeleteAll" class="mt-2 btn btn-outline-danger">Delete All</div>
+    </div>
+</div>
 
 <div class="row mt-5">
     <div class="col">
-        <div class="d-flex flex-wrap justify-content-around"  id="buyContainer">
-            
-        </div>
+        <div class="d-flex flex-wrap justify-content-around" id="buyContainer"></div>
     </div>
 </div>
 
 
 <div class="row mt-5">
     <div class="col">
-        <div class="d-flex flex-wrap justify-content-around" id="sellContainer">
-            
-        </div>
+        <div class="d-flex flex-wrap justify-content-around" id="sellContainer"></div>
     </div>
 </div>
 
-}
 
 @section Scripts{
-   <script>
-       $(window).ready(function () {
-           let buyContainer = $('#buyContainer');
-           let sellContainer = $('#sellContainer');
-           let ticketPanel = $('#ticketPanel');
-           App.getTicketPanel(false, ticketPanel, function () {
-               App.setDatePickerDefaultDate(new Date(), $('#panelDatePicker'));
-               $('#panelDeleteAll').click(function () {
-                   buyContainer.html("");
-                   sellContainer.html("");
-               });
-           });
+    <script>
+        $(window).ready(function () {
+            let buyContainer = $('#buyContainer');
+            let sellContainer = $('#sellContainer');
 
-           $('#buyBtn').click(function () {
-               App.getBuyTicket(buyContainer, $('#panelDatePicker').val());
-           })
 
-           $('#sellBtn').click(function () {
-               App.getSellTicket(sellContainer, $('#panelDatePicker').val());
-           });
-          
+            App.setDatePickerDefaultDate(new Date(), $('#panelDatePicker'));
+            $('#panelDeleteAll').click(function () {
+                buyContainer.html("");
+                sellContainer.html("");
+            });
+
+            $('#buyBtn').click(function () {
+                App.getBuyTicket(buyContainer, $('#panelDatePicker').val());
+            });
+
+            $('#sellBtn').click(function () {
+                App.getSellTicket(sellContainer, $('#panelDatePicker').val());
+            });
+
         });
-   </script>
- }
+    </script>
+}
+

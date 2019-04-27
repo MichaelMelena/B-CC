@@ -1,18 +1,35 @@
 ﻿@{
-    Layout = "~/Views/ExchangeRate/_TicketLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model List<BCC.Model.Models.BankConnector>;
 }
-@section title{
     <div class="row">
         <div class="col justify-content-center d-flex ">
             <h1>Tickets</h1>
         </div>
     </div>
-}
 
-@section content{
+
+
     <div class="row mt-3 d-flex justify-content-center">
+        <div class="col-5 mt-2 justify-content-center d-flex">
+            <input id="panelDatePicker" class="form-control" type="date" />
+        </div>
+       
+        <div class="col mt-2 justify-content-center d-flex">
+            <select class=" btn-outline-dark w-100 rounded" id="panelBankSelect">
+                @foreach (BCC.Model.Models.BankConnector item in Model)
+                {
+                                    
+                        <option value="@item.BankShortName" disabled="@(!item.Enabled)">@item.BankShortName</option>
+                }
+            </select>
+        </div>
+            
         <div class="mt-2 justify-content-center d-flex  col-12 col-sm-4 col-md-4 col-lg-2">
             <div class="btn btn-outline-dark w-100" id="addTicketBtn">Add ticket</div>
+        </div>
+        <div class="col-lg-2 col-md-3 justify-content-center d-flex ">
+            <div id="panelDeleteAll" class="mt-2 btn btn-outline-danger">Delete All</div>
         </div>
     </div>
 
@@ -24,23 +41,22 @@
         </div>
     </div>
 
-}
+
 @section Scripts{
     <script>
         $(window).ready(function () {
             let container = $('#ticketContainer');
-            let ticketPanel = $('#ticketPanel');
-          
-            App.getTicketPanel(true, ticketPanel, function () {
-                App.setDatePickerDefaultDate(new Date(),$('#panelDatePicker'));
-                $('#panelDeleteAll').click(function () {
-                    container.html("");
-                });
-
-                $('#addTicketBtn').click(function () {
-                    App.getBankTicket(container, $('#panelDatePicker').val(), $('#panelBankSelect').val());
-                });
+            
+            App.setDatePickerDefaultDate(new Date(),$('#panelDatePicker'));
+            $('#panelDeleteAll').click(function () {
+                container.html("");
             });
+
+            $('#addTicketBtn').click(function () {
+                App.getBankTicket(container, $('#panelDatePicker').val(), $('#panelBankSelect').val());
+            });
+
+            //$('option:disabled').css('background-color', '#C2C4C6').css('color','001322');
         });
     </script>
 }

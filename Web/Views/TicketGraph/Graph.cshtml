@@ -1,17 +1,22 @@
 ﻿@{
     var guid = Guid.NewGuid();
+    var canvasId = Guid.NewGuid();
 }
 <div class="row" id="@guid.ToString()">
     <div class="col m-0 p-0">
-        <div class="row ">
-            <div class="col-2 m-0 p-0 d-flex justify-content-end p-2">
+        <div class="row justify-content-end">
+            <div class="col-1 m-0 p-0 d-flex justify-content-end p-2">
+                <div class="btn btn-outline-info justify-content-center align-items-center d-flex" style="width: 20pt; height: 20pt; font-size: 1.9em;" onclick="App.toggleGraphSize(this,$('#@canvasId').parent());">&uarr;</div>
+            </div>
+            <div class="col-1 m-0 p-0 d-flex justify-content-end p-2">
                 <div class="btn btn-outline-danger justify-content-center align-items-center d-flex" style="width: 20pt; height: 20pt;" onclick="$('#@guid.ToString()').remove();">X</div>
             </div>
+
         </div>
         <div class="row">
             <div class="col m-0 p-0">
                 <div class="chart-container" style="position: relative; " >
-                    <canvas width="350"></canvas>
+                    <canvas id="@canvasId" width="350"></canvas>
                 </div>
             </div>
         </div>
