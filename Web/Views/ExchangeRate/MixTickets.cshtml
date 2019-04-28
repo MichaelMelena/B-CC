@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewData["Title"] = "CurrencyTimeline";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model Tuple<List<BCC.Model.Models.BankConnector>,List<BCC.Model.Models.CurrencyMetadata>>
+}
+
+
+<div class="row">
+    <div class="col justify-content-center d-flex ">
+        <h1>Mix</h1>
+    </div>
+</div>
+
+
+
+
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-sm-7 col-md-7 col-lg-6 mt-2 justify-content-center d-flex">
+            <div class="row border w-100 mt-3 border-info p-2 rounded ">
+                <div class="col  align-self-center text-nowrap justify-content-center m-1 d-flex">
+                    Start Date
+                </div>
+                <div class="col">
+                    <input id="panelDatePickerStart" class="form-control w-100" type="date" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-7 col-md-7 col-lg-6 mt-2 justify-content-center d-flex">
+            <div class="row mt-3 w-100  border border-info p-2 rounded ">
+                <div class="col  align-self-center text-nowrap justify-content-center m-1 d-flex">
+                    End Date
+                </div>
+                <div class="col">
+                    <input id="panelDatePickerEnd" class="form-control" type="date" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6  col-md-6 col-lg-4 mt-2 justify-content-center d-flex">
+            <div class="row mt-3 w-100 border border-info p-2 rounded ">
+                <div class="col  align-self-center text-nowrap justify-content-center m-1 d-flex">
+                    Currency
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <select class="p-2 rounded" id="currencySelect">
+                        @foreach (BCC.Model.Models.CurrencyMetadata item in Model.Item2)
+                        {
+                            <option value="@item.IsoName">@item.IsoName</option>
+                        }
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mt-2 justify-content-center d-flex">
+            <div class="row mt-3 w-100 border border-info p-2 rounded ">
+                <div class="col  align-self-center text-nowrap justify-content-center m-1 d-flex">
+                    Currency
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <select class="p-2 rounded" id="panelBankSelect">
+                        @foreach (BCC.Model.Models.BankConnector item in Model.Item1)
+                        {
+                            <option value="@item.BankShortName" disabled="@(!item.Enabled.Value)">@item.BankShortName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mt-2 justify-content-center d-flex">
+            <div class="row mt-3 w-100 border border-info p-2 rounded ">
+                <div class="col  align-self-center text-nowrap justify-content-center m-1 d-flex">
+                    Currency
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <select class="p-2 rounded" id="isBuySelect">
+                        <option value="true">Buy</option>
+                        <option value="false">Sell</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mt-2 justify-content-center d-flex align-self-center col-12 col-sm-5 col-md-4 5-lg-2">
+            <div id="panelDeleteAll" class="btn btn-outline-danger w-100">Delete All</div>
+        </div>
+    
+        
+    </div>
+    <div class="row mt-3 d-flex justify-content-center">
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+            <div class="btn btn-outline-dark w-100" id="addCurrencyTimelineBtn">Add Timeline Graph</div>
+        </div>
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-4 col-md-4 col-lg-2">
+            <div class="btn btn-outline-dark w-100" id="addTicketBtn">Add ticket</div>
+        </div>
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+            <div class="btn btn-outline-dark w-100" id="addBestOfDateBtn">Add Best Of Date</div>
+        </div>
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+            <div class="btn btn-outline-dark w-100" id="addCurrencyPriceBtn">Add Price Graph</div>
+        </div>
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+            <div class="btn btn-outline-dark w-100" id="addRecommendationBtn">Add Recommendation</div>
+        </div>
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-4 col-md-4 col-lg-2">
+            <div class="btn btn-outline-dark w-100" id="buyBtn">Buy</div>
+        </div>
+        <div class="mt-2 justify-content-center d-flex col-12 col-sm-4 col-md-4 col-lg-2">
+            <div class="btn btn-outline-dark w-100" id="sellBtn">Sell</div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div class="d-flex flex-wrap justify-content-around " id="mixContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section Scripts{
+        <script>
+            $(window).ready(function () {
+                let container = $('#mixContainer');
+                let currencySelect = $('#currencySelect');
+                let startDatePicker = $('#panelDatePickerStart');
+                let endDatePicker = $('#panelDatePickerEnd');
+                let isBuySelect = $('#isBuySelect');
+                let bankSelect = $('#panelBankSelect');
+                let date = new Date();
+
+
+                App.setDatePickerDefaultDate(new Date(date.getUTCFullYear(), date.getMonth(), date.getDate() - 7), $('#panelDatePickerStart'));
+                App.setDatePickerDefaultDate(new Date(), endDatePicker);
+                $('#panelDeleteAll').click(function () {
+                    container.html("");
+                });
+
+                //Buttons
+                $('#addCurrencyTimelineBtn').click(function () {
+                    App.getPriceTimelineGraph(container, startDatePicker.val(), endDatePicker.val(), currencySelect.val(), isBuySelect.val());
+                })
+
+                $('#addTicketBtn').click(function () {
+                    App.getBankTicket(container, startDatePicker.val(), bankSelect);
+                });
+
+                $('#addBestOfDateBtn').click(function () {
+                    App.getBestTicket(container, startDatePicker.val());
+                });
+
+                $('#addCurrencyPriceBtn').click(function () {
+                    App.getBankPriceGraph(container, startDatePicker.val(), currencySelect, true);
+                });
+
+                $('#addRecommendationBtn').click(function () {
+                    App.getRecommendationTicket(container, startDatePicker.val());
+                });
+
+                $('#buyBtn').click(function () {
+                    App.getBuyTicket(container, startDatePicker.val());
+                });
+
+                $('#sellBtn').click(function () {
+                    App.getSellTicket(container, startDatePicker.val());
+                });
+
+            });
+        </script>
+    }

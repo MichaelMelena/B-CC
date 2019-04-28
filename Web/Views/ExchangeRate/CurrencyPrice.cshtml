@@ -16,19 +16,26 @@
 
     <div class="container-fluid">
         <div class="row mt-3 d-flex justify-content-center">
-            
+
             <div class="col-5 mt-2 justify-content-center d-flex">
                 <input id="panelDatePicker" class="form-control" type="date" />
             </div>
 
             <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
-                <select class=" form-control w-100">
+                <select class="form-control w-100" id="currencySelect">
                     @foreach (BCC.Model.Models.CurrencyMetadata item in Model)
                     {
                         <option value="@item.IsoName">@item.IsoName</option>
                     }
                 </select>
             </div>
+            <div class="col-5 mt-2 justify-content-center d-flex">
+                <select class="form-control w-100" id="isBuySelect">
+                    <option value="true">Buy</option>
+                    <option value="false">Sell</option>
+                </select>
+            </div>
+
             <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
                 <div class="btn btn-outline-dark w-100" id="addCurrencyPriceBtn">Add Price Graph</div>
             </div>
@@ -49,15 +56,19 @@
     <script>
         $(window).ready(function () {
             let container = $('#currencyPriceContainer');
+            let currencySelect = $('#currencySelect');
+            let isBuySelect = $('#isBuySelect');
+
             App.setDatePickerDefaultDate(new Date(), $('#panelDatePicker'));
           
             $('#panelDeleteAll').click(function () {
                 container.html("");
             });
+
             $('#addCurrencyPriceBtn').click(function () {
                 //App.getBuyTicket(buyContainer, panelDatePicker);
-                App.getBankPriceGraph(container, $('#panelDatePicker').val(), "AUD", true);
-            })
+                App.getBankPriceGraph(container, $('#panelDatePicker').val(), currencySelect.val(), isBuySelect.val());
+            });
         });
     </script>
 }

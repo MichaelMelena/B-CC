@@ -59,10 +59,16 @@ namespace Web.Controllers
             ViewBag.version = _version;
             return View(viewName: "~/Views/ExchangeRate/Wholesales.cshtml");
         }
-        #region Partial views
 
-      
-        
+        [HttpGet]
+        public IActionResult MixTickets()
+        {
+            ViewBag.version = _version;
+            List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
+            List<BankConnector> banks = _context.BankConnector.ToList();
+            return View(viewName: "~/Views/ExchangeRate/MixTickets.cshtml",model: Tuple.Create(banks,meta));
+        }
+
        [HttpGet]
        public IActionResult CurrencyPrice()
         {
@@ -78,7 +84,6 @@ namespace Web.Controllers
             List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
             return View(viewName: "~/Views/ExchangeRate/CurrencyTimeline.cshtml", model: meta);
         }
-        #endregion
 
         
     }
