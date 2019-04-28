@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BCC.Model.Models;
 using BCC.Core;
-using System.Data;
 using System.Reflection;
 using  Microsoft.Extensions.Logging;
-
+using OfficeOpenXml;
+using OfficeOpenXml.Table;
+using System.Data;
 
 namespace Web.Controllers
 {
@@ -18,6 +19,7 @@ namespace Web.Controllers
         private readonly BCCContext _context;
         private readonly IPresentationManager _presentationManager;
         private readonly ILogger<ExchangeRateController> _logger;
+        private const string XlsxContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         #endregion
 
         private readonly string _version;
@@ -70,7 +72,7 @@ namespace Web.Controllers
         }
 
        [HttpGet]
-       public IActionResult CurrencyPrice()
+        public IActionResult CurrencyPrice()
         {
             ViewBag.version = _version;
             
@@ -85,6 +87,9 @@ namespace Web.Controllers
             return View(viewName: "~/Views/ExchangeRate/CurrencyTimeline.cshtml", model: meta);
         }
 
+       
+
         
+
     }
 }
