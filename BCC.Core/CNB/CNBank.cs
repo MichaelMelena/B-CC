@@ -40,7 +40,7 @@ namespace BCC.Core.CNB
         private void ValidateDate(DateTime date) {
             if (date < this.MIN_DATE || date > DateTime.Now)
             {
-                new CNBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maxium is {DateTime.Now}");
+                new CNBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maximum is {DateTime.Now}");
             }
         }
      
