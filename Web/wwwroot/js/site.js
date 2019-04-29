@@ -303,6 +303,7 @@ App.createBankPriceTimelineGraph = function (targetElement, graphData) {
         type: 'line',
         data: barChartData,
         options: {
+            spanGaps: true,
             scales: {
                 yAxes: [{
                     ticks: {

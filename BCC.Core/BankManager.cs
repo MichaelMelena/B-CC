@@ -21,7 +21,7 @@ namespace BCC.Core
         /// </summary>
         private readonly int INITIAL_BANKS_SIZE = 4;
 
-        private readonly int TICKET_HISTORY_LENGTH = 14;
+        private readonly int TICKET_HISTORY_LENGTH = 120;
 
        
 
