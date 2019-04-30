@@ -16,43 +16,83 @@
     
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Version: @ViewBag.version</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ExchangeRate" asp-action="Index">Currency</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
 
-    <div class="row justify-content-center">
-        <div class="col-8 alert-primary text-center p-3">
-            <strong>Contact: </strong>Michael Melena | michael.melena@tul.cz
+
+   
+    <div class="d-flex" id="wrapper">
+        
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">Stats</div>
+            <div class="list-group list-group-flush">
+
+                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="BankTickets">Bank tickets</a>
+                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="Recommendations">Recommendations</a>
+                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="Wholesales">Wholesales</a>
+                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="BestTickets">Best tickets</a>
+                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="CurrencyPrice">Currency price</a>
+                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="CurrencyTimeline">Currency timeline</a>
+                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="MixTickets"><strong>Mix</strong></a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+
+
+        <div id="page-content-wrapper">
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="btn btn-outline-dark" id="menu-toggle">Stats sidebar</div>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ExchangeRate" asp-action="Index">Introduction</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Utillities" asp-action="Index">Utillity</a>
+
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+
+
+
+
+            <div class="container-fluid p-4">
+                <!-- /#page-content-wrapper -->
+               
+                @RenderBody()
+            </div>
         </div>
     </div>
-
-
-
-    @RenderBody();
-
-    <footer class="border-top footer text-muted">
+    <footer class="footer  bg-white border-top border-info" >
         <div class="container">
-            &copy; 2019 - Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+                <div class="col justify-content-center d-flex">
+                    <span class="text-muted"><strong>Contact: </strong>Michael Melena | michael.melena@tul.cz</span>
+                </div>
+                <div class="col justify-content-center d-flex">
+                    <span class="text-muted"><strong>Version:</strong> @(ViewBag.version != null? ViewBag.version.ToString():"Unavailable")</span>
+                </div>
+            </div>
+            
         </div>
+            
+                    
+                    
+                
+            
+        
     </footer>
+
+
+
+
 
 
 
@@ -61,6 +101,13 @@
             integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
     </script>
     <script src="~/js/site.js"></script>
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
     @RenderSection("Scripts", required: false)
+
 </body>
-</html>
+    </html>

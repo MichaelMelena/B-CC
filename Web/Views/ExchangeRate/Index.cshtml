@@ -5,241 +5,393 @@
 
 
 
-<div class="container-fluid text-center">
-    <div class="row mt-3 justify-content-center">
-        <div class="col-6">
-            <ul class="list-group ">
+    <div class="container-fluid text-center">
 
-                <li class="list-group-item"><strong>Sell Table</strong> requires <em>date</em></li>
-                <li class="list-group-item"><strong>Buy Table</strong> requires <em>date</em></li>
-                <li class="list-group-item"><strong>Best Of Date Table</strong> requires <em>date</em></li>
-                <li class="list-group-item"><strong>Recomendation Table</strong> requires <em>date</em></li>
-                <li class="list-group-item"><strong>Ticket Table</strong> requires <em>date</em> and bank <em>shortcut</em></li>
-            </ul>
-        </div>
-    </div>
-    <div class="row mt-3 justify-content-center">
-        
-        <div class="col-4">
-            <input id="datePicker" class="form-control" type="date" />
+        <div class="row">
+            <div class="col">
+                <h1>Introduction</h1>
+            </div>
         </div>
 
-        <div class="col-3" >
-            <select class="form-control" id="bankSelect" >
-                <option value="CNB">CNB</option>
-                <option value="KB">KB</option>
-                <option value="CSOB">CSOB</option>
-            </select>
+        <div class="row mt-3  justify-content-center">
+            <div class="col-6">
+                <ul class="text-left">
+                    <li>
+                        <a href="#tableHelp">Table description</a>
+                    </li>
+                    <li>
+                        <a href="#graphHelp">Graph description</a>
+                    </li>
+                    <li>
+                        <a href="#wholesaleHelp">Sell/Buy table</a>
+                    </li>
+                    <li>
+                        <a href="#bankTicketHelp">Bank ticket table</a>
+                    </li>
+                    <li>
+                        <a href="#bestHelp">Best of date table</a>
+                    </li>
+                    <li>
+                        <a href="#recommendationHelp">Recommendation table</a>
+                    </li>
+                    <li>
+                        <a href="#priceGraphHelp">Price graph</a>
+                    </li>
+                    <li>
+                        <a href="#priceTimelineGraphHelp">Price timeline graph</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-4 ">
-            <button id="deleteAll" class="btn btn-primary">Delete All</button>
-        </div>
-    </div>
-      
-    </div>
-    <div class="row mt-3 justify-content-center">
-        <div class="col-2">
-            <button id="buyTableBtn" class="btn btn-primary">Buy Table</button>
-        </div>
-        <div class="col-2">
-            <button id="sellTableBtn" class="btn btn-primary">Sell Table</button>
-        </div>
-        <div class="col-2">
-            <button id="bestTableBtn" class="btn btn-primary">Best of date</button>
-        </div>
-        <div class="col-3">
-            <button id="recomendTableBtn" class="btn btn-primary">Recomendation</button>
-        </div>
-        <div class="col-2">
-            <button id="ticketTableBtn" class="btn btn-primary">Ticket Table</button>
-        </div>
-        
-    </div>
 
-    <div class="row">
-        <canvas id="myChart" class="container " height="200"></canvas>
-    </div>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="container tbl" id="buyTable"></div>
+        <div class="row">
+            <div class="col">
+                <p>
+                    you can toggle sidebar by clicking <strong>Stats Sidebar</strong> button in navigation.
+                </p>
+            </div>
         </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="container tbl" id="sellTable"></div>
-        </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="container tbl" id="bestTable"></div>
-        </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="container tbl" id="ticketTable"></div>
-        </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="container tbl" id="recomendTable"></div>
-        </div>
-    </div>
-</div>
-    <script>
+        <hr />
+
+        <div class="row mt-4" id="tableHelp">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><h2>Table</h2></div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-start">
+                        <p>
+                            Button (<div class="btn btn-outline-danger justify-content-center align-items-center d-inline-flex" style="width: 20pt; height: 20pt;">X</div>) will close the table
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-start">
+                        <p>
+                            Button (<a class="btn btn-outline-info justify-content-center align-items-center d-inline-flex" style="width: 20pt; height: 20pt;">Ex</a>) will export table to which it belong into excel.
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-1 d-flex justify-content-center">
+                    <div class="col-6 ">
+                        @{
+                            var dataTable = new System.Data.DataTable("table name");
+                            dataTable.Columns.Add("First column");
+                            dataTable.Columns.Add("Second column");
+                            dataTable.Columns.Add("Third column");
+
+                            var row = dataTable.NewRow();
+                            row.ItemArray = new object[] { "value 1", "value 2", "value 3" };
 
 
-        var config = {
-            type: 'line',
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [{
-                    label: 'Data2',
-                    backgroundColor: "red",
-                    borderColor: "red",
-                    data: [1, 2, 3, 4
-                    ],
-                    fill: false,
-                }, {
-                    label: 'Data2',
-                    fill: false,
-                    backgroundColor: "blue",
-                    borderColor: "blue",
-                    data: [4, 3, 2, 1
-                    ],
-                }]
-            },
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Example chart'
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Month'
+
+                            dataTable.Rows.Add(row);
+                            dataTable.AcceptChanges();
+
+                            await Html.RenderPartialAsync("~/Views/TicketTable/Table.cshtml", model: dataTable);
                         }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Value'
-                        }
-                    }]
-                }
-            }
-        };
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Click this button if table dissapeared: <div class="btn btn-info d-inline-block" onclick="window.location.reload();">Refresh</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
 
 
-        var ctx = document.getElementById('myChart').getContext('2d');
-        let chart = new Chart(ctx, config);
+        <div class="row mt-4" id="graphHelp">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><h2>Graph</h2></div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-start">
+                        <p>
+                            Button (<div class="btn btn-outline-info justify-content-center align-items-center d-flex" style="width: 20pt; height: 20pt; font-size: 1.9em;">&uarr;</div>) will enlagre graph and shrink it back to orignal size
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-start">
+                        <p>
+                            Button (<div class="btn btn-outline-danger justify-content-center align-items-center d-flex" style="width: 20pt; height: 20pt;">X</div>) will close graph
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row mt-4" id="wholesaleHelp">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><h2>Sell/Buy table</h2></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="text-left">
+                            Displays table which lists sell/buy price of each currency and bank.
+                            You have to select a date for which the table will be displayed.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="MixTickets">Mix</a> page date used for table is <em>Start date</em>.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="Wholesales">Wholesale</a> page there is only one date picker available.
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col">
+                        <h3>Manual</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <ol class="text-left ">
+                            <li>
+                                <span class="pl-2">Select date</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Click button <strong>Add Sell/Buy</strong></span>
+
+                            </li>
+                            <li>
+                                <span class="pl-2">Sell/Buy table should appear on your screen</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row mt-4" id="bankTicketHelp">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><h2>Bank ticket table</h2></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="text-left">
+                            Displays bank ticket for which list currency name, country, ammount of currency, buy and sell price.
+                            You have to select a date and bank for which the table will be displayed.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="MixTickets">Mix</a> page date used for table is <em>Start date</em>.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="BankTickets">Bank ticket</a> page there is only one date picker available.
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col">
+                        <h3>Manual</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <ol class="text-left ">
+                            <li>
+                                <span class="pl-2">Select date</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Select bank</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Click button <strong>Add ticket</strong></span>
+
+                            </li>
+                            <li>
+                                <span class="pl-2">Bank ticket table should appear on your screen</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row mt-4" id="bestHelp">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><h2>Best of date table</h2></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="text-left">
+                            Displays table which lists lowest buy price and highest sell price of each currency and bank where this transaction can be made.
+                            You have to select a date for which the table will be displayed.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="MixTickets">Mix</a> page date used for table is <em>Start date</em>.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="BestTickets">BestTicket</a> page there is only one date picker available.
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col">
+                        <h3>Manual</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <ol class="text-left ">
+                            <li>
+                                <span class="pl-2">Select date</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Click button <strong>Add Best</strong></span>
+
+                            </li>
+                            <li>
+                                <span class="pl-2">Best of date table should appear on your screen</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row mt-4" id="recommendationHelp">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><h2>Recommendation table</h2></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="text-left">
+                            Displays change to previous date and recommends action that should be taken and at bank for that action.
+                            You have to select a date for which the table will be displayed.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="MixTickets">Mix</a> page date used for table is <em>Start date</em>.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="Recommendations">Recommendation</a> page there is only one date picker available.
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col">
+                        <h3>Manual</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <ol class="text-left ">
+                            <li>
+                                <span class="pl-2">Select date</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Click button <strong>Add Recommendation</strong></span>
+
+                            </li>
+                            <li>
+                                <span class="pl-2">Recommendation table should appear on your screen</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row mt-4" id="priceGraphHelp">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><h2>Price Graph</h2></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="text-left">
+                            Displays bar graph of sell/buy price for the the selected currency of each bank.
+                            You have to select a date, buy/sell and currency for which the graph will be displayed.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="MixTickets">Mix</a> page date used for table is <em>Start date</em>.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="CurrencyPrice">Price Graph</a> page there is only one date picker available.
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col">
+                        <h3>Manual</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <ol class="text-left ">
+                            <li>
+                                <span class="pl-2">Select date</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Select currency</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Select buy/sell</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Click button <strong>Add Price Graph</strong></span>
+
+                            </li>
+                            <li>
+                                <span class="pl-2">Price Graph should appear on your screen</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row mt-4" id="priceTimelineGraphHelp">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><h2>Price Timeline Graph</h2></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="text-left">
+                            Displays line graph of sell/buy price for the the selected currency of each bank.
+                            You have to select a time interval and currency for which the graph will be displayed.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="MixTickets">Mix</a> page date used for the start of the interval is <em>Start Date</em>. Date used for the end of the interval is <em>End Date</em>.
+                            On <a asp-area="" asp-controller="ExchangeRate" asp-action="CurrencyTimeline">Price Timeline Graph</a> page date interval selection works the same way.
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col">
+                        <h3>Manual</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <ol class="text-left ">
+                            <li>
+                                <span class="pl-2">Select start of the interval date</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Select end of interval date</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Select currency</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Select sell/buy</span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Click button <strong>Add Timeline Graph</strong></span>
+                            </li>
+                            <li>
+                                <span class="pl-2">Price Timeline Graph should appear on your screen (<span class="text-danger">Depending on length of the interval it may take several seconds for graph to appear!</span>)</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
+    </div>
 
-        function addData(chart, label, data) {
-            chart.data.labels.push(label);
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data.push(data);
-            });
-            chart.update();
-        }
-
-        function removeData(chart) {
-            chart.data.labels.pop();
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data.pop();
-            });
-            chart.update();
-        }
-
-        $.ajax({
-            type: 'GET',
-            //data: requestData,
-            url: '/ExchangeRate/BuyTable',
-            cache: false,
-            success: function (result) {
-                $("#buyTable").html(result);
-            },
-            error: function (xhr, status, error) {
-                Console.log(error);
-            }
-        });
-
-        $.ajax({
-            type: 'GET',
-            url: '/ExchangeRate/SellTable',
-            cache: false,
-            success: function (result) {
-                $("#sellTable").html(result);
-            },
-            error: function (xhr, status, error) {
-                Console.log(error);
-            }
-        });
-
-        $.ajax({
-            type: 'GET',
-            url: '/ExchangeRate/BestOfDateTable',
-            cache: false,
-            success: function (result) {
-                $("#bestTable").html(result);
-            },
-            error: function (xhr, status, error) {
-                Console.log(error);
-            }
-        });
-        $.ajax({
-            type: 'GET',
-            url: '/ExchangeRate/TicketTable?bankName=CNB',
-            cache: false,
-            success: function (result) {
-                $("#ticketTable").html(result);
-            },
-            error: function (xhr, status, error) {
-                Console.log(error);
-            }
-        });
-
-        $.ajax({
-            type: 'GET',
-            url: '/ExchangeRate/RecomendationTable',
-            cache: false,
-            success: function (result) {
-                $("#recomendTable").html(result);
-            },
-            error: function (xhr, status, error) {
-                Console.log(error);
-            }
-        });
-
-
-        $.ajax({
-            type: 'GET',
-            url: '/ExchangeRate/CurrencyGraph',
-            data: { isoName: "AUD" },
-            cache: false,
-            success: function (result) {
-                //$("#graph").html(result);
-                console.log(result);
-                addData(chart, "hello", 7)
-
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-            }
-        });
-    </script>
 
 
 

@@ -39,8 +39,8 @@ namespace BCC.Model.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string connectionString = Configuration.GetValue<string>("connectionStrings:add:bccLocal:connectionString");
-                optionsBuilder.UseSqlServer(connectionString);
+               
+                optionsBuilder.UseSqlServer(ConnectionString);
             }
             
         }

@@ -1,0 +1,74 @@
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model List<BCC.Model.Models.CurrencyMetadata>
+}
+
+
+    <div class="row">
+        <div class="col justify-content-center d-flex ">
+            <h1>Currency price</h1>
+        </div>
+    </div>
+
+
+
+
+    <div class="container-fluid">
+        <div class="row mt-3 d-flex justify-content-center">
+
+            <div class="col-5 mt-2 justify-content-center d-flex">
+                <input id="panelDatePicker" class="form-control" type="date" />
+            </div>
+
+            <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+                <select class="form-control w-100" id="currencySelect">
+                    @foreach (BCC.Model.Models.CurrencyMetadata item in Model)
+                    {
+                        <option value="@item.IsoName">@item.IsoName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-5 mt-2 justify-content-center d-flex">
+                <select class="form-control w-100" id="isBuySelect">
+                    <option value="true">Buy</option>
+                    <option value="false">Sell</option>
+                </select>
+            </div>
+
+            <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+                <div class="btn btn-outline-dark w-100" id="addCurrencyPriceBtn">Add Price Graph</div>
+            </div>
+            <div class="col-lg-2 col-md-3 justify-content-center d-flex ">
+                <div id="panelDeleteAll" class="mt-2 btn btn-outline-danger">Delete All</div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                <div class="d-flex flex-wrap justify-content-around " id="currencyPriceContainer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section Scripts{
+    <script>
+        $(window).ready(function () {
+            let container = $('#currencyPriceContainer');
+            let currencySelect = $('#currencySelect');
+            let isBuySelect = $('#isBuySelect');
+
+            App.setDatePickerDefaultDate(new Date(), $('#panelDatePicker'));
+          
+            $('#panelDeleteAll').click(function () {
+                container.html("");
+            });
+
+            $('#addCurrencyPriceBtn').click(function () {
+                //App.getBuyTicket(buyContainer, panelDatePicker);
+                App.getBankPriceGraph(container, $('#panelDatePicker').val(), currencySelect.val(), isBuySelect.val());
+            });
+        });
+    </script>
+}

@@ -27,4 +27,18 @@ namespace BCC.Core.CNB
         public CNBInvalidData(string message): base(message) { }
     }
 
+    class CNBDownloadException: CNBException
+    {
+        public CNBDownloadException() : base(){}
+        public CNBDownloadException(string message) : base(message) { }
+        public CNBDownloadException(string message, Exception exception) : this(message) { }
+    }
+    class CNBTicketParseException: CNBException
+    {
+        public CNBTicketParseException() :base(){ }
+        public CNBTicketParseException(string message) : base(message) { }
+        public CNBTicketParseException(string message, Exception ex): this(message) { }
+
+    }
+
 }

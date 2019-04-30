@@ -1,0 +1,47 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col justify-content-center d-flex ">
+        <h1>Best of date</h1>
+    </div>
+</div>
+
+<div class="row mt-3 d-flex justify-content-center">
+    <div class="col-5 mt-2 justify-content-center d-flex">
+        <input id="panelDatePicker" class="form-control" type="date" />
+    </div>
+    <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+        <div class="btn btn-outline-dark w-100" id="addBestOfDateBtn">Add Best Of Date</div>
+    </div>
+    <div class="col-lg-2 col-md-3 justify-content-center d-flex ">
+        <div id="panelDeleteAll" class="mt-2 btn btn-outline-danger">Delete All</div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col">
+        <div class="d-flex flex-wrap justify-content-around" id="bestOfDateContainer"></div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+       $(window).ready(function () {
+           let container = $('#bestOfDateContainer');
+           
+            App.setDatePickerDefaultDate(new Date(), $('#panelDatePicker'));
+            $('#panelDeleteAll').click(function () {
+                container.html("");
+            });
+          
+            $('#addBestOfDateBtn').click(function () {
+                App.getBestTicket(container, $('#panelDatePicker').val());
+            })
+
+        });
+    </script>
+}

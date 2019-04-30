@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "CurrencyTimeline";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @model List<BCC.Model.Models.CurrencyMetadata>
+}
+
+
+<div class="row">
+    <div class="col justify-content-center d-flex ">
+        <h1>Currency price timeline</h1>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row mt-3 d-flex justify-content-center">
+        <div class="col-5 mt-2 justify-content-center d-flex">
+            <input id="panelDatePickerStart" class="form-control" type="date" />
+        </div>
+        <div class="col-5 mt-2 justify-content-center d-flex">
+            <input id="panelDatePickerEnd" class="form-control" type="date" />
+        </div>
+
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+            <select class="form-control w-100" id="currencySelect">
+                @foreach (BCC.Model.Models.CurrencyMetadata item in Model)
+                {
+                    <option value="@item.IsoName">@item.IsoName</option>
+                }
+            </select>
+        </div>
+        <div class="col-5 mt-2 justify-content-center d-flex">
+            <select class="form-control w-100" id="isBuySelect">
+                    <option value="true">Buy</option>
+                    <option value="false">Sell</option>
+            </select>
+        </div>
+        <div class="mt-2 justify-content-center d-flex  col-12 col-sm-5 col-md-4 5-lg-2">
+            <div class="btn btn-outline-dark w-100" id="addCurrencyTimelineBtn">Add Timeline Graph</div>
+        </div>
+        <div class="col-lg-2 col-md-3 justify-content-center d-flex ">
+            <div id="panelDeleteAll" class="mt-2 btn btn-outline-danger">Delete All</div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div class="d-flex flex-wrap justify-content-around " id="currencyTimelineContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(window).ready(function () {
+            let container = $('#currencyTimelineContainer');
+            let currencySelect = $('#currencySelect');
+            let startDatePicker = $('#panelDatePickerStart');
+            let endDatePicker = $('#panelDatePickerEnd');
+            let date = new Date();
+
+
+            App.setDatePickerDefaultDate(new Date(date.getUTCFullYear(), date.getMonth(), date.getDate() - 7), $('#panelDatePickerStart'));
+            App.setDatePickerDefaultDate(new Date(), endDatePicker);
+            $('#panelDeleteAll').click(function () {
+                container.html("");
+            });
+            $('#addCurrencyTimelineBtn').click(function () {
+                //$('#panelDatePicker').val()
+                App.getPriceTimelineGraph(container, startDatePicker.val(), endDatePicker.val(), currencySelect.val(), $('#isBuySelect').val());
+            })
+        });
+    </script>
+}

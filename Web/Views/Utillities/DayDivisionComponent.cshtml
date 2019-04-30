@@ -1,0 +1,81 @@
+﻿@model Web.Controllers.UtillitiesController.DayDivisionModel
+
+<div class="row mt-5">
+    <div class="col">
+        <div class="row">
+            <div class="col text-center">
+                <h2>Input</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>Start date:</strong> @Model.Start.ToLongDateString()
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>End date:</strong> @Model.End.ToLongDateString()
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>Days:</strong> @Model.Days
+            </div>
+        </div>
+        @{
+            if (Model.IsOk)
+            {
+                <div class="row">
+                    <div class="col">
+                        <strong>Average:</strong> @Model.Average
+                    </div>
+                </div>
+            }
+        }
+
+        <hr />
+
+
+
+        @{
+            if (Model.IsOk)
+            {
+
+
+                <div class="row">
+                    <div class="col">
+                        <h3>listed by year:</h3>
+                    </div>
+                </div>
+
+                @foreach (Web.Controllers.UtillitiesController.DayDivisionData data in Model.Data)
+                {
+                    <div class="row mb-5 ml-3">
+                        <div class="col ">
+                            <div class="row">
+                                <div class="col">
+                                    <strong>Date: </strong>@data.From.ToShortDateString() - @data.To.ToShortDateString()
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <strong>Days: </strong>  @((int)Math.Abs((data.From - data.To).Days))
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <strong>Ammount: </strong> @data.Value.ToString("C");
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="row">
+                <div class="col">
+                    @Model.Error
+                </div>
+            </div>
+        }
+    </div>
+</div>

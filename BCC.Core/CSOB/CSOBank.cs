@@ -5,14 +5,15 @@ using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using BCC.Core.Abstract;
+using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace BCC.Core.CSOB
 {
-    public class CSOBank : IExchangeRateBank
+    public class CSOBank :ABank<CSOBank>, IExchangeRateBank
     {
-        public CSOBank()
-        {
-        }
+        public CSOBank() {}
 
         // Whole URL is in format: URL_FRONT + "yyyy-MM-dd" + URL_END
         private readonly string URL_FRONT = "https://www.csob.cz/portal/lide/kurzovni-listek/-/date/";
@@ -24,28 +25,8 @@ namespace BCC.Core.CSOB
         {
             if (date < this.MIN_DATE || date > DateTime.Today)
             {
-                new CSOBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maximum is {DateTime.Today}");
+                throw new CSOBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maximum is {DateTime.Today}(Current time)");
             }
-        }
-        
-        public static bool DownloadXMLText(string url, out string input)
-        {
-            try
-            {
-                using (WebClient wc = new WebClient())
-                {
-                    input = wc.DownloadString(url);
-                }
-            }
-            catch(WebException ex)
-            {
-                using (StreamReader sr = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream()))
-                {
-                    input = sr.ReadToEnd();
-                }
-                return false;
-            }
-            return true;
         }
 
         #region XML Classes
@@ -53,7 +34,6 @@ namespace BCC.Core.CSOB
         [System.ComponentModel.DesignerCategoryAttribute("code")]
         [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
         [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-
         public partial class ExchangeRate
         {
             private ExchangeRateCountry[] countryField;
@@ -211,111 +191,45 @@ namespace BCC.Core.CSOB
         #region Interface implementation
         public ExchangeRateTicket DownloadTodaysTicket()
         {
-            DateTime date = DateTime.Today;
-            string url = String.Format("{0}{1}{2}", URL_FRONT, date.ToString("yyyy-MM-dd"), URL_END);
-            string input = null;
-            if (DownloadXMLText(url, out input))
-            {
-                ExchangeRateTicket ticket = ParseDayTicket(input, date);
-                if(ticket != null) return ticket;
-                else new CSOBInvalidData("This ticket doesn't exist.");
-                return null;
-            }
-            else
-            {
-                new CSOBInvalidDate(input);
-                return null;
-            }
+            return DownloadTicketForDate(DateTime.Now);
         }
 
         public ExchangeRateTicket DownloadTicketForDate(DateTime date)
         {
             ValidateDate(date);
-            string url = String.Format("{0}{1}{2}", URL_FRONT, date.ToString("yyyy-MM-dd"), URL_END);
-            string input = null;
-            if (DownloadXMLText(url, out input))
-            {
-                ExchangeRateTicket ticket = ParseDayTicket(input, date);
-                if (ticket != null) return ticket;
-                else new CSOBInvalidData("This ticket doesn't exist.");
-                return null;
-            }
-            else
-            {
-                new CSOBInvalidDate(input);
-                return null;
-            }
+            string url = $"{URL_FRONT}{date.ToString("yyyy-MM-dd")}{URL_END}";
+            string input = DownloadTicketText(url);
+            ExchangeRateTicket ticket = ParseDayTicket(input, date);
+            if (ticket == null) throw new CSOBInvalidData("This ticket doesn't exist.");
+            return ticket;
         }
 
         public List<ExchangeRateTicket> DownloadTicketForInterval(DateTime start, DateTime end)
         {
             ValidateDate(start);
             ValidateDate(end);
-            if (DateTime.Compare(start, end) < 0)
+            if (start > end) throw new CSOBInvalidDate($"Start date: {start.ToShortTimeString()} is after end date: {end.ToShortTimeString()}");
+            List<ExchangeRateTicket> tickets = new List<ExchangeRateTicket>();
+            for (; start <= end; start = start.AddDays(1))
             {
-                string url;
-                List<ExchangeRateTicket> tickets = new List<ExchangeRateTicket>();
-                string input = null;
-                while (true)
-                {
-                    url = String.Format("{0}{1}{2}", URL_FRONT, start.ToString("yyyy-MM-dd"), URL_END);
-                    if (DownloadXMLText(url, out input))
-                    {
-                        tickets.Add(ParseDayTicket(input, start));
-                    }
-                    else
-                    {
-                        new CSOBInvalidDate(input);
-                        tickets.Add(null);
-                    }
-                    start = start.AddDays(1);
-                    if (DateTime.Compare(start, end) > 0) break;
-                }
-                return tickets;
+                tickets.Add(DownloadTicketForDate(start));
             }
-            else
-            {
-                new CSOBInvalidDate($"Invalid dates. First date is newer than the second one.");
-                return null;
-            }
+            return tickets;
         }
 
         public List<ExchangeRateTicket> DownloadAllTickets()
         {
-            DateTime start = MIN_DATE;
-            DateTime end = DateTime.Today;
-            if (DateTime.Compare(start, end) < 0)
-            {
-                string url;
-                List<ExchangeRateTicket> tickets = new List<ExchangeRateTicket>();
-                string input = null;
-                while (true)
-                {
-                    url = String.Format("{0}{1}{2}", URL_FRONT, start.ToString("yyyy-MM-dd"), URL_END);
-                    if (DownloadXMLText(url, out input))
-                    {
-                        tickets.Add(ParseDayTicket(input, start));
-                    }
-                    else
-                    {
-                        new CSOBInvalidDate(input);
-                        tickets.Add(null);
-                    }
-                    start = start.AddDays(1);
-                    if (DateTime.Compare(start, end) > 0) break;
-                }
-                return tickets;
-            }
-            else
-            {
-                new CSOBInvalidDate($"Invalid dates. First date is newer than the second one.");
-                return null;
-            }
+            return DownloadTicketForInterval(MIN_DATE, DateTime.Now);
         }
 
         public bool TodaysTicketIsAvailable()
         {
             return (DateTime.Now.Hour > 6 ); //should be zero
+        }
+
+        public void SetLogger(ILoggerFactory loggerFactory)
+        {
+            Logger = loggerFactory.CreateLogger<CSOBank>();
         }
         #endregion
 
@@ -347,14 +261,12 @@ namespace BCC.Core.CSOB
                 return null;
             }
         }
-    #endregion
+        #endregion
 
-    public List<ICurrencyMetada> DownloadCurrencyMetada()
+        public List<ICurrencyMetada> DownloadCurrencyMetadata()
         {
             ExchangeRateTicket ticket = DownloadTodaysTicket();
-            ICurrencyData[] data = ticket.GetExchangeRateData();
-            List<ICurrencyMetada> metaData = new List<ICurrencyMetada>(data.Length);
-            return metaData;
+            return ticket.GetExchangeRateData().ToList<ICurrencyMetada>();
         }
     }
 }

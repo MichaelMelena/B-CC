@@ -13,6 +13,8 @@ using BCC.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Logging.Configuration;
+using NLog.Extensions.Logging;
 
 namespace Web
 {
@@ -54,9 +56,10 @@ namespace Web
             
             services.AddDbContext<BCC.Model.Models.BCCContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
             services.AddScoped<IPresentationManager, PresentationManger>();
-            services.AddSingleton<Microsoft.Extensions.Hosting.IHostedService, BankManager>();
+            services.AddHostedService<BankManager>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,6 +88,12 @@ namespace Web
                 routes.MapRoute(
                     name: "ExchangeRate",
                     template: "{controller=ExchangeRate}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "TicketTable",
+                    template: "{controller=TicketTable}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "TicketGraph",
+                    template: "{controller=TicketGraph}/{action=Index}/{id?}");
             });
 
             if (env.IsProduction())

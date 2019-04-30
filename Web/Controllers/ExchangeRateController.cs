@@ -5,21 +5,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BCC.Model.Models;
 using BCC.Core;
-using System.Data;
 using System.Reflection;
-
+using  Microsoft.Extensions.Logging;
+using OfficeOpenXml;
+using OfficeOpenXml.Table;
+using System.Data;
 
 namespace Web.Controllers
 {
     public class ExchangeRateController : Controller
     {
+        #region Dependencies
         private readonly BCCContext _context;
         private readonly IPresentationManager _presentationManager;
+        private readonly ILogger<ExchangeRateController> _logger;
+        private const string XlsxContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        #endregion
+
         private readonly string _version;
-        public ExchangeRateController(BCCContext context, IPresentationManager presentationManager)
+        public ExchangeRateController(BCCContext context, IPresentationManager presentationManager, ILogger<ExchangeRateController> logger)
         {
-            this._context = context;
-            this._presentationManager = presentationManager;
+            _logger = logger;
+            _context = context;
+            _presentationManager = presentationManager;
             _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
@@ -29,59 +37,59 @@ namespace Web.Controllers
             ViewBag.title = "Exchange Rates";
             return View();
         }
-
-        public PartialViewResult BuyTable([FromQuery]DateTime tableDate)
+        public IActionResult BankTickets()
         {
-            if (tableDate == DateTime.MinValue) tableDate = DateTime.Now;
-
-            DataTable table =  _presentationManager.GetBuyTableData(date: tableDate);
-
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
+            ViewBag.version = _version;
+            List<BankConnector> banks = _context.BankConnector.ToList();
+            return View(viewName: "~/Views/ExchangeRate/BankTickets.cshtml", model: banks);
         }
 
-        public PartialViewResult SellTable([FromQuery]DateTime tableDate)
+        public IActionResult BestTickets()
         {
-            if (tableDate == DateTime.MinValue) tableDate = DateTime.Now;
-            DataTable table = _presentationManager.GetSellTableData(tableDate);
-
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
+            ViewBag.version = _version;
+            return View(viewName: "~/Views/ExchangeRate/BestTickets.cshtml");
         }
 
-        public PartialViewResult BestOfDateTable([FromQuery]DateTime tableDate)
+        public IActionResult Recommendations()
         {
-            if (tableDate == DateTime.MinValue) tableDate = DateTime.Now;
-            DataTable table = _presentationManager.GetBestOfDateTableData(tableDate);
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
+            ViewBag.version = _version;
+            return View(viewName: "~/Views/ExchangeRate/Recommendations.cshtml");
         }
 
-        public PartialViewResult RecomendationTable([FromQuery]DateTime tableDate)
+        public IActionResult Wholesales()
         {
-            
-            if (tableDate == DateTime.MinValue) tableDate = DateTime.Now;
-
-            DataTable table = _presentationManager.GetRecomendationTableData(tableDate);
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
+            ViewBag.version = _version;
+            return View(viewName: "~/Views/ExchangeRate/Wholesales.cshtml");
         }
 
-        public PartialViewResult TicketTable(string bankName, [FromQuery]DateTime tableDate)
-        {
-            if (tableDate == null) tableDate = DateTime.Now;
-            if (string.IsNullOrWhiteSpace(bankName)) bankName = "CNB";
-
-            DataTable table = _presentationManager.GetTicketTableData(bankName, tableDate);
-            return PartialView(viewName: "~/Views/ExchangeRate/Table.cshtml", model: table);
-        }
-
-        public PartialViewResult CurrencyChangeTable(string bankName)
-        {
-            return PartialView();
-        }
         [HttpGet]
-        public ContentResult CurrencyGraph(string currency)
+        public IActionResult MixTickets()
         {
-            string json = _presentationManager.GetBuyDateGraph("AUD", new DateTime(2019, 3, 21));
-           
-            return Content(content: json, contentType: "application/json");
+            ViewBag.version = _version;
+            List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
+            List<BankConnector> banks = _context.BankConnector.ToList();
+            return View(viewName: "~/Views/ExchangeRate/MixTickets.cshtml",model: Tuple.Create(banks,meta));
         }
+
+       [HttpGet]
+        public IActionResult CurrencyPrice()
+        {
+            ViewBag.version = _version;
+            
+            List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
+            return View(viewName: "~/Views/ExchangeRate/CurrencyPrice.cshtml", model: meta);
+        }
+
+        [HttpGet]
+        public IActionResult CurrencyTimeline()
+        {
+            List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
+            return View(viewName: "~/Views/ExchangeRate/CurrencyTimeline.cshtml", model: meta);
+        }
+
+       
+
+        
+
     }
 }

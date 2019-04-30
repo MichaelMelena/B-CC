@@ -1,0 +1,72 @@
+﻿@model System.Data.DataTable
+@{ 
+    var guid = Guid.NewGuid();
+
+    if( ViewBag.tableType == null)
+    {
+        ViewBag.tableType = "Buy";
+    }
+    if (ViewBag.tableDate == null)
+    {
+        ViewBag.tableDate  = DateTime.Now.ToString("yyyy-MM-dd");
+    }
+    if(ViewBag.bankName == null)
+    {
+        ViewBag.bankName = "CSOB";
+    }
+    if (ViewBag.currency == null)
+    {
+        ViewBag.currency = "AUD";
+    }
+
+    var dict = new Dictionary<string, string>()
+    {
+        { "currency", ViewBag.currency },
+        { "tableType", ViewBag.tableType},
+        { "tableDate", ViewBag.tableDate},
+        { "bankName", ViewBag.bankName}
+    };
+    //onclick="App.getExcelTable( '@ViewBag.tableType', '@ViewBag.tableDate', '@ViewBag.bankName', '@ViewBag.currency');"
+}
+    <div class="" id="@guid.ToString()">
+        <div class="row justify-content-end">
+            <div class="col-9">
+                <h3>@Model.TableName</h3>
+            </div>
+            <div class="col-1 m-0 p-0 d-flex justify-content-end p-2">
+                <a class="btn btn-outline-info justify-content-center align-items-center d-flex" style="width: 20pt; height: 20pt;"  asp-controller="TicketTable" asp-action="DownloadExcelTable" asp-all-route-data="dict" >Ex</a>
+            </div>
+            <div class="col-1 m-0 p-0 d-flex justify-content-end p-2">
+                <div class="btn btn-outline-danger justify-content-center align-items-center d-flex" style="width: 20pt; height: 20pt;" onclick="$('#@guid').remove();">X</div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @foreach (System.Data.DataColumn collumn in Model.Columns)
+                            {
+                                <th class="border exchangeItem"><strong>@collumn.ColumnName</strong></th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (System.Data.DataRow row in Model.Rows)
+                        {
+                            <tr class="border">
+                                @foreach (var item in row.ItemArray)
+                                {
+                                    <td class="border exchangeItem">@item.ToString()</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+

@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "Day Division";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>DayDivision</h1>
+
+<div class="row">
+
+    <div class="col">
+        <div class="row">
+            <div class="col">
+                <strong>Start: </strong><input id="startPicker" type="date" class="form-control" />
+            </div>
+            <div class="col">
+                <strong>End: </strong><input id="endPicker" type="date" class="form-control" />
+            </div>
+            <div class="col">
+                <strong>Ammount: </strong><input id="ammountNumber" type="number" min="0" value="100" class="form-control" />
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <button id="calculateBtn" class="btn btn-primary">Calculate</button>
+            </div>
+        </div>
+        <div id="dayDivision">
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+    $(window).ready(function(){
+        $("#calculateBtn").on("click", () => {
+            console.log("clicked");
+            $.get(
+                url = "Utillity/DayDivisionComponent",
+                {
+                    start: $("#startPicker").val(),
+                    end: $("#endPicker").val(),
+                    value: $("#ammountNumber").val()
+                }
+            ).done((data) => {
+                $("#dayDivision").html(data);
+            });
+        });
+
+
+
+       
+
+        App.setDatePickerDefaultDate(new Date(), $('#startPicker'));
+        App.setDatePickerDefaultDate(new Date(), $('#endPicker'));
+
+       
+  
+
+
+
+    });
+</script>
+}
+
