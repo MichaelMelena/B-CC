@@ -97,7 +97,7 @@ namespace BCC.Core.KB
         // Get all tickets
         public List<ExchangeRateTicket> DownloadAllTickets()
         {
-            return DownloadTicketForInterval(MIN_DATE, DateTime.Now);
+            return DownloadTicketForInterval(MIN_DATE.AddDays(1), DateTime.Now.AddDays(-1));
         }
 
         public bool TodaysTicketIsAvailable()

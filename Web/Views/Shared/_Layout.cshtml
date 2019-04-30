@@ -51,7 +51,9 @@
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ExchangeRate" asp-action="Index">Info</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ExchangeRate" asp-action="Index">Introduction</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Utillities" asp-action="Index">Utillity</a>
+
                         </div>
                     </div>
                 </nav>
@@ -63,19 +65,29 @@
 
             <div class="container-fluid p-4">
                 <!-- /#page-content-wrapper -->
-                <div class="row justify-content-center">
-                    <div class="col-8 alert-primary text-center p-3">
-                        <strong>Contact: </strong>Michael Melena | michael.melena@tul.cz
-                    </div>
-                </div>
+               
                 @RenderBody()
             </div>
         </div>
     </div>
-    <footer class="footer  bg-light">
+    <footer class="footer  bg-white border-top border-info" >
         <div class="container">
-            <span class="text-muted">Place sticky footer content here.</span>
+            <div class="row">
+                <div class="col justify-content-center d-flex">
+                    <span class="text-muted"><strong>Contact: </strong>Michael Melena | michael.melena@tul.cz</span>
+                </div>
+                <div class="col justify-content-center d-flex">
+                    <span class="text-muted"><strong>Version:</strong> @(ViewBag.version != null? ViewBag.version.ToString():"Unavailable")</span>
+                </div>
+            </div>
+            
         </div>
+            
+                    
+                    
+                
+            
+        
     </footer>
 
 

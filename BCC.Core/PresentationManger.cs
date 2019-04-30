@@ -73,20 +73,28 @@ namespace BCC.Core
                     {
                         float diffBuy = todayBuy - oldBuy;
                         float diffSell = todaySell - oldSell;
-                        float absBuy = Math.Abs(diffBuy);
-                        float absSell = Math.Abs(diffSell);
-                        rowData[1] = diffBuy.ToString("P");
-                        rowData[2] = diffSell.ToString("P");
+                        float absBuy = Math.Abs(diffBuy) / Math.Max(todayBuy, oldBuy);
+                        float absSell = Math.Abs(diffSell) / Math.Max(todaySell,todaySell);
+                        rowData[1] = absBuy.ToString("P4");
+                        rowData[2] = absSell.ToString("P4");
 
                         string recomend = null;
                         string bank = null;
 
+                        if (diffBuy == 0 && diffSell == 0) ;
+                        {
+                            recomend = "Buy";
+                            bank = buyBank;
+                        }
+                        //1
                         if(diffBuy >= 0 && diffSell>=0)
                         {
                             recomend = "Sell";
                             bank = sellBank;
                         }
-                        else if(diffBuy< 0 && diffSell > 0)
+
+                        //2
+                        else if(diffBuy <= 0 && diffSell >= 0)
                         {
                             if(absBuy > absSell)
                             {
@@ -99,12 +107,16 @@ namespace BCC.Core
                                 bank = sellBank;
                             }
                         }
-                        else if(diffBuy < 0 && diffSell < 0)
+
+                        //3
+                        else if(diffBuy <= 0 && diffSell <= 0)
                         {
                             recomend = "Buy";
                             bank = buyBank;
                         }
-                        else if(diffBuy > 0 && diffSell < 0)
+
+                        //4
+                        else if(diffBuy >= 0 && diffSell <= 0)
                         {
                             if(absBuy > absSell)
                             {
@@ -117,7 +129,7 @@ namespace BCC.Core
                                 bank = buyBank;
                             }
                         }
-                        else if( todayBuy > oldBuy)
+
                         if (recomend == null || bank == null) continue;
                         rowData[3] = recomend;
                         rowData[4] = bank;
@@ -163,11 +175,11 @@ namespace BCC.Core
                 object[] rowData = new object[table.Columns.Count];
                 CurrencyMetadata meta = metadata[currency.IsoName];
                 rowData[0] = currency.IsoName;
-                rowData[1] = meta.Name ?? "X";
-                rowData[2] = meta.Country ?? "X";
+                rowData[1] = meta.Name ?? "Not set";
+                rowData[2] = meta.Country ?? "Not set";
                 rowData[3] = meta.Quantity;
                 rowData[4] = currency.Buy;
-                rowData[5] = currency.Sell.HasValue ? currency.Sell.Value.ToString() : "X";
+                rowData[5] = currency.Sell.HasValue?currency.Sell.Value.ToString() : "Unavailable";
 
                 table.Rows.Add(rowData);
             }
@@ -248,6 +260,16 @@ namespace BCC.Core
                     //Necessary
                     i++;
                 }
+
+                int invalidColumnCount = 0;
+                for(int k=1; k <= bankCurrency.Keys.Count; k++)
+                {
+                    if(rowData[k].ToString() == "X")
+                    {
+                        invalidColumnCount += 1;
+                    }
+                }
+                if (invalidColumnCount >= bankCurrency.Keys.Count)  continue;
                 table.Rows.Add(rowData);
             }
             table.AcceptChanges();
@@ -380,6 +402,17 @@ namespace BCC.Core
                     //Best Sell
                     rowData[3] = bestSell.HasValue ? bestSell.Value.ToString() : "X";
                     rowData[4] = bestSellBank ?? "X";
+
+                    int invalidColumnCount = 0;
+                    for (int k = 1; k <= innerData.Keys.Count; k++)
+                    {
+                        if (rowData[k].ToString() == "X")
+                        {
+                            invalidColumnCount += 1;
+                        }
+                    }
+                    if (invalidColumnCount >= innerData.Keys.Count) continue;
+
                     table.Rows.Add(rowData);
                 }
             }

@@ -5,7 +5,7 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <Configurations>Debug;Release</Configurations>
     <StartupObject>Web.Program</StartupObject>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <Authors>Michael Melena, František Vančát</Authors>
     <RepositoryUrl>https://github.com/MichaelMelena/B-CC</RepositoryUrl>

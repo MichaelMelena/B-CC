@@ -119,6 +119,7 @@ namespace BCC.Core
                         try
                         {
                             List<ExchangeRateTicket> tickets = bank.DownloadTicketForInterval(DateTime.Now.AddDays(-TICKET_HISTORY_LENGTH), DateTime.Now.AddDays(-1));
+                            //List<ExchangeRateTicket> tickets = bank.DownloadAllTickets();
                             foreach (ExchangeRateTicket ticket in tickets)
                             {
                                 SaveERTicket(scope.Context, ticket, bankName);
