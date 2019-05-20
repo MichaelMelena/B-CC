@@ -53,7 +53,25 @@ namespace Web
                     connectionString = Configuration.GetConnectionString("bccLocal");
                     break;
             }
-            
+
+
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = connectionString;
+                options.SchemaName = "dbo";
+                options.TableName = "Cache";
+                options.DefaultSlidingExpiration = TimeSpan.FromDays(30);
+            });
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromDays(14);
+                options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddDbContext<BCC.Model.Models.BCCContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
             services.AddScoped<IPresentationManager, PresentationManger>();
             services.AddHostedService<BankManager>();
@@ -79,6 +97,8 @@ namespace Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
+
 
             app.UseMvc(routes =>
             {
@@ -96,6 +116,9 @@ namespace Web
                     template: "{controller=TicketGraph}/{action=Index}/{id?}");
             });
 
+
+            
+            
             if (env.IsProduction())
             {
                 app.UseForwardedHeaders(new ForwardedHeadersOptions

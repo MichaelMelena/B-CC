@@ -8,7 +8,7 @@ using Web.Models;
 using NLog.Common;
 using System.Reflection;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.AspNetCore.Http;
 namespace Web.Controllers
 {
     public class HomeController : Controller
@@ -26,7 +26,9 @@ namespace Web.Controllers
         
         public IActionResult Index()
         {
-           
+
+            HttpContext.Session.SetString(HttpContext.Session.Id, HttpContext.Session.Id);
+            ViewBag.session = HttpContext.Session.GetString(HttpContext.Session.Id);
             ViewBag.version = _version;
             ViewBag.title = "Homepage";
             return View();
