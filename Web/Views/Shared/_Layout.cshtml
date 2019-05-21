@@ -27,13 +27,17 @@
             <div class="sidebar-heading">Stats</div>
             <div class="list-group list-group-flush">
 
-                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="BankTickets">Bank tickets</a>
-                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="Recommendations">Recommendations</a>
-                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="Wholesales">Wholesales</a>
-                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="BestTickets">Best tickets</a>
-                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="CurrencyPrice">Currency price</a>
-                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="CurrencyTimeline">Currency timeline</a>
-                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="MixTickets"><strong>Mix</strong></a>
+                <!--
+    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="BankTickets">Bank tickets</a>
+    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="Recommendations">Recommendations</a>
+    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="Wholesales">Wholesales</a>
+    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="BestTickets">Best tickets</a>
+    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="CurrencyPrice">Currency price</a>
+    <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="CurrencyTimeline">Currency timeline</a>
+    -->
+                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="Overview"><strong>Overview</strong></a>
+                <a class="list-group-item list-group-item-action bg-light" asp-area="" asp-controller="ExchangeRate" asp-action="MixTickets">Mix</a>
+
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -52,6 +56,7 @@
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ExchangeRate" asp-action="Overview"><strong>Overview</strong></a>
                             <a class="nav-link text-dark" asp-area="" asp-controller="ExchangeRate" asp-action="Index">Introduction</a>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Utillities" asp-action="Index">Utillity</a>
 

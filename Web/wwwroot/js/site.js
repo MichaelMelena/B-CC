@@ -18,6 +18,29 @@ const arrMin = arr => Math.min(...arr);
 //setup
 
 
+App.restoreFromSession = function (targetElement, json) {
+
+    for (let settings of json) {
+
+        App.getOverviewControl(targetElement, settings.currency, settings.interval, settings.isBuy);
+    }
+    //App.activeOverviews = json;
+    //App.refreshOverviews(targetElement);
+}
+
+App.updateSession = function () {
+    $.ajax({
+        type: 'POST',
+        contentType: "application/json",
+        url: `/${App.ExchangeRateController}/UpdateSession`,
+        data: JSON.stringify(Object.values(App.activeOverviews)),
+        /*data: {
+            data: JSON.stringify(Object.values(App.activeOverviews))
+        },*/
+        error: err => console.log(err),
+    });
+}
+
 App.refreshOverviews = function (targetElement) {
     for (let key of Object.keys(App.activeOverviews)) {
 
@@ -27,6 +50,8 @@ App.refreshOverviews = function (targetElement) {
         //App.getOverviewControl(targetElement)
     }
 }
+
+
 
 App.addActiveOverview = function (elementId,canvasId,currency, interval, isBuyText) {
     let isBuy = false;

@@ -13,6 +13,7 @@ using OfficeOpenXml.Table;
 using System.Data;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Web.Controllers
 {
@@ -77,9 +78,12 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult Overview()
         {
+            string json = HttpContext.Session.GetString(HttpContext.Session.Id);
+            var sessionData = JsonConvert.DeserializeObject(json??"[]");
+            string sesionJson = JsonConvert.SerializeObject(sessionData);
             ViewBag.version = _version;
             List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
-            return View(viewName: "~/Views/ExchangeRate/Overview.cshtml", model: meta);
+            return View(viewName: "~/Views/ExchangeRate/Overview.cshtml", model: new Tuple<List<CurrencyMetadata>,string>( meta,sesionJson));
         }
 
 
@@ -105,12 +109,20 @@ namespace Web.Controllers
         public PartialViewResult OverviewControl([FromQuery]string isoName="AUD",[FromQuery] int interval=7,[FromQuery] bool isBuy=true)
         {
 
-
-
             ViewBag.tableType = isBuy ? "Buy" : "Sell";
-           var overviewModel = new OverviewModel() { Currency = isoName, Interval = interval, IsBuy = isBuy };
+            var overviewModel = new OverviewModel() { Currency = isoName, Interval = interval, IsBuy = isBuy };
             var table = _presentationManager.SingleCurrencyRecommendation(isoName);
             return PartialView(viewName: "~/Views/ExchangeRate/OverviewControl.cshtml", model: new Tuple<DataTable,OverviewModel>(table,overviewModel));
+        }
+
+        [HttpPost]
+        public OkResult UpdateSession([FromBody]List<OverviewModel> data)
+        {
+
+            var json = JsonConvert.SerializeObject(data);
+            HttpContext.Session.SetString(HttpContext.Session.Id, json);
+
+            return Ok();
         }
        
 
