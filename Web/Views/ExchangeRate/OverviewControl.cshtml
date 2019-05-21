@@ -1,0 +1,87 @@
+﻿@{
+
+    @model Tuple< System.Data.DataTable, Web.Models.OverviewModel>
+    var guid = Guid.NewGuid();
+    var canvasId = Guid.NewGuid();
+
+
+
+    if( ViewBag.tableType == null)
+    {
+        ViewBag.tableType = "Buy";
+    }
+    if (ViewBag.tableDate == null)
+    {
+        ViewBag.tableDate  = DateTime.Now.ToString("yyyy-MM-dd");
+    }
+    if(ViewBag.bankName == null)
+    {
+        ViewBag.bankName = "CSOB";
+    }
+    if (ViewBag.currency == null)
+    {
+        ViewBag.currency = "AUD";
+    }
+
+    var dict = new Dictionary<string, string>()
+    {
+        { "currency", ViewBag.currency },
+        { "tableType", ViewBag.tableType},
+        { "tableDate", ViewBag.tableDate},
+        { "bankName", ViewBag.bankName}
+    };
+
+}
+
+
+<div class="row p-3 mt-2 border border-dark rounded" style="max-width:550pt;" id="@guid.ToString()">
+    
+        <div class="row w-100 justify-content-end">
+            <div class="col-1 m-0 p-0 d-flex justify-content-end p-2">
+                <a class="btn btn-outline-info justify-content-center align-items-center d-flex" style="width: 20pt; height: 20pt;" asp-controller="TicketTable" asp-action="DownloadExcelTable" asp-all-route-data="dict">Ex</a>
+            </div>
+            <div class="col-1  m-0 p-0 d-flex justify-content-end p-2">
+                <div class="btn btn-outline-danger justify-content-center align-items-center d-flex" style="width: 20pt; height: 20pt;" onclick="App.removeOverviewControl('@guid');">X</div>
+            </div>
+
+        </div>
+    
+    
+        <div class="row">
+            <div class="col m-0 p-0">
+                <div class="chart-container d-flex justify-content-center"  style="position: relative; ">
+                    <canvas id="@canvasId" width="350" style="max-width:600pt" class="w-100"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2 w-100 d-flex justify-content-center">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @foreach (System.Data.DataColumn collumn in Model.Item1.Columns)
+                            {
+                                <th class="border exchangeItem"><strong>@collumn.ColumnName</strong></th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (System.Data.DataRow row in Model.Item1.Rows)
+                        {
+                            <tr class="border">
+                                @foreach (var item in row.ItemArray)
+                                {
+                                    <td class="border exchangeItem">@item.ToString()</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <script>
+        App.addActiveOverview('@guid', '@canvasId', '@Model.Item2.Currency',@Model.Item2.Interval,'@Model.Item2.IsBuy');
+        
+    </script>
+    
+</div>

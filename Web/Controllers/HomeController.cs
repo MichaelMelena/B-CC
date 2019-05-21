@@ -27,8 +27,8 @@ namespace Web.Controllers
         public IActionResult Index()
         {
 
-            HttpContext.Session.SetString(HttpContext.Session.Id, HttpContext.Session.Id);
-            ViewBag.session = HttpContext.Session.GetString(HttpContext.Session.Id);
+            //HttpContext.Session.SetString(HttpContext.Session.Id, HttpContext.Session.Id);
+            //ViewBag.session = HttpContext.Session.GetString(HttpContext.Session.Id);
             ViewBag.version = _version;
             ViewBag.title = "Homepage";
             return View();

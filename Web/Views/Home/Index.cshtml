@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Session
+@{
 
     ViewData["Title"] = "Home Page";
 
@@ -14,5 +16,8 @@
     <p>
         For more information about its functionality you can go here
         <a asp-area="" asp-controller="ExchangeRate" asp-action="Index">here</a>.
+    </p>
+    <p>
+        @ViewBag.session
     </p>
 </div>

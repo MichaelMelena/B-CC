@@ -209,7 +209,199 @@ namespace BCC.Core
         }
         #endregion
 
+        /*
+        public CurrencyRecommendation(string isoName)
+        {
+            var current = _context.Ticket.OrderByDescending(x => x.Date).FirstOrDefault(x => null != x.Currency.FirstOrDefault(a => a.IsoName.Equals(isoName, StringComparison.InvariantCultureIgnoreCase) && x.BankShortName !="CNB"));
+            if (current != null)
+            {
+                var old = _context.Ticket.OrderByDescending(x => x.Date).FirstOrDefault(x => x.Date < new DateTime(current.Date.Year, current.Date.Month, current.Date.Day).AddDays(-1) && x.BankShortName != "CNB" && null != x.Currency.FirstOrDefault(a => a.IsoName.Equals(isoName, StringComparison.InvariantCultureIgnoreCase)));
+                if(old != null)
+                {
+                    var currentCurrency = current.Currency.FirstOrDefault(x => x.IsoName.Equals(isoName, StringComparison.InvariantCultureIgnoreCase));
+                    var oldCurrency = old.Currency.FirstOrDefault(x => x.IsoName.Equals(isoName, StringComparison.InvariantCultureIgnoreCase));
 
+                    return Recomend(currentCurrency.Buy, currentCurrency.Sell ?? 0, oldCurrency.Buy, oldCurrency.Sell?? 0, )
+                }
+            }
+
+
+
+        }
+        */
+
+        public DataTable SingleCurrencyRecommendation(string isoName)
+        {
+            string tableName = isoName;
+            DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+            DataTable today = CreateRecomendationTable("Today", date, out bool todayErr);
+
+            DataTable yesterday = CreateRecomendationTable("Yesterday", date.AddDays(-1), out bool yesterdayErr);
+            if (todayErr || yesterdayErr)
+            {
+                return ErrorTable(tableName, "Couldnt create recomendation");
+            }
+
+            DataTable table = new DataTable(tableName);
+            table.Columns.Add("Currency", typeof(string));
+            table.Columns.Add("Buy Change", typeof(string));
+            table.Columns.Add("Sell Change", typeof(string));
+            table.Columns.Add("Action", typeof(string));
+            table.Columns.Add("Bank", typeof(string));
+            int i = 0;
+
+            
+            foreach (DataRow row in today.Rows)
+            {
+                object[] rowData = new object[table.Columns.Count];
+
+                DataRow old = yesterday.Rows[i++];
+                if (old != null)
+                {
+                    if (!isoName.Equals(row[0].ToString(), StringComparison.InvariantCultureIgnoreCase)) continue;
+
+                    rowData[0] = row[0];
+                    float oldBuy, todayBuy, oldSell, todaySell;
+                    string buyBank = row[2].ToString();
+                    string sellBank = row[4].ToString();
+                    if (float.TryParse(old[1].ToString(), out oldBuy) && float.TryParse(row[1].ToString(), out todayBuy) && float.TryParse(old[3].ToString(), out oldSell) && float.TryParse(row[3].ToString(), out todaySell))
+                    {
+                        float diffBuy = todayBuy - oldBuy;
+                        float diffSell = todaySell - oldSell;
+                        float absBuy = Math.Abs(diffBuy) / Math.Max(todayBuy, oldBuy);
+                        float absSell = Math.Abs(diffSell) / Math.Max(todaySell, todaySell);
+                        rowData[1] = absBuy.ToString("P4");
+                        rowData[2] = absSell.ToString("P4");
+
+                        string recomend = null;
+                        string bank = null;
+
+                        if (diffBuy == 0 && diffSell == 0) ;
+                        {
+                            recomend = "Buy";
+                            bank = buyBank;
+                        }
+                        //1
+                        if (diffBuy >= 0 && diffSell >= 0)
+                        {
+                            recomend = "Sell";
+                            bank = sellBank;
+                        }
+
+                        //2
+                        else if (diffBuy <= 0 && diffSell >= 0)
+                        {
+                            if (absBuy > absSell)
+                            {
+                                recomend = "Buy";
+                                bank = buyBank;
+                            }
+                            else
+                            {
+                                recomend = "Sell";
+                                bank = sellBank;
+                            }
+                        }
+
+                        //3
+                        else if (diffBuy <= 0 && diffSell <= 0)
+                        {
+                            recomend = "Buy";
+                            bank = buyBank;
+                        }
+
+                        //4
+                        else if (diffBuy >= 0 && diffSell <= 0)
+                        {
+                            if (absBuy > absSell)
+                            {
+                                recomend = "Hold (Sell)";
+                                bank = sellBank;
+                            }
+                            else
+                            {
+                                recomend = "Hold (Buy)";
+                                bank = buyBank;
+                            }
+                        }
+
+                        if (recomend == null || bank == null) continue;
+                        rowData[3] = recomend;
+                        rowData[4] = bank;
+                        table.Rows.Add(rowData);
+                    }
+                    else continue;
+                }
+                else continue;
+                if (isoName.Equals(row[0].ToString(), StringComparison.InvariantCultureIgnoreCase)) break;
+            }
+            if(table.Rows.Count < 1)
+            {
+                return ErrorTable(isoName, "Not enough data to create recommendation");
+            }
+            table.AcceptChanges();
+            return table;
+        }
+
+        public (string,string,string,string) Recomend(float todayBuy, float todaySell, float oldBuy, float oldSell, string buyBank, string sellBank )
+        {
+
+            float diffBuy = todayBuy - oldBuy;
+            float diffSell = todaySell - oldSell;
+            float absBuy = Math.Abs(diffBuy) / Math.Max(todayBuy, oldBuy);
+            float absSell = Math.Abs(diffSell) / Math.Max(todaySell, todaySell);
+            string recomend = null;
+            string bank = null;
+            if (diffBuy == 0 && diffSell == 0) ;
+            {
+                recomend = "Buy";
+                bank = buyBank;
+            }
+            //1
+            if (diffBuy >= 0 && diffSell >= 0)
+            {
+                recomend = "Sell";
+                bank = sellBank;
+            }
+
+            //2
+            else if (diffBuy <= 0 && diffSell >= 0)
+            {
+                if (absBuy > absSell)
+                {
+                    recomend = "Buy";
+                    bank = buyBank;
+                }
+                else
+                {
+                    recomend = "Sell";
+                    bank = sellBank;
+                }
+            }
+
+            //3
+            else if (diffBuy <= 0 && diffSell <= 0)
+            {
+                recomend = "Buy";
+                bank = buyBank;
+            }
+
+            //4
+            else if (diffBuy >= 0 && diffSell <= 0)
+            {
+                if (absBuy > absSell)
+                {
+                    recomend = "Hold (Sell)";
+                    bank = sellBank;
+                }
+                else
+                {
+                    recomend = "Hold (Buy)";
+                    bank = buyBank;
+                }
+            }
+            return (recomend, bank, absBuy.ToString("P4"), absSell.ToString("P4"));
+        }
 
         private DataTable BSTable(string name,bool IsBuy,DateTime date)
         {

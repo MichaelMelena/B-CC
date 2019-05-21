@@ -19,6 +19,8 @@ namespace BCC.Core
 
         DataTable GetCurrencyChangeTableData(string bankName, DateTime date);
 
+        DataTable SingleCurrencyRecommendation(string isoName);
+
         string GetIntervalBuyDateGraph(string isoName, DateTime start, DateTime end);
 
         string GetIntervalSellDateGraph(string isoName, DateTime start, DateTime end);

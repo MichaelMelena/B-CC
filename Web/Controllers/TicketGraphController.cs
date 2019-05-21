@@ -76,6 +76,7 @@ namespace Web.Controllers
                 start = DateTime.Now;
                 end = DateTime.Now;
             }
+            end = new DateTime(end.Year, end.Month, end.Day, 23, 59, 59);
             if (string.IsNullOrWhiteSpace(currency)) currency = "AUD";
 
             //List<Ticket> tickets = _context.Ticket.Where(x => x.Date.Year >= start.Year && x.Date.Month >= start.Month && x.Date.Day >= start.Day && x.Date.Year <= end.Year && x.Date.Month <= end.Month && x.Date.Day <= end.Day).ToList();

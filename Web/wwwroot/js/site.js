@@ -6,9 +6,94 @@
 let App = {};
 App.TableController = "TicketTable";
 App.GraphController = "TicketGraph"; 
+App.ExchangeRateController = "ExchangeRate";
 App.SamllGraphWidth = 350;
+App.overviewMaxWidth = 734;
+App.activeOverviews = {}
+
+const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length
+const arrSum = arr => arr.reduce((a, b) => a + b, 0)
+const arrMax = arr => Math.max(...arr);
+const arrMin = arr => Math.min(...arr);
 //setup
 
+
+App.refreshOverviews = function (targetElement) {
+    for (let key of Object.keys(App.activeOverviews)) {
+
+        settings = App.activeOverviews[key];
+        App.getOverviewControl(targetElement, settings.currency, settings.interval, settings.isBuy);
+        App.removeOverviewControl(key);
+        //App.getOverviewControl(targetElement)
+    }
+}
+
+App.addActiveOverview = function (elementId,canvasId,currency, interval, isBuyText) {
+    let isBuy = false;
+    if (isBuyText === "True") isBuy = true;
+
+    App.activeOverviews[elementId] = { currency: currency, interval: interval, isBuy: isBuy, canvasId: canvasId };
+}
+
+App.removeOverviewControl = function(elementId){
+
+    delete App.activeOverviews[elementId];
+    $('#' + elementId).remove();
+}
+
+
+App.getOverviewControl = function (targetElement,currency,interval,isBuy) {
+
+    let length = Number(interval);
+    let dateNow = new Date();
+
+    let endDate = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate(), 23, 59, 59);
+    let startDate = new Date(endDate.getTime());
+
+    startDate = new Date( startDate.setDate(endDate.getDate() - length));
+
+    
+    $.get({
+        url: `/${App.ExchangeRateController}/OverviewControl`,
+        data: {
+            isoName: currency,
+            interval: length,
+            isBuy: isBuy
+        },
+        success: function (result) {
+
+            $.get({
+                url: `/${App.GraphController}/CurrencyTimelineGraphData`,
+                data: {
+                    currency: currency,
+                    start: App.getFormatedDate(startDate),
+                    end: App.getFormatedDate(endDate),
+                    isBuy: isBuy
+                },
+                success: function (data) {
+                    var elements = $(result);
+                    var chr = elements.find('canvas');
+                    $(window).resize(function () { App.updateOverviewSize(targetElement, chr.parent()); });
+
+                    targetElement.append(elements).fadeIn(300, "linear");
+                    App.createBankPriceTimelineGraph(chr[0], data);
+                },
+                error: function (err) {
+                    console.log(`failed to get a graph data:\n${err}`);
+                }
+
+            });
+
+            
+
+            
+        },
+        error: function (err) {
+            console.log(`failed to get a overview control:\n${err}`);
+        }
+
+    });
+}
 
 App.setDatePickerDefaultDate = function(date,targetDatepicker){
 
@@ -160,6 +245,18 @@ App.UpateGraphSize = function (chartParent) {
     }
 }
 
+
+App.updateOverviewSize = function (parent, chartParent) {
+    if (parent.innerWidth() > App.overviewMaxWidth) {
+        chartParent.width(App.overviewMaxWidth)
+    }
+    else {
+        chartParent.width(parent.innerWidth());
+    }
+    
+}
+
+
 App.graphFactory = function (url,targetElement, data, createFunction) {
     $.get({
         url: `/${App.GraphController}/GetGraph`,
@@ -274,20 +371,65 @@ App.createBankPriceTimelineGraph = function (targetElement, graphData) {
         i += 1;
     }
 
+    let lineValues = []
+    
     for (let label of graphData.labels) {
         let labelDate = new Date(label);
         let formatedDate = App.getFormatedDate(labelDate);
+        let validValues = 0;
+        let valueSum = 0;
         for (let dataset of datasets) {
+            
             if (graphData.dataset[dataset.label][formatedDate] === undefined) {
                 dataset.data.push(Number.NaN);
             }
             else {
-
+                validValues += 1;
+                valueSum += graphData.dataset[dataset.label][formatedDate];
                 dataset.data.push(Math.round(graphData.dataset[dataset.label][formatedDate]*10000)/10000);
             }
         }
+        if (validValues > 0) {
+            let tmpVal = valueSum / validValues;
+            lineValues.push(tmpVal);
+        } 
+
+
         
     }
+    //Fake regression
+    let separator = Math.round(lineValues.length / 2)
+    let startValues = lineValues.slice(0, separator);
+    let endValues = lineValues.slice(separator, lineValues.length);
+
+    let endValue = arrAvg(startValues);
+    let value = arrAvg(endValues)
+
+    endValue = Math.round(endValue * 10000) / 10000;
+    value = Math.round(value * 10000) / 10000;
+
+
+    //
+    let n = lineValues.length;
+    let xy = lineValues.map((value, index) => value * (index + 1));
+    let x = lineValues;
+    let y = lineValues.map((value, index) => index + 1);
+    let x2 = lineValues.map(value => value * value);
+    let xySum = arrSum(xy);
+    let xSum = arrSum(x);
+    let ySum = arrSum(y);
+    let x2Sum = arrSum(x2);
+    let aTmp = (xySum - xSum) / x2Sum;
+    let b = ySum / (n + aTmp);
+    let a = (xySum - (b * xSum)) / x2Sum;
+
+    let yMin = arrMin(y);
+    let yMax = arrMax(y);
+    regValue = yMin * a + b;
+    regEndValue = yMax * a + b;
+
+    
+
 
     let labels = [];
     for (let j = 0; j < graphData.labels.length; j++) {
@@ -320,6 +462,20 @@ App.createBankPriceTimelineGraph = function (targetElement, graphData) {
             title: {
                 display: true,
                 text: ` ${graphData.currency} ${graphData.isBuy ? "buy" : "sell"} price from ${App.PrettyPrintDate(startDate)} to ${App.PrettyPrintDate(endDate)}`
+            },
+            annotation: {
+                drawTime: 'beforeDatasetsDraw',
+                events: ['click'],
+                annotations: [{
+                    id: 'hline',
+                    type: 'line',
+                    mode: 'horizontal',
+                    scaleID: 'y-axis-0',
+                    value: value,
+                    endValue: endValue, 
+                    borderColor: 'rgba(90, 90, 90, 0.6)',
+                    borderWidth: 4
+                }]
             }
         }
     });
