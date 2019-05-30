@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BCC.Core;
+using Web.Models;
 using BCC.Model.Models;
 
 namespace Web.Controllers
@@ -79,55 +80,18 @@ namespace Web.Controllers
             end = new DateTime(end.Year, end.Month, end.Day, 23, 59, 59);
             if (string.IsNullOrWhiteSpace(currency)) currency = "AUD";
 
-            //List<Ticket> tickets = _context.Ticket.Where(x => x.Date.Year >= start.Year && x.Date.Month >= start.Month && x.Date.Day >= start.Day && x.Date.Year <= end.Year && x.Date.Month <= end.Month && x.Date.Day <= end.Day).ToList();
-            
-           
-            var bankNames = _context.BankConnector.Select(x => x.BankShortName).ToList();
-            var dataset = new Dictionary<string, Dictionary<string,double>>();
-            HashSet<DateTime> labels = new HashSet<DateTime>();
-            foreach (string name in bankNames)
-            {
-                dataset.Add(name, new Dictionary<string, double>());
-                var tickets = _context.Ticket.Where(x => x.Date >= start && x.Date <= end && x.BankShortName == name).ToList();
-                tickets.Sort(new TicketDateComparer());
-                foreach (var ticket in tickets)
-                {
-                    Currency selectedCurrency = _context.Currency.FirstOrDefault(x => x.TicketId == ticket.Id && x.IsoName == currency.ToUpperInvariant());
-                    if (selectedCurrency != null)
-                    {
-                        if (isBuy)
-                        {
-                            dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"),selectedCurrency.Buy);
-                            
-                        }
-                        else
-                        {
-                            if (selectedCurrency.Sell.HasValue)
-                            {
-                                dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"), selectedCurrency.Sell.Value);
-                               
-                            }
-                        }
-                    }
-                    labels.Add(ticket.Date);
-                }
-            }
-            var labelList = labels.ToList();
-            labelList.Sort();
-            return new JsonResult(new { labels=labelList, dataset,currency,isBuy,start,end });
+            return new JsonResult(_presentationManager.CreateTimelineDataset(start, end, currency, isBuy));
         }
+        
+
+        
+
         private bool IsDateInValid(ref DateTime date)
         {
             return (date == DateTime.MinValue || date > DateTime.Now);
 
         }
 
-        private class TicketDateComparer : IComparer<Ticket>
-        {
-            public int Compare(Ticket x, Ticket y)
-            {
-               return x.Date.CompareTo(y.Date);
-            }
-        }
+
     }
 }

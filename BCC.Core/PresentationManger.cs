@@ -38,7 +38,60 @@ namespace BCC.Core
             throw new NotImplementedException();
         }
 
-   
+        public TimelineDatasetModel CreateTimelineDataset(DateTime start, DateTime end, string currency, bool isBuy)
+        {
+            var bankNames = _context.BankConnector.Select(x => x.BankShortName).ToList();
+            var dataset = new Dictionary<string, Dictionary<string, double>>();
+            HashSet<DateTime> labels = new HashSet<DateTime>();
+            foreach (string name in bankNames)
+            {
+                dataset.Add(name, new Dictionary<string, double>());
+                var tickets = _context.Ticket.Where(x => x.Date >= start && x.Date <= end && x.BankShortName == name).ToList();
+                tickets.Sort(new TicketDateComparer());
+                foreach (var ticket in tickets)
+                {
+                    Currency selectedCurrency = _context.Currency.FirstOrDefault(x => x.TicketId == ticket.Id && x.IsoName == currency.ToUpperInvariant());
+                    if (selectedCurrency != null)
+                    {
+                        if (isBuy)
+                        {
+                            dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"), selectedCurrency.Buy);
+
+                        }
+                        else
+                        {
+                            if (selectedCurrency.Sell.HasValue)
+                            {
+                                dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"), selectedCurrency.Sell.Value);
+
+                            }
+                        }
+                    }
+                    labels.Add(ticket.Date);
+                }
+            }
+            var labelList = labels.ToList();
+            labelList.Sort();
+            return new TimelineDatasetModel()
+            {
+                Currency = currency,
+                Dataset = dataset,
+                IsBuy = isBuy,
+                Labels = labels,
+                Start = start,
+                End = end
+            };
+
+        }
+
+        private class TicketDateComparer : IComparer<Ticket>
+        {
+            public int Compare(Ticket x, Ticket y)
+            {
+                return x.Date.CompareTo(y.Date);
+            }
+        }
+
         public DataTable GetRecomendationTableData(DateTime date)
         {
             string tableName = $"Recomendations for {date.ToShortDateString()}";
@@ -81,7 +134,7 @@ namespace BCC.Core
                         string recomend = null;
                         string bank = null;
 
-                        if (diffBuy == 0 && diffSell == 0) ;
+                        if (diffBuy == 0 && diffSell == 0) 
                         {
                             recomend = "Buy";
                             bank = buyBank;
@@ -276,7 +329,7 @@ namespace BCC.Core
                         string recomend = null;
                         string bank = null;
 
-                        if (diffBuy == 0 && diffSell == 0) ;
+                        if (diffBuy == 0 && diffSell == 0) 
                         {
                             recomend = "Buy";
                             bank = buyBank;
@@ -352,7 +405,7 @@ namespace BCC.Core
             float absSell = Math.Abs(diffSell) / Math.Max(todaySell, todaySell);
             string recomend = null;
             string bank = null;
-            if (diffBuy == 0 && diffSell == 0) ;
+            if (diffBuy == 0 && diffSell == 0) 
             {
                 recomend = "Buy";
                 bank = buyBank;

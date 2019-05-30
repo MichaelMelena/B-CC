@@ -15,7 +15,7 @@ namespace Web.Controllers
     public class TicketTableController : Controller
     {
         
-        enum TableTypes { Buy, Sell, Ticket, Best, Recommendation, Change  }
+        enum TableTypes { Buy, Sell, Ticket, Best, Recommendation, Change, TimelineBuy, TimelineSell}
 
         #region Dependencies
         private readonly BCCContext _context;
@@ -126,10 +126,12 @@ namespace Web.Controllers
         #region excels
 
         
-        public IActionResult DownloadExcelTable(string tableType,DateTime tableDate,string bankName, string currency)
+        public IActionResult DownloadExcelTable(string tableType,DateTime tableDate,string bankName, string currency, int interval=7)
         {
             if(Enum.TryParse<TableTypes>(tableType,true,out TableTypes type))
             {
+                var start = DateTime.Now.Subtract(TimeSpan.FromDays(interval));
+                var end = DateTime.Now;
                 DataTable dataTable = null;
                 switch (type)
                 {
@@ -147,6 +149,14 @@ namespace Web.Controllers
                         break;
                     case TableTypes.Recommendation:
                         dataTable = _presentationManager.GetRecomendationTableData(tableDate);
+                        break;
+                    case TableTypes.TimelineBuy:
+                       
+                        dataTable = CreateTimelineDataTable(start,end, currency, true);
+                        break;
+                    case TableTypes.TimelineSell:
+                      
+                        dataTable = CreateTimelineDataTable(start, end, currency, false);
                         break;
 
                 }
@@ -170,5 +180,43 @@ namespace Web.Controllers
             }
         }
         #endregion
+
+        private DataTable CreateTimelineDataTable(DateTime start, DateTime end, string currency, bool isBuy)
+        {
+            TimelineDatasetModel model = _presentationManager.CreateTimelineDataset(start,end,currency,isBuy);
+            var table = new DataTable($"Timeline table from {start} to {end}");
+            table.Columns.Add("Date", typeof(string));
+            
+            foreach( string bank in model.Dataset.Keys)
+            {
+                table.Columns.Add(bank, typeof(double));
+            }
+
+            table.AcceptChanges();
+
+            foreach (DateTime date in model.Labels)
+            {
+                string stringDate = date.ToString("yyyy-MM-dd");
+                DataRow row = table.NewRow();
+
+                row[0] = date.ToShortDateString();
+                foreach (string bank in model.Dataset.Keys)
+                {
+                    if (model.Dataset[bank].ContainsKey(stringDate))
+                    {
+                        row[bank] = model.Dataset[bank][stringDate];
+                    }
+                    else
+                    {
+                        row[bank] = Double.NaN;
+                    }
+                    
+                }
+                table.Rows.Add(row);
+            }
+
+            table.AcceptChanges();
+            return table;
+        }
     }
 }

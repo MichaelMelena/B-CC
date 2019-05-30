@@ -5,11 +5,16 @@
     var canvasId = Guid.NewGuid();
 
 
-
-    if( ViewBag.tableType == null)
+    if (Model.Item2.IsBuy)
     {
-        ViewBag.tableType = "Buy";
+        ViewBag.tableType = "TimelineBuy";
     }
+    else
+    {
+        ViewBag.tableType = "TimelineSell";
+    }
+     
+
     if (ViewBag.tableDate == null)
     {
         ViewBag.tableDate  = DateTime.Now.ToString("yyyy-MM-dd");
@@ -18,17 +23,18 @@
     {
         ViewBag.bankName = "CSOB";
     }
-    if (ViewBag.currency == null)
-    {
-        ViewBag.currency = "AUD";
-    }
+    
+    
+    ViewBag.currency = Model.Item2.Currency;
+    
 
     var dict = new Dictionary<string, string>()
     {
         { "currency", ViewBag.currency },
         { "tableType", ViewBag.tableType},
         { "tableDate", ViewBag.tableDate},
-        { "bankName", ViewBag.bankName}
+        { "bankName", ViewBag.bankName},
+        { "interval", Model.Item2.Interval.ToString()}
     };
 
 }

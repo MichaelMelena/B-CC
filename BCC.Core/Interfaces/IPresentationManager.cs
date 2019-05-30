@@ -28,5 +28,7 @@ namespace BCC.Core
         string GetBuyDateGraph(string isoName, DateTime date);
 
         string GetSellDateGraph(string isoName, DateTime date);
+
+        TimelineDatasetModel CreateTimelineDataset(DateTime start, DateTime end, string currency, bool isBuy);
     }
 }
