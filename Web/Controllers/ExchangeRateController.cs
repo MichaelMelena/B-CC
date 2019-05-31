@@ -115,6 +115,15 @@ namespace Web.Controllers
             return PartialView(viewName: "~/Views/ExchangeRate/OverviewControl.cshtml", model: new Tuple<DataTable,OverviewModel>(table,overviewModel));
         }
 
+        [HttpGet]
+        public IActionResult BankMargin()
+        {
+            ViewBag.version = _version;
+            List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
+            List<BankConnector> banks = _context.BankConnector.Where(x=> x.BankShortName != "CNB" ).ToList();
+            return View(viewName: "~/Views/ExchangeRate/BankMargin.cshtml",model: new Tuple<List<CurrencyMetadata>, List<BankConnector>> (meta, banks));
+        }
+
         [HttpPost]
         public OkResult UpdateSession([FromBody]List<OverviewModel> data)
         {

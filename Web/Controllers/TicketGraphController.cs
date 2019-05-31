@@ -95,6 +95,8 @@ namespace Web.Controllers
             return new JsonResult(_presentationManager.BankMargin(start, end, bankName, currency, isBuy));
         }        
 
+
+
         private bool IsDateInValid(ref DateTime date)
         {
             return (date == DateTime.MinValue || date > DateTime.Now);

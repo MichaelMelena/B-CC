@@ -51,8 +51,6 @@ App.refreshOverviews = function (targetElement) {
     }
 }
 
-
-
 App.addActiveOverview = function (elementId,canvasId,currency, interval, isBuyText) {
     let isBuy = false;
     if (isBuyText === "True") isBuy = true;
@@ -65,7 +63,6 @@ App.removeOverviewControl = function(elementId){
     delete App.activeOverviews[elementId];
     $('#' + elementId).remove();
 }
-
 
 App.getOverviewControl = function (targetElement,currency,interval,isBuy) {
 
@@ -241,29 +238,30 @@ App.getBestTicket = function (targetElement, date) {
     });
 }
 
-App.toggleGraphSize = function (thisButton,canvasParent) {
+App.toggleGraphSize = function (thisButton,canvasParent, widthParent) {
+
     
     if (canvasParent.width() > App.SamllGraphWidth) {
         canvasParent.width(App.SamllGraphWidth);
         $(thisButton).html('&uarr;');
     } else {
-        let newWidth = Math.round($(window).innerWidth() * 0.85);
+        let newWidth = Math.round($(widthParent).innerWidth() * 0.90);
         if (newWidth > App.SamllGraphWidth) {
-            canvasParent.width(Math.round($(window).innerWidth() * 0.85));
+            canvasParent.width(Math.round($(widthParent).innerWidth() * 0.90));
             $(thisButton).html('&darr;');
         } else {
             canvasParent.width(App.SamllGraphWidth);
             $(thisButton).html('&uarr;');
         }
-       
-        
+
+
     }
    
 }
 
-App.UpateGraphSize = function (chartParent) {
+App.UpateGraphSize = function (chartParent,widthParent) {
     if (chartParent.width() > App.SamllGraphWidth) {
-        chartParent.width(Math.round($(window).innerWidth()*0.85));
+        chartParent.width(Math.round($(widthParent).innerWidth()*0.95));
     }
     else {
         chartParent.width(App.SamllGraphWidth);
@@ -292,7 +290,7 @@ App.graphFactory = function (url,targetElement, data, createFunction) {
                 success: function (data) {
                     var elements = $(content);
                     var chr = elements.find('canvas');
-                    $(window).resize(function () { App.UpateGraphSize(chr.parent()); });
+                    $(window).resize(function () { App.UpateGraphSize(chr.parent(), targetElement); });
                     targetElement.append(elements);
                     createFunction(chr[0], data);
                 },

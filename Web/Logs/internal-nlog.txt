@@ -33475,3 +33475,2202 @@
 2019-05-30 16:26:21.8502 Debug Warn => allfile ownFile-web
 2019-05-30 16:26:21.8502 Debug Error => allfile ownFile-web
 2019-05-30 16:26:21.8647 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:42.4773 Info Message Template Auto Format enabled
+2019-05-31 10:00:42.4988 Info Loading assembly: NLog.Web.AspNetCore
+2019-05-31 10:00:42.4988 Debug ScanAssembly('NLog.Web.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c')
+2019-05-31 10:00:42.5426 Debug Setting 'UppercaseLayoutRendererWrapper.uppercase' to 'true'
+2019-05-31 10:00:42.6123 Debug Setting 'FileTarget.name' to 'allfile'
+2019-05-31 10:00:42.6171 Debug Setting 'FileTarget.fileName' to './Logs/${shortdate}.log'
+2019-05-31 10:00:42.6171 Debug Setting 'FileTarget.layout' to '${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}'
+2019-05-31 10:00:42.6308 Debug Setting 'EventPropertiesLayoutRenderer.item' to 'EventId_Id'
+2019-05-31 10:00:42.6308 Debug Setting 'UppercaseLayoutRendererWrapper.Inner' to '${level}'
+2019-05-31 10:00:42.6676 Debug Setting 'ExceptionLayoutRenderer.format' to 'tostring'
+2019-05-31 10:00:42.6807 Info Adding target FileTarget(Name=allfile)
+2019-05-31 10:00:42.6807 Debug Registered target allfile: NLog.Targets.FileTarget
+2019-05-31 10:00:42.6931 Debug Setting 'UppercaseLayoutRendererWrapper.uppercase' to 'true'
+2019-05-31 10:00:42.6931 Debug Setting 'FileTarget.name' to 'ownFile-web'
+2019-05-31 10:00:42.7078 Debug Setting 'FileTarget.fileName' to './Logs/nlog-own-${shortdate}.log'
+2019-05-31 10:00:42.7078 Debug Setting 'FileTarget.layout' to '${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}|url: ${aspnet-request-url}|action: ${aspnet-mvc-action}'
+2019-05-31 10:00:42.7267 Debug Setting 'EventPropertiesLayoutRenderer.item' to 'EventId_Id'
+2019-05-31 10:00:42.7267 Debug Setting 'UppercaseLayoutRendererWrapper.Inner' to '${level}'
+2019-05-31 10:00:42.7267 Debug Setting 'ExceptionLayoutRenderer.format' to 'tostring'
+2019-05-31 10:00:42.7509 Info Adding target FileTarget(Name=ownFile-web)
+2019-05-31 10:00:42.7550 Debug Registered target ownFile-web: NLog.Targets.FileTarget
+2019-05-31 10:00:42.7738 Debug Unused target checking is started... Rule Count: 3, Target Count: 2
+2019-05-31 10:00:42.7738 Debug Unused target checking is completed. Total Rule Count: 3, Total Target Count: 2, Unused Target Count: 0
+2019-05-31 10:00:42.8060 Debug Watching path 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2' filter 'nlog.config' for changes.
+2019-05-31 10:00:42.8060 Debug --- NLog configuration dump ---
+2019-05-31 10:00:42.8060 Debug Targets:
+2019-05-31 10:00:42.8192 Debug File Target[allfile]
+2019-05-31 10:00:42.8192 Debug File Target[ownFile-web]
+2019-05-31 10:00:42.8192 Debug Rules:
+2019-05-31 10:00:42.8332 Debug logNamePattern: (:All) levels: [ Trace Debug Info Warn Error Fatal ] appendTo: [ allfile ]
+2019-05-31 10:00:42.8332 Debug logNamePattern: (Microsoft.:StartsWith) levels: [ Trace Debug Info ] appendTo: [ ]
+2019-05-31 10:00:42.8332 Debug logNamePattern: (:All) levels: [ Trace Debug Info Warn Error Fatal ] appendTo: [ ownFile-web ]
+2019-05-31 10:00:42.8332 Debug --- End of NLog configuration dump ---
+2019-05-31 10:00:42.8560 Info Found 45 configuration items
+2019-05-31 10:00:42.8965 Debug Targets for Web.Program by level:
+2019-05-31 10:00:42.8965 Debug Trace => allfile ownFile-web
+2019-05-31 10:00:42.8965 Debug Debug => allfile ownFile-web
+2019-05-31 10:00:42.8965 Debug Info => allfile ownFile-web
+2019-05-31 10:00:42.9130 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:42.9130 Debug Error => allfile ownFile-web
+2019-05-31 10:00:42.9130 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:42.9525 Debug FileTarget(Name=allfile): Process file 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/2019-05-31.log' on startup
+2019-05-31 10:00:42.9640 Debug Creating file appender: C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/2019-05-31.log
+2019-05-31 10:00:42.9936 Debug Missing serviceProvider, so no HttpContext
+2019-05-31 10:00:42.9936 Debug Missing serviceProvider, so no HttpContext
+2019-05-31 10:00:42.9936 Debug FileTarget(Name=ownFile-web): Process file 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/nlog-own-2019-05-31.log' on startup
+2019-05-31 10:00:42.9936 Debug Creating file appender: C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/nlog-own-2019-05-31.log
+2019-05-31 10:00:45.2252 Debug ScanAssembly('NLog.Web.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c')
+2019-05-31 10:00:45.9294 Debug Hide assemblies for callsite
+2019-05-31 10:00:45.9520 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.WebHost by level:
+2019-05-31 10:00:45.9520 Debug Trace => allfile
+2019-05-31 10:00:45.9596 Debug Debug => allfile
+2019-05-31 10:00:45.9596 Debug Info => allfile
+2019-05-31 10:00:45.9596 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:45.9596 Debug Error => allfile ownFile-web
+2019-05-31 10:00:45.9732 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:45.9732 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.ApplicationLifetime by level:
+2019-05-31 10:00:45.9732 Debug Trace => allfile
+2019-05-31 10:00:45.9906 Debug Debug => allfile
+2019-05-31 10:00:45.9906 Debug Info => allfile
+2019-05-31 10:00:45.9906 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:45.9906 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.0056 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.0056 Debug Targets for Microsoft.AspNetCore.Server.IIS.Core.IISHttpServer by level:
+2019-05-31 10:00:46.0056 Debug Trace => allfile
+2019-05-31 10:00:46.0056 Debug Debug => allfile
+2019-05-31 10:00:46.0210 Debug Info => allfile
+2019-05-31 10:00:46.0210 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.0210 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.0210 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.0410 Debug Targets for Microsoft.AspNetCore.DataProtection.TypeForwardingActivator by level:
+2019-05-31 10:00:46.0410 Debug Trace => allfile
+2019-05-31 10:00:46.0410 Debug Debug => allfile
+2019-05-31 10:00:46.0517 Debug Info => allfile
+2019-05-31 10:00:46.0517 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.0517 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.0517 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.0780 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager by level:
+2019-05-31 10:00:46.0780 Debug Trace => allfile
+2019-05-31 10:00:46.0851 Debug Debug => allfile
+2019-05-31 10:00:46.0851 Debug Info => allfile
+2019-05-31 10:00:46.0851 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.0984 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.0984 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.0984 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngGcmAuthenticatedEncryptorFactory by level:
+2019-05-31 10:00:46.0984 Debug Trace => allfile
+2019-05-31 10:00:46.1160 Debug Debug => allfile
+2019-05-31 10:00:46.1160 Debug Info => allfile
+2019-05-31 10:00:46.1160 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.1160 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.1311 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.1311 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory by level:
+2019-05-31 10:00:46.1311 Debug Trace => allfile
+2019-05-31 10:00:46.1311 Debug Debug => allfile
+2019-05-31 10:00:46.1453 Debug Info => allfile
+2019-05-31 10:00:46.1453 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.1453 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.1453 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.1453 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ManagedAuthenticatedEncryptorFactory by level:
+2019-05-31 10:00:46.1634 Debug Trace => allfile
+2019-05-31 10:00:46.1634 Debug Debug => allfile
+2019-05-31 10:00:46.1634 Debug Info => allfile
+2019-05-31 10:00:46.1634 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.1783 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.1783 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.1783 Debug Targets for Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlEncryptor by level:
+2019-05-31 10:00:46.1934 Debug Trace => allfile
+2019-05-31 10:00:46.1934 Debug Debug => allfile
+2019-05-31 10:00:46.1934 Debug Info => allfile
+2019-05-31 10:00:46.1934 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.2101 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.2101 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.2101 Debug Targets for Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository by level:
+2019-05-31 10:00:46.2101 Debug Trace => allfile
+2019-05-31 10:00:46.2263 Debug Debug => allfile
+2019-05-31 10:00:46.2263 Debug Info => allfile
+2019-05-31 10:00:46.2263 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.2263 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.2414 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.2968 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver by level:
+2019-05-31 10:00:46.2968 Debug Trace => allfile
+2019-05-31 10:00:46.3057 Debug Debug => allfile
+2019-05-31 10:00:46.3057 Debug Info => allfile
+2019-05-31 10:00:46.3057 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.3187 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.3187 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.3187 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider by level:
+2019-05-31 10:00:46.3187 Debug Trace => allfile
+2019-05-31 10:00:46.3369 Debug Debug => allfile
+2019-05-31 10:00:46.3369 Debug Info => allfile
+2019-05-31 10:00:46.3369 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.3525 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.3525 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.3525 Debug Targets for Microsoft.AspNetCore.DataProtection.Internal.DataProtectionStartupFilter by level:
+2019-05-31 10:00:46.3642 Debug Trace => allfile
+2019-05-31 10:00:46.3642 Debug Debug => allfile
+2019-05-31 10:00:46.3642 Debug Info => allfile
+2019-05-31 10:00:46.3642 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.3822 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.3822 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.4815 Debug Targets for Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor by level:
+2019-05-31 10:00:46.4815 Debug Trace => allfile
+2019-05-31 10:00:46.4815 Debug Debug => allfile
+2019-05-31 10:00:46.4922 Debug Info => allfile
+2019-05-31 10:00:46.4922 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.4922 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.4922 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.5727 Debug Targets for Microsoft.AspNetCore.Mvc.MvcJsonOptions by level:
+2019-05-31 10:00:46.5727 Debug Trace => allfile
+2019-05-31 10:00:46.5727 Debug Debug => allfile
+2019-05-31 10:00:46.5835 Debug Info => allfile
+2019-05-31 10:00:46.5835 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.5835 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.5835 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.6067 Debug Targets for Microsoft.AspNetCore.Mvc.MvcOptions by level:
+2019-05-31 10:00:46.6067 Debug Trace => allfile
+2019-05-31 10:00:46.6169 Debug Debug => allfile
+2019-05-31 10:00:46.6169 Debug Info => allfile
+2019-05-31 10:00:46.6169 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.6321 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.6321 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.6699 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.JsonPatchInputFormatter by level:
+2019-05-31 10:00:46.6699 Debug Trace => allfile
+2019-05-31 10:00:46.6771 Debug Debug => allfile
+2019-05-31 10:00:46.6771 Debug Info => allfile
+2019-05-31 10:00:46.6771 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.6771 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.6953 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.6953 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.JsonInputFormatter by level:
+2019-05-31 10:00:46.6953 Debug Trace => allfile
+2019-05-31 10:00:46.6953 Debug Debug => allfile
+2019-05-31 10:00:46.7108 Debug Info => allfile
+2019-05-31 10:00:46.7108 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.7108 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.7252 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.7252 Debug Targets for Microsoft.AspNetCore.Mvc.ApiBehaviorOptions by level:
+2019-05-31 10:00:46.7423 Debug Trace => allfile
+2019-05-31 10:00:46.7423 Debug Debug => allfile
+2019-05-31 10:00:46.7423 Debug Info => allfile
+2019-05-31 10:00:46.7550 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.7550 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.7550 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.7550 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions by level:
+2019-05-31 10:00:46.7719 Debug Trace => allfile
+2019-05-31 10:00:46.7719 Debug Debug => allfile
+2019-05-31 10:00:46.7719 Debug Info => allfile
+2019-05-31 10:00:46.7719 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.7860 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.7860 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.7860 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.RazorPagesOptions by level:
+2019-05-31 10:00:46.7860 Debug Trace => allfile
+2019-05-31 10:00:46.7860 Debug Debug => allfile
+2019-05-31 10:00:46.8056 Debug Info => allfile
+2019-05-31 10:00:46.8056 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.8056 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.8170 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.8485 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler by level:
+2019-05-31 10:00:46.8538 Debug Trace => allfile
+2019-05-31 10:00:46.8538 Debug Debug => allfile
+2019-05-31 10:00:46.8643 Debug Info => allfile
+2019-05-31 10:00:46.8643 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.8643 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.8643 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.8853 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine by level:
+2019-05-31 10:00:46.9107 Debug Trace => allfile
+2019-05-31 10:00:46.9428 Debug Debug => allfile
+2019-05-31 10:00:46.9428 Debug Info => allfile
+2019-05-31 10:00:46.9583 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.9583 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.9583 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.9753 Debug Targets for Microsoft.AspNetCore.Mvc.MvcViewOptions by level:
+2019-05-31 10:00:46.9753 Debug Trace => allfile
+2019-05-31 10:00:46.9753 Debug Debug => allfile
+2019-05-31 10:00:46.9753 Debug Info => allfile
+2019-05-31 10:00:46.9895 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:46.9895 Debug Error => allfile ownFile-web
+2019-05-31 10:00:46.9895 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:46.9895 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.RazorProjectPageRouteModelProvider by level:
+2019-05-31 10:00:47.0078 Debug Trace => allfile
+2019-05-31 10:00:47.0078 Debug Debug => allfile
+2019-05-31 10:00:47.0078 Debug Info => allfile
+2019-05-31 10:00:47.0078 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.0231 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.0231 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.0231 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.CompiledPageRouteModelProvider by level:
+2019-05-31 10:00:47.0231 Debug Trace => allfile
+2019-05-31 10:00:47.0473 Debug Debug => allfile
+2019-05-31 10:00:47.0473 Debug Info => allfile
+2019-05-31 10:00:47.0548 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.0548 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.0548 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.0823 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory by level:
+2019-05-31 10:00:47.0878 Debug Trace => allfile
+2019-05-31 10:00:47.0878 Debug Debug => allfile
+2019-05-31 10:00:47.1079 Debug Info => allfile
+2019-05-31 10:00:47.1079 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.1147 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.1147 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.1375 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder by level:
+2019-05-31 10:00:47.1375 Debug Trace => allfile
+2019-05-31 10:00:47.1375 Debug Debug => allfile
+2019-05-31 10:00:47.1488 Debug Info => allfile
+2019-05-31 10:00:47.1488 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.1488 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.1607 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.1607 Debug Targets for Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker by level:
+2019-05-31 10:00:47.1607 Debug Trace => allfile
+2019-05-31 10:00:47.1607 Debug Debug => allfile
+2019-05-31 10:00:47.1811 Debug Info => allfile
+2019-05-31 10:00:47.1811 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.1811 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.1927 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.1927 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector by level:
+2019-05-31 10:00:47.1927 Debug Trace => allfile
+2019-05-31 10:00:47.1927 Debug Debug => allfile
+2019-05-31 10:00:47.2086 Debug Info => allfile
+2019-05-31 10:00:47.2086 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.2086 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.2086 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.2265 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.CookieTempDataProvider by level:
+2019-05-31 10:00:47.2265 Debug Trace => allfile
+2019-05-31 10:00:47.2265 Debug Debug => allfile
+2019-05-31 10:00:47.2265 Debug Info => allfile
+2019-05-31 10:00:47.2409 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.2409 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.2409 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.2703 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvoker by level:
+2019-05-31 10:00:47.2740 Debug Trace => allfile
+2019-05-31 10:00:47.2740 Debug Debug => allfile
+2019-05-31 10:00:47.2740 Debug Info => allfile
+2019-05-31 10:00:47.2740 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.2886 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.2886 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.4567 Debug Targets for Microsoft.AspNetCore.Routing.EndpointMiddleware by level:
+2019-05-31 10:00:47.4612 Debug Trace => allfile
+2019-05-31 10:00:47.4612 Debug Debug => allfile
+2019-05-31 10:00:47.4612 Debug Info => allfile
+2019-05-31 10:00:47.4738 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.4738 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.4738 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.4891 Debug Targets for Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware by level:
+2019-05-31 10:00:47.4891 Debug Trace => allfile
+2019-05-31 10:00:47.4891 Debug Debug => allfile
+2019-05-31 10:00:47.4891 Debug Info => allfile
+2019-05-31 10:00:47.4891 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.5080 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.5080 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.5080 Debug Targets for Microsoft.AspNetCore.Session.SessionMiddleware by level:
+2019-05-31 10:00:47.5225 Debug Trace => allfile
+2019-05-31 10:00:47.5225 Debug Debug => allfile
+2019-05-31 10:00:47.5225 Debug Info => allfile
+2019-05-31 10:00:47.5225 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.5390 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.5390 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.5390 Debug Targets for Microsoft.AspNetCore.CookiePolicy.CookiePolicyMiddleware by level:
+2019-05-31 10:00:47.5547 Debug Trace => allfile
+2019-05-31 10:00:47.5547 Debug Debug => allfile
+2019-05-31 10:00:47.5547 Debug Info => allfile
+2019-05-31 10:00:47.5671 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.5671 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.5671 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.5671 Debug Targets for Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware by level:
+2019-05-31 10:00:47.5851 Debug Trace => allfile
+2019-05-31 10:00:47.5851 Debug Debug => allfile
+2019-05-31 10:00:47.5851 Debug Info => allfile
+2019-05-31 10:00:47.5851 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.6026 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.6026 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.6026 Debug Targets for Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware by level:
+2019-05-31 10:00:47.6154 Debug Trace => allfile
+2019-05-31 10:00:47.6154 Debug Debug => allfile
+2019-05-31 10:00:47.6154 Debug Info => allfile
+2019-05-31 10:00:47.6154 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.6325 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.6325 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.6325 Debug Targets for Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware by level:
+2019-05-31 10:00:47.6458 Debug Trace => allfile
+2019-05-31 10:00:47.6458 Debug Debug => allfile
+2019-05-31 10:00:47.6458 Debug Info => allfile
+2019-05-31 10:00:47.6458 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.6625 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.6625 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.6625 Debug Targets for Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware by level:
+2019-05-31 10:00:47.6625 Debug Trace => allfile
+2019-05-31 10:00:47.6777 Debug Debug => allfile
+2019-05-31 10:00:47.6777 Debug Info => allfile
+2019-05-31 10:00:47.6777 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.6777 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.6945 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.6945 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor by level:
+2019-05-31 10:00:47.6945 Debug Trace => allfile
+2019-05-31 10:00:47.6945 Debug Debug => allfile
+2019-05-31 10:00:47.7113 Debug Info => allfile
+2019-05-31 10:00:47.7113 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.7113 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.7113 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:47.7261 Debug Targets for BCC.Core.BankManager by level:
+2019-05-31 10:00:47.7261 Debug Trace => allfile ownFile-web
+2019-05-31 10:00:47.7261 Debug Debug => allfile ownFile-web
+2019-05-31 10:00:47.7261 Debug Info => allfile ownFile-web
+2019-05-31 10:00:47.7406 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:47.7406 Debug Error => allfile ownFile-web
+2019-05-31 10:00:47.7406 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:48.1615 Debug Targets for Microsoft.EntityFrameworkCore.Infrastructure by level:
+2019-05-31 10:00:48.1615 Debug Trace => allfile
+2019-05-31 10:00:48.1615 Debug Debug => allfile
+2019-05-31 10:00:48.1615 Debug Info => allfile
+2019-05-31 10:00:48.1765 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:48.1765 Debug Error => allfile ownFile-web
+2019-05-31 10:00:48.1765 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:48.2591 Debug Targets for Microsoft.EntityFrameworkCore.ChangeTracking by level:
+2019-05-31 10:00:48.2591 Debug Trace => allfile
+2019-05-31 10:00:48.2591 Debug Debug => allfile
+2019-05-31 10:00:48.2720 Debug Info => allfile
+2019-05-31 10:00:48.2720 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:48.2720 Debug Error => allfile ownFile-web
+2019-05-31 10:00:48.2720 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:48.3119 Debug Targets for Microsoft.EntityFrameworkCore.Model by level:
+2019-05-31 10:00:48.3119 Debug Trace => allfile
+2019-05-31 10:00:48.3194 Debug Debug => allfile
+2019-05-31 10:00:48.3194 Debug Info => allfile
+2019-05-31 10:00:48.3194 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:48.3194 Debug Error => allfile ownFile-web
+2019-05-31 10:00:48.3354 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:48.3354 Debug Targets for Microsoft.EntityFrameworkCore.Model.Validation by level:
+2019-05-31 10:00:48.3354 Debug Trace => allfile
+2019-05-31 10:00:48.3512 Debug Debug => allfile
+2019-05-31 10:00:48.3512 Debug Info => allfile
+2019-05-31 10:00:48.3512 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:48.3512 Debug Error => allfile ownFile-web
+2019-05-31 10:00:48.3670 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:48.9829 Debug Targets for Microsoft.EntityFrameworkCore.Database.Transaction by level:
+2019-05-31 10:00:48.9829 Debug Trace => allfile
+2019-05-31 10:00:48.9906 Debug Debug => allfile
+2019-05-31 10:00:48.9906 Debug Info => allfile
+2019-05-31 10:00:48.9906 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:48.9906 Debug Error => allfile ownFile-web
+2019-05-31 10:00:48.9906 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:49.0083 Debug Targets for Microsoft.EntityFrameworkCore.Database.Connection by level:
+2019-05-31 10:00:49.0083 Debug Trace => allfile
+2019-05-31 10:00:49.0083 Debug Debug => allfile
+2019-05-31 10:00:49.0083 Debug Info => allfile
+2019-05-31 10:00:49.0225 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:49.0225 Debug Error => allfile ownFile-web
+2019-05-31 10:00:49.0225 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:49.0389 Debug Targets for Microsoft.EntityFrameworkCore.Query by level:
+2019-05-31 10:00:49.0389 Debug Trace => allfile
+2019-05-31 10:00:49.0389 Debug Debug => allfile
+2019-05-31 10:00:49.0389 Debug Info => allfile
+2019-05-31 10:00:49.0543 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:49.0543 Debug Error => allfile ownFile-web
+2019-05-31 10:00:49.0543 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:49.0877 Debug Targets for Microsoft.EntityFrameworkCore.Database.Command by level:
+2019-05-31 10:00:49.0877 Debug Trace => allfile
+2019-05-31 10:00:49.0983 Debug Debug => allfile
+2019-05-31 10:00:49.0983 Debug Info => allfile
+2019-05-31 10:00:49.0983 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:49.0983 Debug Error => allfile ownFile-web
+2019-05-31 10:00:49.1158 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:49.1786 Debug Targets for Microsoft.EntityFrameworkCore.Update by level:
+2019-05-31 10:00:49.1786 Debug Trace => allfile
+2019-05-31 10:00:49.1786 Debug Debug => allfile
+2019-05-31 10:00:49.1786 Debug Info => allfile
+2019-05-31 10:00:49.1931 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:49.1931 Debug Error => allfile ownFile-web
+2019-05-31 10:00:49.1931 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:49.8898 Debug Targets for BCC.Core.CNB.CNBank by level:
+2019-05-31 10:00:49.8898 Debug Trace => allfile ownFile-web
+2019-05-31 10:00:49.8979 Debug Debug => allfile ownFile-web
+2019-05-31 10:00:49.8979 Debug Info => allfile ownFile-web
+2019-05-31 10:00:49.9137 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:49.9266 Debug Error => allfile ownFile-web
+2019-05-31 10:00:49.9266 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:49.9266 Debug Targets for BCC.Core.KB.KBank by level:
+2019-05-31 10:00:49.9432 Debug Trace => allfile ownFile-web
+2019-05-31 10:00:49.9432 Debug Debug => allfile ownFile-web
+2019-05-31 10:00:49.9432 Debug Info => allfile ownFile-web
+2019-05-31 10:00:49.9432 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:49.9615 Debug Error => allfile ownFile-web
+2019-05-31 10:00:49.9615 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:49.9615 Debug Targets for BCC.Core.CSOB.CSOBank by level:
+2019-05-31 10:00:49.9745 Debug Trace => allfile ownFile-web
+2019-05-31 10:00:49.9745 Debug Debug => allfile ownFile-web
+2019-05-31 10:00:49.9745 Debug Info => allfile ownFile-web
+2019-05-31 10:00:49.9745 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:49.9891 Debug Error => allfile ownFile-web
+2019-05-31 10:00:49.9891 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:49.9891 Debug Targets for BCC.Core.RB.RBank by level:
+2019-05-31 10:00:50.0079 Debug Trace => allfile ownFile-web
+2019-05-31 10:00:50.0079 Debug Debug => allfile ownFile-web
+2019-05-31 10:00:50.0079 Debug Info => allfile ownFile-web
+2019-05-31 10:00:50.0079 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:50.0220 Debug Error => allfile ownFile-web
+2019-05-31 10:00:50.0220 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:50.0220 Debug No available HttpContext. Logging outside valid request context?
+2019-05-31 10:00:50.0377 Debug No available HttpContext. Logging outside valid request context?
+2019-05-31 10:00:50.2315 Debug Targets for Microsoft.AspNetCore.Session.DistributedSession by level:
+2019-05-31 10:00:50.2315 Debug Trace => allfile
+2019-05-31 10:00:50.2394 Debug Debug => allfile
+2019-05-31 10:00:50.2394 Debug Info => allfile
+2019-05-31 10:00:50.2394 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:50.2394 Debug Error => allfile ownFile-web
+2019-05-31 10:00:50.2554 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:50.2944 Debug Targets for Microsoft.AspNetCore.Routing.Matching.DfaMatcher by level:
+2019-05-31 10:00:50.2944 Debug Trace => allfile
+2019-05-31 10:00:50.3025 Debug Debug => allfile
+2019-05-31 10:00:50.3025 Debug Info => allfile
+2019-05-31 10:00:50.3025 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:50.3025 Debug Error => allfile ownFile-web
+2019-05-31 10:00:50.3187 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:50.3561 Debug Targets for Web.Controllers.HomeController by level:
+2019-05-31 10:00:50.3653 Debug Trace => allfile ownFile-web
+2019-05-31 10:00:50.3653 Debug Debug => allfile ownFile-web
+2019-05-31 10:00:50.3653 Debug Info => allfile ownFile-web
+2019-05-31 10:00:50.3990 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:50.4164 Debug Error => allfile ownFile-web
+2019-05-31 10:00:50.4164 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:50.7084 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor by level:
+2019-05-31 10:00:50.7084 Debug Trace => allfile
+2019-05-31 10:00:50.7084 Debug Debug => allfile
+2019-05-31 10:00:50.7084 Debug Info => allfile
+2019-05-31 10:00:50.7262 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:50.7394 Debug Error => allfile ownFile-web
+2019-05-31 10:00:50.7394 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:50.8351 Debug Targets for Microsoft.AspNetCore.Routing.DefaultLinkGenerator by level:
+2019-05-31 10:00:50.8351 Debug Trace => allfile
+2019-05-31 10:00:50.8495 Debug Debug => allfile
+2019-05-31 10:00:50.8495 Debug Info => allfile
+2019-05-31 10:00:50.8495 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:50.8495 Debug Error => allfile ownFile-web
+2019-05-31 10:00:50.8661 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:50.8661 Debug Targets for Microsoft.AspNetCore.Mvc.Routing.EndpointRoutingUrlHelper by level:
+2019-05-31 10:00:50.8661 Debug Trace => allfile
+2019-05-31 10:00:50.8661 Debug Debug => allfile
+2019-05-31 10:00:50.8826 Debug Info => allfile
+2019-05-31 10:00:50.8826 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:50.8826 Debug Error => allfile ownFile-web
+2019-05-31 10:00:50.8954 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:50.8954 Debug Targets for Microsoft.AspNetCore.Mvc.ViewComponents.DefaultViewComponentInvoker by level:
+2019-05-31 10:00:50.8954 Debug Trace => allfile
+2019-05-31 10:00:50.8954 Debug Debug => allfile
+2019-05-31 10:00:50.9115 Debug Info => allfile
+2019-05-31 10:00:50.9115 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:50.9115 Debug Error => allfile ownFile-web
+2019-05-31 10:00:50.9115 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:50.9320 Debug Targets for Microsoft.AspNetCore.Antiforgery.Internal.DefaultAntiforgery by level:
+2019-05-31 10:00:50.9320 Debug Trace => allfile
+2019-05-31 10:00:50.9320 Debug Debug => allfile
+2019-05-31 10:00:50.9445 Debug Info => allfile
+2019-05-31 10:00:50.9445 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:50.9445 Debug Error => allfile ownFile-web
+2019-05-31 10:00:50.9445 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:51.0361 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.TagHelpers.HeadTagHelper by level:
+2019-05-31 10:00:51.0361 Debug Trace => allfile
+2019-05-31 10:00:51.0823 Debug Debug => allfile
+2019-05-31 10:00:51.0864 Debug Info => allfile
+2019-05-31 10:00:51.0864 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:51.0864 Debug Error => allfile ownFile-web
+2019-05-31 10:00:51.1045 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:51.1174 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.TagHelpers.BodyTagHelper by level:
+2019-05-31 10:00:51.1174 Debug Trace => allfile
+2019-05-31 10:00:51.1174 Debug Debug => allfile
+2019-05-31 10:00:51.1459 Debug Info => allfile
+2019-05-31 10:00:51.1459 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:51.1459 Debug Error => allfile ownFile-web
+2019-05-31 10:00:51.1617 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:58.5473 Debug Targets for BCC.Core.PresentationManger by level:
+2019-05-31 10:00:58.5545 Debug Trace => allfile ownFile-web
+2019-05-31 10:00:58.5545 Debug Debug => allfile ownFile-web
+2019-05-31 10:00:58.5545 Debug Info => allfile ownFile-web
+2019-05-31 10:00:58.5725 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:58.5725 Debug Error => allfile ownFile-web
+2019-05-31 10:00:58.5725 Debug Fatal => allfile ownFile-web
+2019-05-31 10:00:58.5861 Debug Targets for Web.Controllers.ExchangeRateController by level:
+2019-05-31 10:00:58.5861 Debug Trace => allfile ownFile-web
+2019-05-31 10:00:58.5861 Debug Debug => allfile ownFile-web
+2019-05-31 10:00:58.5988 Debug Info => allfile ownFile-web
+2019-05-31 10:00:58.5988 Debug Warn => allfile ownFile-web
+2019-05-31 10:00:58.5988 Debug Error => allfile ownFile-web
+2019-05-31 10:00:58.5988 Debug Fatal => allfile ownFile-web
+2019-05-31 10:01:05.2572 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder by level:
+2019-05-31 10:01:05.2572 Debug Trace => allfile
+2019-05-31 10:01:05.2965 Debug Debug => allfile
+2019-05-31 10:01:05.2965 Debug Info => allfile
+2019-05-31 10:01:05.3030 Debug Warn => allfile ownFile-web
+2019-05-31 10:01:05.3030 Debug Error => allfile ownFile-web
+2019-05-31 10:01:05.3030 Debug Fatal => allfile ownFile-web
+2019-05-31 10:01:05.4923 Debug Targets for Microsoft.AspNetCore.Mvc.StatusCodeResult by level:
+2019-05-31 10:01:05.5049 Debug Trace => allfile
+2019-05-31 10:01:05.5049 Debug Debug => allfile
+2019-05-31 10:01:05.5049 Debug Info => allfile
+2019-05-31 10:01:05.5049 Debug Warn => allfile ownFile-web
+2019-05-31 10:01:05.5246 Debug Error => allfile ownFile-web
+2019-05-31 10:01:05.5246 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:45.7153 Info Message Template Auto Format enabled
+2019-05-31 10:04:45.7341 Info Loading assembly: NLog.Web.AspNetCore
+2019-05-31 10:04:45.7341 Debug ScanAssembly('NLog.Web.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c')
+2019-05-31 10:04:45.7672 Debug Setting 'UppercaseLayoutRendererWrapper.uppercase' to 'true'
+2019-05-31 10:04:45.8180 Debug Setting 'FileTarget.name' to 'allfile'
+2019-05-31 10:04:45.8180 Debug Setting 'FileTarget.fileName' to './Logs/${shortdate}.log'
+2019-05-31 10:04:45.8180 Debug Setting 'FileTarget.layout' to '${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}'
+2019-05-31 10:04:45.8180 Debug Setting 'EventPropertiesLayoutRenderer.item' to 'EventId_Id'
+2019-05-31 10:04:45.8364 Debug Setting 'UppercaseLayoutRendererWrapper.Inner' to '${level}'
+2019-05-31 10:04:45.8534 Debug Setting 'ExceptionLayoutRenderer.format' to 'tostring'
+2019-05-31 10:04:45.8534 Info Adding target FileTarget(Name=allfile)
+2019-05-31 10:04:45.8641 Debug Registered target allfile: NLog.Targets.FileTarget
+2019-05-31 10:04:45.8641 Debug Setting 'UppercaseLayoutRendererWrapper.uppercase' to 'true'
+2019-05-31 10:04:45.8641 Debug Setting 'FileTarget.name' to 'ownFile-web'
+2019-05-31 10:04:45.8641 Debug Setting 'FileTarget.fileName' to './Logs/nlog-own-${shortdate}.log'
+2019-05-31 10:04:45.8810 Debug Setting 'FileTarget.layout' to '${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}|url: ${aspnet-request-url}|action: ${aspnet-mvc-action}'
+2019-05-31 10:04:45.8810 Debug Setting 'EventPropertiesLayoutRenderer.item' to 'EventId_Id'
+2019-05-31 10:04:45.8810 Debug Setting 'UppercaseLayoutRendererWrapper.Inner' to '${level}'
+2019-05-31 10:04:45.8810 Debug Setting 'ExceptionLayoutRenderer.format' to 'tostring'
+2019-05-31 10:04:45.9025 Info Adding target FileTarget(Name=ownFile-web)
+2019-05-31 10:04:45.9025 Debug Registered target ownFile-web: NLog.Targets.FileTarget
+2019-05-31 10:04:45.9228 Debug Unused target checking is started... Rule Count: 3, Target Count: 2
+2019-05-31 10:04:45.9325 Debug Unused target checking is completed. Total Rule Count: 3, Total Target Count: 2, Unused Target Count: 0
+2019-05-31 10:04:45.9534 Debug Watching path 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2' filter 'nlog.config' for changes.
+2019-05-31 10:04:45.9534 Debug --- NLog configuration dump ---
+2019-05-31 10:04:45.9614 Debug Targets:
+2019-05-31 10:04:45.9614 Debug File Target[allfile]
+2019-05-31 10:04:45.9614 Debug File Target[ownFile-web]
+2019-05-31 10:04:45.9614 Debug Rules:
+2019-05-31 10:04:45.9776 Debug logNamePattern: (:All) levels: [ Trace Debug Info Warn Error Fatal ] appendTo: [ allfile ]
+2019-05-31 10:04:45.9776 Debug logNamePattern: (Microsoft.:StartsWith) levels: [ Trace Debug Info ] appendTo: [ ]
+2019-05-31 10:04:45.9776 Debug logNamePattern: (:All) levels: [ Trace Debug Info Warn Error Fatal ] appendTo: [ ownFile-web ]
+2019-05-31 10:04:45.9776 Debug --- End of NLog configuration dump ---
+2019-05-31 10:04:45.9956 Info Found 45 configuration items
+2019-05-31 10:04:46.0362 Debug Targets for Web.Program by level:
+2019-05-31 10:04:46.0362 Debug Trace => allfile ownFile-web
+2019-05-31 10:04:46.0362 Debug Debug => allfile ownFile-web
+2019-05-31 10:04:46.0520 Debug Info => allfile ownFile-web
+2019-05-31 10:04:46.0520 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:46.0520 Debug Error => allfile ownFile-web
+2019-05-31 10:04:46.0520 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:46.0982 Debug FileTarget(Name=allfile): Process file 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/2019-05-31.log' on startup
+2019-05-31 10:04:46.0982 Debug Creating file appender: C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/2019-05-31.log
+2019-05-31 10:04:46.1317 Debug Missing serviceProvider, so no HttpContext
+2019-05-31 10:04:46.1317 Debug Missing serviceProvider, so no HttpContext
+2019-05-31 10:04:46.1317 Debug FileTarget(Name=ownFile-web): Process file 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/nlog-own-2019-05-31.log' on startup
+2019-05-31 10:04:46.1317 Debug Creating file appender: C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/nlog-own-2019-05-31.log
+2019-05-31 10:04:47.3238 Debug ScanAssembly('NLog.Web.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c')
+2019-05-31 10:04:47.9239 Debug Hide assemblies for callsite
+2019-05-31 10:04:47.9498 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.WebHost by level:
+2019-05-31 10:04:47.9498 Debug Trace => allfile
+2019-05-31 10:04:47.9587 Debug Debug => allfile
+2019-05-31 10:04:47.9587 Debug Info => allfile
+2019-05-31 10:04:47.9587 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:47.9587 Debug Error => allfile ownFile-web
+2019-05-31 10:04:47.9735 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:47.9735 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.ApplicationLifetime by level:
+2019-05-31 10:04:47.9735 Debug Trace => allfile
+2019-05-31 10:04:47.9917 Debug Debug => allfile
+2019-05-31 10:04:47.9917 Debug Info => allfile
+2019-05-31 10:04:47.9917 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:47.9917 Debug Error => allfile ownFile-web
+2019-05-31 10:04:47.9917 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.0116 Debug Targets for Microsoft.AspNetCore.Server.IIS.Core.IISHttpServer by level:
+2019-05-31 10:04:48.0116 Debug Trace => allfile
+2019-05-31 10:04:48.0204 Debug Debug => allfile
+2019-05-31 10:04:48.0204 Debug Info => allfile
+2019-05-31 10:04:48.0204 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.0204 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.0204 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.0422 Debug Targets for Microsoft.AspNetCore.DataProtection.TypeForwardingActivator by level:
+2019-05-31 10:04:48.0422 Debug Trace => allfile
+2019-05-31 10:04:48.0422 Debug Debug => allfile
+2019-05-31 10:04:48.0528 Debug Info => allfile
+2019-05-31 10:04:48.0528 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.0528 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.0528 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.0775 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager by level:
+2019-05-31 10:04:48.0775 Debug Trace => allfile
+2019-05-31 10:04:48.0846 Debug Debug => allfile
+2019-05-31 10:04:48.0846 Debug Info => allfile
+2019-05-31 10:04:48.0846 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.0846 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.0987 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.0987 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngGcmAuthenticatedEncryptorFactory by level:
+2019-05-31 10:04:48.0987 Debug Trace => allfile
+2019-05-31 10:04:48.0987 Debug Debug => allfile
+2019-05-31 10:04:48.1139 Debug Info => allfile
+2019-05-31 10:04:48.1139 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.1139 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.1139 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.1139 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory by level:
+2019-05-31 10:04:48.1321 Debug Trace => allfile
+2019-05-31 10:04:48.1321 Debug Debug => allfile
+2019-05-31 10:04:48.1321 Debug Info => allfile
+2019-05-31 10:04:48.1321 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.1482 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.1482 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.1482 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ManagedAuthenticatedEncryptorFactory by level:
+2019-05-31 10:04:48.1482 Debug Trace => allfile
+2019-05-31 10:04:48.1643 Debug Debug => allfile
+2019-05-31 10:04:48.1643 Debug Info => allfile
+2019-05-31 10:04:48.1643 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.1643 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.1777 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.1777 Debug Targets for Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlEncryptor by level:
+2019-05-31 10:04:48.1777 Debug Trace => allfile
+2019-05-31 10:04:48.1939 Debug Debug => allfile
+2019-05-31 10:04:48.1939 Debug Info => allfile
+2019-05-31 10:04:48.1939 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.1939 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.2087 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.2087 Debug Targets for Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository by level:
+2019-05-31 10:04:48.2087 Debug Trace => allfile
+2019-05-31 10:04:48.2087 Debug Debug => allfile
+2019-05-31 10:04:48.2234 Debug Info => allfile
+2019-05-31 10:04:48.2234 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.2234 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.2234 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.2791 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver by level:
+2019-05-31 10:04:48.2791 Debug Trace => allfile
+2019-05-31 10:04:48.2791 Debug Debug => allfile
+2019-05-31 10:04:48.2891 Debug Info => allfile
+2019-05-31 10:04:48.2891 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.2891 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.2891 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.3041 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider by level:
+2019-05-31 10:04:48.3041 Debug Trace => allfile
+2019-05-31 10:04:48.3041 Debug Debug => allfile
+2019-05-31 10:04:48.3041 Debug Info => allfile
+2019-05-31 10:04:48.3202 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.3202 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.3353 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.3353 Debug Targets for Microsoft.AspNetCore.DataProtection.Internal.DataProtectionStartupFilter by level:
+2019-05-31 10:04:48.3353 Debug Trace => allfile
+2019-05-31 10:04:48.3353 Debug Debug => allfile
+2019-05-31 10:04:48.3495 Debug Info => allfile
+2019-05-31 10:04:48.3495 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.3495 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.3495 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.4300 Debug Targets for Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor by level:
+2019-05-31 10:04:48.4300 Debug Trace => allfile
+2019-05-31 10:04:48.4300 Debug Debug => allfile
+2019-05-31 10:04:48.4418 Debug Info => allfile
+2019-05-31 10:04:48.4418 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.4418 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.4418 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.5175 Debug Targets for Microsoft.AspNetCore.Mvc.MvcJsonOptions by level:
+2019-05-31 10:04:48.5214 Debug Trace => allfile
+2019-05-31 10:04:48.5214 Debug Debug => allfile
+2019-05-31 10:04:48.5214 Debug Info => allfile
+2019-05-31 10:04:48.5214 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.5363 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.5363 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.5363 Debug Targets for Microsoft.AspNetCore.Mvc.MvcOptions by level:
+2019-05-31 10:04:48.5533 Debug Trace => allfile
+2019-05-31 10:04:48.5533 Debug Debug => allfile
+2019-05-31 10:04:48.5533 Debug Info => allfile
+2019-05-31 10:04:48.5533 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.5685 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.5685 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.5997 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.JsonPatchInputFormatter by level:
+2019-05-31 10:04:48.5997 Debug Trace => allfile
+2019-05-31 10:04:48.5997 Debug Debug => allfile
+2019-05-31 10:04:48.5997 Debug Info => allfile
+2019-05-31 10:04:48.6144 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.6144 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.6144 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.6144 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.JsonInputFormatter by level:
+2019-05-31 10:04:48.6144 Debug Trace => allfile
+2019-05-31 10:04:48.6323 Debug Debug => allfile
+2019-05-31 10:04:48.6323 Debug Info => allfile
+2019-05-31 10:04:48.6323 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.6323 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.6460 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.6460 Debug Targets for Microsoft.AspNetCore.Mvc.ApiBehaviorOptions by level:
+2019-05-31 10:04:48.6460 Debug Trace => allfile
+2019-05-31 10:04:48.6633 Debug Debug => allfile
+2019-05-31 10:04:48.6633 Debug Info => allfile
+2019-05-31 10:04:48.6633 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.6633 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.6781 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.6781 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions by level:
+2019-05-31 10:04:48.6781 Debug Trace => allfile
+2019-05-31 10:04:48.6926 Debug Debug => allfile
+2019-05-31 10:04:48.6926 Debug Info => allfile
+2019-05-31 10:04:48.6926 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.7106 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.7106 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.7106 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.RazorPagesOptions by level:
+2019-05-31 10:04:48.7254 Debug Trace => allfile
+2019-05-31 10:04:48.7254 Debug Debug => allfile
+2019-05-31 10:04:48.7254 Debug Info => allfile
+2019-05-31 10:04:48.7436 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.7436 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.7545 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.7860 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler by level:
+2019-05-31 10:04:48.7906 Debug Trace => allfile
+2019-05-31 10:04:48.7906 Debug Debug => allfile
+2019-05-31 10:04:48.7906 Debug Info => allfile
+2019-05-31 10:04:48.8030 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.8030 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.8030 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.8205 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine by level:
+2019-05-31 10:04:48.8570 Debug Trace => allfile
+2019-05-31 10:04:48.8570 Debug Debug => allfile
+2019-05-31 10:04:48.8659 Debug Info => allfile
+2019-05-31 10:04:48.8659 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.8659 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.8659 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.8829 Debug Targets for Microsoft.AspNetCore.Mvc.MvcViewOptions by level:
+2019-05-31 10:04:48.8829 Debug Trace => allfile
+2019-05-31 10:04:48.8829 Debug Debug => allfile
+2019-05-31 10:04:48.8829 Debug Info => allfile
+2019-05-31 10:04:48.8982 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.8982 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.8982 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.9118 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.RazorProjectPageRouteModelProvider by level:
+2019-05-31 10:04:48.9118 Debug Trace => allfile
+2019-05-31 10:04:48.9118 Debug Debug => allfile
+2019-05-31 10:04:48.9269 Debug Info => allfile
+2019-05-31 10:04:48.9269 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.9269 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.9269 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:48.9488 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.CompiledPageRouteModelProvider by level:
+2019-05-31 10:04:48.9488 Debug Trace => allfile
+2019-05-31 10:04:48.9488 Debug Debug => allfile
+2019-05-31 10:04:48.9598 Debug Info => allfile
+2019-05-31 10:04:48.9598 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:48.9598 Debug Error => allfile ownFile-web
+2019-05-31 10:04:48.9598 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.0042 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory by level:
+2019-05-31 10:04:49.0084 Debug Trace => allfile
+2019-05-31 10:04:49.0084 Debug Debug => allfile
+2019-05-31 10:04:49.0283 Debug Info => allfile
+2019-05-31 10:04:49.0453 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.0453 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.0563 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.0755 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder by level:
+2019-05-31 10:04:49.0755 Debug Trace => allfile
+2019-05-31 10:04:49.0828 Debug Debug => allfile
+2019-05-31 10:04:49.0828 Debug Info => allfile
+2019-05-31 10:04:49.0828 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.0828 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.0828 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.1016 Debug Targets for Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker by level:
+2019-05-31 10:04:49.1016 Debug Trace => allfile
+2019-05-31 10:04:49.1016 Debug Debug => allfile
+2019-05-31 10:04:49.1016 Debug Info => allfile
+2019-05-31 10:04:49.1163 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.1163 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.1163 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.1163 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector by level:
+2019-05-31 10:04:49.1328 Debug Trace => allfile
+2019-05-31 10:04:49.1328 Debug Debug => allfile
+2019-05-31 10:04:49.1328 Debug Info => allfile
+2019-05-31 10:04:49.1328 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.1485 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.1485 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.1485 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.CookieTempDataProvider by level:
+2019-05-31 10:04:49.1607 Debug Trace => allfile
+2019-05-31 10:04:49.1607 Debug Debug => allfile
+2019-05-31 10:04:49.1607 Debug Info => allfile
+2019-05-31 10:04:49.1787 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.1787 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.1787 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.2054 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvoker by level:
+2019-05-31 10:04:49.2096 Debug Trace => allfile
+2019-05-31 10:04:49.2096 Debug Debug => allfile
+2019-05-31 10:04:49.2096 Debug Info => allfile
+2019-05-31 10:04:49.2096 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.2234 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.2234 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.3640 Debug Targets for Microsoft.AspNetCore.Routing.EndpointMiddleware by level:
+2019-05-31 10:04:49.3687 Debug Trace => allfile
+2019-05-31 10:04:49.3687 Debug Debug => allfile
+2019-05-31 10:04:49.3687 Debug Info => allfile
+2019-05-31 10:04:49.3803 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.3803 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.3803 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.3803 Debug Targets for Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware by level:
+2019-05-31 10:04:49.3989 Debug Trace => allfile
+2019-05-31 10:04:49.3989 Debug Debug => allfile
+2019-05-31 10:04:49.3989 Debug Info => allfile
+2019-05-31 10:04:49.4129 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.4129 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.4129 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.4129 Debug Targets for Microsoft.AspNetCore.Session.SessionMiddleware by level:
+2019-05-31 10:04:49.4295 Debug Trace => allfile
+2019-05-31 10:04:49.4295 Debug Debug => allfile
+2019-05-31 10:04:49.4295 Debug Info => allfile
+2019-05-31 10:04:49.4295 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.4447 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.4447 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.4447 Debug Targets for Microsoft.AspNetCore.CookiePolicy.CookiePolicyMiddleware by level:
+2019-05-31 10:04:49.4586 Debug Trace => allfile
+2019-05-31 10:04:49.4586 Debug Debug => allfile
+2019-05-31 10:04:49.4586 Debug Info => allfile
+2019-05-31 10:04:49.4586 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.4747 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.4747 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.4747 Debug Targets for Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware by level:
+2019-05-31 10:04:49.4747 Debug Trace => allfile
+2019-05-31 10:04:49.4932 Debug Debug => allfile
+2019-05-31 10:04:49.4932 Debug Info => allfile
+2019-05-31 10:04:49.4932 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.4932 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.5068 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.5068 Debug Targets for Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware by level:
+2019-05-31 10:04:49.5068 Debug Trace => allfile
+2019-05-31 10:04:49.5206 Debug Debug => allfile
+2019-05-31 10:04:49.5206 Debug Info => allfile
+2019-05-31 10:04:49.5206 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.5407 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.5407 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.5407 Debug Targets for Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware by level:
+2019-05-31 10:04:49.5527 Debug Trace => allfile
+2019-05-31 10:04:49.5527 Debug Debug => allfile
+2019-05-31 10:04:49.5527 Debug Info => allfile
+2019-05-31 10:04:49.5527 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.5701 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.5701 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.5701 Debug Targets for Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware by level:
+2019-05-31 10:04:49.5830 Debug Trace => allfile
+2019-05-31 10:04:49.5830 Debug Debug => allfile
+2019-05-31 10:04:49.5830 Debug Info => allfile
+2019-05-31 10:04:49.5830 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.5830 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.6008 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.6008 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor by level:
+2019-05-31 10:04:49.6008 Debug Trace => allfile
+2019-05-31 10:04:49.6008 Debug Debug => allfile
+2019-05-31 10:04:49.6160 Debug Info => allfile
+2019-05-31 10:04:49.6160 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.6160 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.6160 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.6312 Debug Targets for BCC.Core.BankManager by level:
+2019-05-31 10:04:49.6312 Debug Trace => allfile ownFile-web
+2019-05-31 10:04:49.6312 Debug Debug => allfile ownFile-web
+2019-05-31 10:04:49.6312 Debug Info => allfile ownFile-web
+2019-05-31 10:04:49.6477 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.6477 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.6477 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:49.9503 Debug Targets for Microsoft.EntityFrameworkCore.Infrastructure by level:
+2019-05-31 10:04:49.9503 Debug Trace => allfile
+2019-05-31 10:04:49.9591 Debug Debug => allfile
+2019-05-31 10:04:49.9591 Debug Info => allfile
+2019-05-31 10:04:49.9591 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:49.9591 Debug Error => allfile ownFile-web
+2019-05-31 10:04:49.9753 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:50.0474 Debug Targets for Microsoft.EntityFrameworkCore.ChangeTracking by level:
+2019-05-31 10:04:50.0518 Debug Trace => allfile
+2019-05-31 10:04:50.0518 Debug Debug => allfile
+2019-05-31 10:04:50.0518 Debug Info => allfile
+2019-05-31 10:04:50.0518 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:50.0672 Debug Error => allfile ownFile-web
+2019-05-31 10:04:50.0672 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:50.1019 Debug Targets for Microsoft.EntityFrameworkCore.Model by level:
+2019-05-31 10:04:50.1019 Debug Trace => allfile
+2019-05-31 10:04:50.1019 Debug Debug => allfile
+2019-05-31 10:04:50.1152 Debug Info => allfile
+2019-05-31 10:04:50.1152 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:50.1152 Debug Error => allfile ownFile-web
+2019-05-31 10:04:50.1152 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:50.1345 Debug Targets for Microsoft.EntityFrameworkCore.Model.Validation by level:
+2019-05-31 10:04:50.1345 Debug Trace => allfile
+2019-05-31 10:04:50.1345 Debug Debug => allfile
+2019-05-31 10:04:50.1456 Debug Info => allfile
+2019-05-31 10:04:50.1456 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:50.1456 Debug Error => allfile ownFile-web
+2019-05-31 10:04:50.1456 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:50.8012 Debug Targets for Microsoft.EntityFrameworkCore.Database.Transaction by level:
+2019-05-31 10:04:50.8061 Debug Trace => allfile
+2019-05-31 10:04:50.8061 Debug Debug => allfile
+2019-05-31 10:04:50.8061 Debug Info => allfile
+2019-05-31 10:04:50.8186 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:50.8186 Debug Error => allfile ownFile-web
+2019-05-31 10:04:50.8186 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:50.8186 Debug Targets for Microsoft.EntityFrameworkCore.Database.Connection by level:
+2019-05-31 10:04:50.8390 Debug Trace => allfile
+2019-05-31 10:04:50.8390 Debug Debug => allfile
+2019-05-31 10:04:50.8483 Debug Info => allfile
+2019-05-31 10:04:50.8483 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:50.8483 Debug Error => allfile ownFile-web
+2019-05-31 10:04:50.8646 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:50.8646 Debug Targets for Microsoft.EntityFrameworkCore.Query by level:
+2019-05-31 10:04:50.8810 Debug Trace => allfile
+2019-05-31 10:04:50.8810 Debug Debug => allfile
+2019-05-31 10:04:50.8810 Debug Info => allfile
+2019-05-31 10:04:50.8810 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:50.8987 Debug Error => allfile ownFile-web
+2019-05-31 10:04:50.8987 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:50.9238 Debug Targets for Microsoft.EntityFrameworkCore.Database.Command by level:
+2019-05-31 10:04:50.9276 Debug Trace => allfile
+2019-05-31 10:04:50.9276 Debug Debug => allfile
+2019-05-31 10:04:50.9276 Debug Info => allfile
+2019-05-31 10:04:50.9276 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:50.9276 Debug Error => allfile ownFile-web
+2019-05-31 10:04:50.9454 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:51.0015 Debug Targets for Microsoft.EntityFrameworkCore.Update by level:
+2019-05-31 10:04:51.0060 Debug Trace => allfile
+2019-05-31 10:04:51.0060 Debug Debug => allfile
+2019-05-31 10:04:51.0060 Debug Info => allfile
+2019-05-31 10:04:51.0060 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:51.0239 Debug Error => allfile ownFile-web
+2019-05-31 10:04:51.0239 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:51.7347 Debug Targets for BCC.Core.CNB.CNBank by level:
+2019-05-31 10:04:51.7396 Debug Trace => allfile ownFile-web
+2019-05-31 10:04:51.7396 Debug Debug => allfile ownFile-web
+2019-05-31 10:04:51.7396 Debug Info => allfile ownFile-web
+2019-05-31 10:04:51.7596 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:51.7596 Debug Error => allfile ownFile-web
+2019-05-31 10:04:51.7596 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:51.7730 Debug Targets for BCC.Core.KB.KBank by level:
+2019-05-31 10:04:51.7730 Debug Trace => allfile ownFile-web
+2019-05-31 10:04:51.7730 Debug Debug => allfile ownFile-web
+2019-05-31 10:04:51.7730 Debug Info => allfile ownFile-web
+2019-05-31 10:04:51.7881 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:51.7881 Debug Error => allfile ownFile-web
+2019-05-31 10:04:51.8021 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:51.8021 Debug Targets for BCC.Core.CSOB.CSOBank by level:
+2019-05-31 10:04:51.8021 Debug Trace => allfile ownFile-web
+2019-05-31 10:04:51.8172 Debug Debug => allfile ownFile-web
+2019-05-31 10:04:51.8172 Debug Info => allfile ownFile-web
+2019-05-31 10:04:51.8172 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:51.8172 Debug Error => allfile ownFile-web
+2019-05-31 10:04:51.8340 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:51.8496 Debug Targets for BCC.Core.RB.RBank by level:
+2019-05-31 10:04:51.8496 Debug Trace => allfile ownFile-web
+2019-05-31 10:04:51.8496 Debug Debug => allfile ownFile-web
+2019-05-31 10:04:51.8681 Debug Info => allfile ownFile-web
+2019-05-31 10:04:51.8681 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:51.8681 Debug Error => allfile ownFile-web
+2019-05-31 10:04:51.8822 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:51.8822 Debug No available HttpContext. Logging outside valid request context?
+2019-05-31 10:04:51.8960 Debug No available HttpContext. Logging outside valid request context?
+2019-05-31 10:04:52.0908 Debug Targets for Microsoft.AspNetCore.Session.DistributedSession by level:
+2019-05-31 10:04:52.0908 Debug Trace => allfile
+2019-05-31 10:04:52.0986 Debug Debug => allfile
+2019-05-31 10:04:52.0986 Debug Info => allfile
+2019-05-31 10:04:52.0986 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.0986 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.1176 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:52.1583 Debug Targets for Microsoft.AspNetCore.Routing.Matching.DfaMatcher by level:
+2019-05-31 10:04:52.1632 Debug Trace => allfile
+2019-05-31 10:04:52.1632 Debug Debug => allfile
+2019-05-31 10:04:52.1632 Debug Info => allfile
+2019-05-31 10:04:52.1632 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.1799 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.1799 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:52.2260 Debug Targets for Web.Controllers.HomeController by level:
+2019-05-31 10:04:52.2260 Debug Trace => allfile ownFile-web
+2019-05-31 10:04:52.2407 Debug Debug => allfile ownFile-web
+2019-05-31 10:04:52.2407 Debug Info => allfile ownFile-web
+2019-05-31 10:04:52.2628 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.2707 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.2882 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:52.4743 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor by level:
+2019-05-31 10:04:52.4743 Debug Trace => allfile
+2019-05-31 10:04:52.4743 Debug Debug => allfile
+2019-05-31 10:04:52.4906 Debug Info => allfile
+2019-05-31 10:04:52.4906 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.4906 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.5047 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:52.5578 Debug Targets for Microsoft.AspNetCore.Routing.DefaultLinkGenerator by level:
+2019-05-31 10:04:52.5578 Debug Trace => allfile
+2019-05-31 10:04:52.5578 Debug Debug => allfile
+2019-05-31 10:04:52.5688 Debug Info => allfile
+2019-05-31 10:04:52.5688 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.5688 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.5688 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:52.5835 Debug Targets for Microsoft.AspNetCore.Mvc.Routing.EndpointRoutingUrlHelper by level:
+2019-05-31 10:04:52.5835 Debug Trace => allfile
+2019-05-31 10:04:52.5835 Debug Debug => allfile
+2019-05-31 10:04:52.5835 Debug Info => allfile
+2019-05-31 10:04:52.5835 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.6023 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.6023 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:52.6023 Debug Targets for Microsoft.AspNetCore.Mvc.ViewComponents.DefaultViewComponentInvoker by level:
+2019-05-31 10:04:52.6165 Debug Trace => allfile
+2019-05-31 10:04:52.6165 Debug Debug => allfile
+2019-05-31 10:04:52.6165 Debug Info => allfile
+2019-05-31 10:04:52.6165 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.6326 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.6326 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:52.6473 Debug Targets for Microsoft.AspNetCore.Antiforgery.Internal.DefaultAntiforgery by level:
+2019-05-31 10:04:52.6473 Debug Trace => allfile
+2019-05-31 10:04:52.6473 Debug Debug => allfile
+2019-05-31 10:04:52.6473 Debug Info => allfile
+2019-05-31 10:04:52.6690 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.6690 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.6765 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:52.7533 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.TagHelpers.HeadTagHelper by level:
+2019-05-31 10:04:52.7583 Debug Trace => allfile
+2019-05-31 10:04:52.7583 Debug Debug => allfile
+2019-05-31 10:04:52.7583 Debug Info => allfile
+2019-05-31 10:04:52.7742 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.7742 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.7742 Debug Fatal => allfile ownFile-web
+2019-05-31 10:04:52.8021 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.TagHelpers.BodyTagHelper by level:
+2019-05-31 10:04:52.8021 Debug Trace => allfile
+2019-05-31 10:04:52.8021 Debug Debug => allfile
+2019-05-31 10:04:52.8021 Debug Info => allfile
+2019-05-31 10:04:52.8178 Debug Warn => allfile ownFile-web
+2019-05-31 10:04:52.8178 Debug Error => allfile ownFile-web
+2019-05-31 10:04:52.8178 Debug Fatal => allfile ownFile-web
+2019-05-31 10:05:25.0869 Debug Targets for BCC.Core.PresentationManger by level:
+2019-05-31 10:05:25.0869 Debug Trace => allfile ownFile-web
+2019-05-31 10:05:25.1018 Debug Debug => allfile ownFile-web
+2019-05-31 10:05:25.1018 Debug Info => allfile ownFile-web
+2019-05-31 10:05:25.1018 Debug Warn => allfile ownFile-web
+2019-05-31 10:05:25.1167 Debug Error => allfile ownFile-web
+2019-05-31 10:05:25.1167 Debug Fatal => allfile ownFile-web
+2019-05-31 10:05:25.1167 Debug Targets for Web.Controllers.ExchangeRateController by level:
+2019-05-31 10:05:25.1310 Debug Trace => allfile ownFile-web
+2019-05-31 10:05:25.1310 Debug Debug => allfile ownFile-web
+2019-05-31 10:05:25.1310 Debug Info => allfile ownFile-web
+2019-05-31 10:05:25.1458 Debug Warn => allfile ownFile-web
+2019-05-31 10:05:25.1458 Debug Error => allfile ownFile-web
+2019-05-31 10:05:25.1458 Debug Fatal => allfile ownFile-web
+2019-05-31 10:05:31.4764 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder by level:
+2019-05-31 10:05:31.5086 Debug Trace => allfile
+2019-05-31 10:05:31.5086 Debug Debug => allfile
+2019-05-31 10:05:31.5504 Debug Info => allfile
+2019-05-31 10:05:31.5548 Debug Warn => allfile ownFile-web
+2019-05-31 10:05:31.5548 Debug Error => allfile ownFile-web
+2019-05-31 10:05:31.5548 Debug Fatal => allfile ownFile-web
+2019-05-31 10:10:46.3290 Debug Targets for Web.Controllers.TicketGraphController by level:
+2019-05-31 10:10:46.3433 Debug Trace => allfile ownFile-web
+2019-05-31 10:10:46.3433 Debug Debug => allfile ownFile-web
+2019-05-31 10:10:46.3523 Debug Info => allfile ownFile-web
+2019-05-31 10:10:46.3523 Debug Warn => allfile ownFile-web
+2019-05-31 10:10:46.3523 Debug Error => allfile ownFile-web
+2019-05-31 10:10:46.3661 Debug Fatal => allfile ownFile-web
+2019-05-31 10:10:46.3981 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.PartialViewResultExecutor by level:
+2019-05-31 10:10:46.3981 Debug Trace => allfile
+2019-05-31 10:10:46.4107 Debug Debug => allfile
+2019-05-31 10:10:46.4107 Debug Info => allfile
+2019-05-31 10:10:46.4107 Debug Warn => allfile ownFile-web
+2019-05-31 10:10:46.4107 Debug Error => allfile ownFile-web
+2019-05-31 10:10:46.4279 Debug Fatal => allfile ownFile-web
+2019-05-31 10:10:46.5055 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder by level:
+2019-05-31 10:10:46.5055 Debug Trace => allfile
+2019-05-31 10:10:46.5055 Debug Debug => allfile
+2019-05-31 10:10:46.5234 Debug Info => allfile
+2019-05-31 10:10:46.5234 Debug Warn => allfile ownFile-web
+2019-05-31 10:10:46.5234 Debug Error => allfile ownFile-web
+2019-05-31 10:10:46.5383 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:19.4391 Info Message Template Auto Format enabled
+2019-05-31 10:12:19.4941 Info Loading assembly: NLog.Web.AspNetCore
+2019-05-31 10:12:19.4941 Debug ScanAssembly('NLog.Web.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c')
+2019-05-31 10:12:19.5446 Debug Setting 'UppercaseLayoutRendererWrapper.uppercase' to 'true'
+2019-05-31 10:12:19.5969 Debug Setting 'FileTarget.name' to 'allfile'
+2019-05-31 10:12:19.6075 Debug Setting 'FileTarget.fileName' to './Logs/${shortdate}.log'
+2019-05-31 10:12:19.6075 Debug Setting 'FileTarget.layout' to '${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}'
+2019-05-31 10:12:19.6155 Debug Setting 'EventPropertiesLayoutRenderer.item' to 'EventId_Id'
+2019-05-31 10:12:19.6155 Debug Setting 'UppercaseLayoutRendererWrapper.Inner' to '${level}'
+2019-05-31 10:12:19.6332 Debug Setting 'ExceptionLayoutRenderer.format' to 'tostring'
+2019-05-31 10:12:19.6332 Info Adding target FileTarget(Name=allfile)
+2019-05-31 10:12:19.6332 Debug Registered target allfile: NLog.Targets.FileTarget
+2019-05-31 10:12:19.6514 Debug Setting 'UppercaseLayoutRendererWrapper.uppercase' to 'true'
+2019-05-31 10:12:19.6514 Debug Setting 'FileTarget.name' to 'ownFile-web'
+2019-05-31 10:12:19.6514 Debug Setting 'FileTarget.fileName' to './Logs/nlog-own-${shortdate}.log'
+2019-05-31 10:12:19.6620 Debug Setting 'FileTarget.layout' to '${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}|url: ${aspnet-request-url}|action: ${aspnet-mvc-action}'
+2019-05-31 10:12:19.6620 Debug Setting 'EventPropertiesLayoutRenderer.item' to 'EventId_Id'
+2019-05-31 10:12:19.6620 Debug Setting 'UppercaseLayoutRendererWrapper.Inner' to '${level}'
+2019-05-31 10:12:19.6620 Debug Setting 'ExceptionLayoutRenderer.format' to 'tostring'
+2019-05-31 10:12:19.6830 Info Adding target FileTarget(Name=ownFile-web)
+2019-05-31 10:12:19.6830 Debug Registered target ownFile-web: NLog.Targets.FileTarget
+2019-05-31 10:12:19.7016 Debug Unused target checking is started... Rule Count: 3, Target Count: 2
+2019-05-31 10:12:19.7116 Debug Unused target checking is completed. Total Rule Count: 3, Total Target Count: 2, Unused Target Count: 0
+2019-05-31 10:12:19.7366 Debug Watching path 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2' filter 'nlog.config' for changes.
+2019-05-31 10:12:19.7420 Debug --- NLog configuration dump ---
+2019-05-31 10:12:19.7420 Debug Targets:
+2019-05-31 10:12:19.7420 Debug File Target[allfile]
+2019-05-31 10:12:19.7420 Debug File Target[ownFile-web]
+2019-05-31 10:12:19.7587 Debug Rules:
+2019-05-31 10:12:19.7587 Debug logNamePattern: (:All) levels: [ Trace Debug Info Warn Error Fatal ] appendTo: [ allfile ]
+2019-05-31 10:12:19.7587 Debug logNamePattern: (Microsoft.:StartsWith) levels: [ Trace Debug Info ] appendTo: [ ]
+2019-05-31 10:12:19.7737 Debug logNamePattern: (:All) levels: [ Trace Debug Info Warn Error Fatal ] appendTo: [ ownFile-web ]
+2019-05-31 10:12:19.7737 Debug --- End of NLog configuration dump ---
+2019-05-31 10:12:19.7927 Info Found 45 configuration items
+2019-05-31 10:12:19.8344 Debug Targets for Web.Program by level:
+2019-05-31 10:12:19.8344 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:19.8344 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:19.8344 Debug Info => allfile ownFile-web
+2019-05-31 10:12:19.8490 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:19.8490 Debug Error => allfile ownFile-web
+2019-05-31 10:12:19.8490 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:19.8862 Debug FileTarget(Name=allfile): Process file 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/2019-05-31.log' on startup
+2019-05-31 10:12:19.9016 Debug Creating file appender: C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/2019-05-31.log
+2019-05-31 10:12:19.9222 Debug Missing serviceProvider, so no HttpContext
+2019-05-31 10:12:19.9222 Debug Missing serviceProvider, so no HttpContext
+2019-05-31 10:12:19.9295 Debug FileTarget(Name=ownFile-web): Process file 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/nlog-own-2019-05-31.log' on startup
+2019-05-31 10:12:19.9295 Debug Creating file appender: C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/nlog-own-2019-05-31.log
+2019-05-31 10:12:21.0774 Debug ScanAssembly('NLog.Web.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c')
+2019-05-31 10:12:21.6662 Debug Hide assemblies for callsite
+2019-05-31 10:12:21.6857 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.WebHost by level:
+2019-05-31 10:12:21.6968 Debug Trace => allfile
+2019-05-31 10:12:21.6968 Debug Debug => allfile
+2019-05-31 10:12:21.6968 Debug Info => allfile
+2019-05-31 10:12:21.7089 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:21.7089 Debug Error => allfile ownFile-web
+2019-05-31 10:12:21.7089 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:21.7348 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.ApplicationLifetime by level:
+2019-05-31 10:12:21.7389 Debug Trace => allfile
+2019-05-31 10:12:21.7389 Debug Debug => allfile
+2019-05-31 10:12:21.7389 Debug Info => allfile
+2019-05-31 10:12:21.7389 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:21.7566 Debug Error => allfile ownFile-web
+2019-05-31 10:12:21.7566 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:21.7566 Debug Targets for Microsoft.AspNetCore.Server.IIS.Core.IISHttpServer by level:
+2019-05-31 10:12:21.7717 Debug Trace => allfile
+2019-05-31 10:12:21.7717 Debug Debug => allfile
+2019-05-31 10:12:21.7717 Debug Info => allfile
+2019-05-31 10:12:21.7717 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:21.7881 Debug Error => allfile ownFile-web
+2019-05-31 10:12:21.7881 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:21.7881 Debug Targets for Microsoft.AspNetCore.DataProtection.TypeForwardingActivator by level:
+2019-05-31 10:12:21.8048 Debug Trace => allfile
+2019-05-31 10:12:21.8048 Debug Debug => allfile
+2019-05-31 10:12:21.8048 Debug Info => allfile
+2019-05-31 10:12:21.8192 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:21.8192 Debug Error => allfile ownFile-web
+2019-05-31 10:12:21.8192 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:21.8443 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager by level:
+2019-05-31 10:12:21.8443 Debug Trace => allfile
+2019-05-31 10:12:21.8524 Debug Debug => allfile
+2019-05-31 10:12:21.8524 Debug Info => allfile
+2019-05-31 10:12:21.8524 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:21.8655 Debug Error => allfile ownFile-web
+2019-05-31 10:12:21.8655 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:21.8655 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngGcmAuthenticatedEncryptorFactory by level:
+2019-05-31 10:12:21.8802 Debug Trace => allfile
+2019-05-31 10:12:21.8802 Debug Debug => allfile
+2019-05-31 10:12:21.8802 Debug Info => allfile
+2019-05-31 10:12:21.8949 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:21.8949 Debug Error => allfile ownFile-web
+2019-05-31 10:12:21.8949 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:21.8949 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory by level:
+2019-05-31 10:12:21.9126 Debug Trace => allfile
+2019-05-31 10:12:21.9126 Debug Debug => allfile
+2019-05-31 10:12:21.9271 Debug Info => allfile
+2019-05-31 10:12:21.9271 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:21.9271 Debug Error => allfile ownFile-web
+2019-05-31 10:12:21.9460 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:21.9460 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ManagedAuthenticatedEncryptorFactory by level:
+2019-05-31 10:12:21.9460 Debug Trace => allfile
+2019-05-31 10:12:21.9636 Debug Debug => allfile
+2019-05-31 10:12:21.9636 Debug Info => allfile
+2019-05-31 10:12:21.9758 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:21.9758 Debug Error => allfile ownFile-web
+2019-05-31 10:12:21.9758 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:21.9976 Debug Targets for Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlEncryptor by level:
+2019-05-31 10:12:21.9976 Debug Trace => allfile
+2019-05-31 10:12:22.0082 Debug Debug => allfile
+2019-05-31 10:12:22.0082 Debug Info => allfile
+2019-05-31 10:12:22.0225 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.0225 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.0225 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.0225 Debug Targets for Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository by level:
+2019-05-31 10:12:22.0367 Debug Trace => allfile
+2019-05-31 10:12:22.0367 Debug Debug => allfile
+2019-05-31 10:12:22.0367 Debug Info => allfile
+2019-05-31 10:12:22.0556 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.0556 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.0556 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.1024 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver by level:
+2019-05-31 10:12:22.1024 Debug Trace => allfile
+2019-05-31 10:12:22.1024 Debug Debug => allfile
+2019-05-31 10:12:22.1138 Debug Info => allfile
+2019-05-31 10:12:22.1138 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.1138 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.1138 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.1138 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider by level:
+2019-05-31 10:12:22.1318 Debug Trace => allfile
+2019-05-31 10:12:22.1318 Debug Debug => allfile
+2019-05-31 10:12:22.1318 Debug Info => allfile
+2019-05-31 10:12:22.1318 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.1461 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.1461 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.1461 Debug Targets for Microsoft.AspNetCore.DataProtection.Internal.DataProtectionStartupFilter by level:
+2019-05-31 10:12:22.1461 Debug Trace => allfile
+2019-05-31 10:12:22.1629 Debug Debug => allfile
+2019-05-31 10:12:22.1629 Debug Info => allfile
+2019-05-31 10:12:22.1629 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.1776 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.1776 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.2441 Debug Targets for Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor by level:
+2019-05-31 10:12:22.2441 Debug Trace => allfile
+2019-05-31 10:12:22.2441 Debug Debug => allfile
+2019-05-31 10:12:22.2551 Debug Info => allfile
+2019-05-31 10:12:22.2551 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.2551 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.2551 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.3393 Debug Targets for Microsoft.AspNetCore.Mvc.MvcJsonOptions by level:
+2019-05-31 10:12:22.3393 Debug Trace => allfile
+2019-05-31 10:12:22.3486 Debug Debug => allfile
+2019-05-31 10:12:22.3486 Debug Info => allfile
+2019-05-31 10:12:22.3486 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.3649 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.3649 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.3862 Debug Targets for Microsoft.AspNetCore.Mvc.MvcOptions by level:
+2019-05-31 10:12:22.3862 Debug Trace => allfile
+2019-05-31 10:12:22.3960 Debug Debug => allfile
+2019-05-31 10:12:22.3960 Debug Info => allfile
+2019-05-31 10:12:22.3960 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.3960 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.4129 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.4406 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.JsonPatchInputFormatter by level:
+2019-05-31 10:12:22.4441 Debug Trace => allfile
+2019-05-31 10:12:22.4441 Debug Debug => allfile
+2019-05-31 10:12:22.4441 Debug Info => allfile
+2019-05-31 10:12:22.4441 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.4590 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.4590 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.4590 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.JsonInputFormatter by level:
+2019-05-31 10:12:22.4590 Debug Trace => allfile
+2019-05-31 10:12:22.4757 Debug Debug => allfile
+2019-05-31 10:12:22.4757 Debug Info => allfile
+2019-05-31 10:12:22.4757 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.4757 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.4929 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.4929 Debug Targets for Microsoft.AspNetCore.Mvc.ApiBehaviorOptions by level:
+2019-05-31 10:12:22.5051 Debug Trace => allfile
+2019-05-31 10:12:22.5051 Debug Debug => allfile
+2019-05-31 10:12:22.5051 Debug Info => allfile
+2019-05-31 10:12:22.5051 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.5227 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.5227 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.5227 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions by level:
+2019-05-31 10:12:22.5367 Debug Trace => allfile
+2019-05-31 10:12:22.5367 Debug Debug => allfile
+2019-05-31 10:12:22.5367 Debug Info => allfile
+2019-05-31 10:12:22.5367 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.5548 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.5548 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.5548 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.RazorPagesOptions by level:
+2019-05-31 10:12:22.5674 Debug Trace => allfile
+2019-05-31 10:12:22.5674 Debug Debug => allfile
+2019-05-31 10:12:22.5674 Debug Info => allfile
+2019-05-31 10:12:22.5674 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.5844 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.5844 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.6214 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler by level:
+2019-05-31 10:12:22.6214 Debug Trace => allfile
+2019-05-31 10:12:22.6214 Debug Debug => allfile
+2019-05-31 10:12:22.6324 Debug Info => allfile
+2019-05-31 10:12:22.6324 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.6324 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.6450 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.6450 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine by level:
+2019-05-31 10:12:22.6825 Debug Trace => allfile
+2019-05-31 10:12:22.6825 Debug Debug => allfile
+2019-05-31 10:12:22.6825 Debug Info => allfile
+2019-05-31 10:12:22.6930 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.6930 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.6930 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.6930 Debug Targets for Microsoft.AspNetCore.Mvc.MvcViewOptions by level:
+2019-05-31 10:12:22.7088 Debug Trace => allfile
+2019-05-31 10:12:22.7088 Debug Debug => allfile
+2019-05-31 10:12:22.7088 Debug Info => allfile
+2019-05-31 10:12:22.7088 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.7240 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.7240 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.7240 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.RazorProjectPageRouteModelProvider by level:
+2019-05-31 10:12:22.7401 Debug Trace => allfile
+2019-05-31 10:12:22.7401 Debug Debug => allfile
+2019-05-31 10:12:22.7401 Debug Info => allfile
+2019-05-31 10:12:22.7401 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.7591 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.7591 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.7719 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.CompiledPageRouteModelProvider by level:
+2019-05-31 10:12:22.7719 Debug Trace => allfile
+2019-05-31 10:12:22.7719 Debug Debug => allfile
+2019-05-31 10:12:22.7859 Debug Info => allfile
+2019-05-31 10:12:22.7859 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.7859 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.7859 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.8198 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory by level:
+2019-05-31 10:12:22.8198 Debug Trace => allfile
+2019-05-31 10:12:22.8198 Debug Debug => allfile
+2019-05-31 10:12:22.8421 Debug Info => allfile
+2019-05-31 10:12:22.8421 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.8595 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.8595 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.8819 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder by level:
+2019-05-31 10:12:22.8819 Debug Trace => allfile
+2019-05-31 10:12:22.8819 Debug Debug => allfile
+2019-05-31 10:12:22.8819 Debug Info => allfile
+2019-05-31 10:12:22.8982 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.8982 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.8982 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.8982 Debug Targets for Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker by level:
+2019-05-31 10:12:22.9134 Debug Trace => allfile
+2019-05-31 10:12:22.9134 Debug Debug => allfile
+2019-05-31 10:12:22.9134 Debug Info => allfile
+2019-05-31 10:12:22.9134 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.9286 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.9286 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.9286 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector by level:
+2019-05-31 10:12:22.9444 Debug Trace => allfile
+2019-05-31 10:12:22.9444 Debug Debug => allfile
+2019-05-31 10:12:22.9444 Debug Info => allfile
+2019-05-31 10:12:22.9444 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.9607 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.9607 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:22.9607 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.CookieTempDataProvider by level:
+2019-05-31 10:12:22.9737 Debug Trace => allfile
+2019-05-31 10:12:22.9737 Debug Debug => allfile
+2019-05-31 10:12:22.9737 Debug Info => allfile
+2019-05-31 10:12:22.9737 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:22.9922 Debug Error => allfile ownFile-web
+2019-05-31 10:12:22.9922 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.0231 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvoker by level:
+2019-05-31 10:12:23.0231 Debug Trace => allfile
+2019-05-31 10:12:23.0231 Debug Debug => allfile
+2019-05-31 10:12:23.0231 Debug Info => allfile
+2019-05-31 10:12:23.0392 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.0392 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.0392 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.1676 Debug Targets for Microsoft.AspNetCore.Routing.EndpointMiddleware by level:
+2019-05-31 10:12:23.1676 Debug Trace => allfile
+2019-05-31 10:12:23.1676 Debug Debug => allfile
+2019-05-31 10:12:23.1801 Debug Info => allfile
+2019-05-31 10:12:23.1801 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.1801 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.1926 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.1926 Debug Targets for Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware by level:
+2019-05-31 10:12:23.1926 Debug Trace => allfile
+2019-05-31 10:12:23.2086 Debug Debug => allfile
+2019-05-31 10:12:23.2086 Debug Info => allfile
+2019-05-31 10:12:23.2086 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.2086 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.2238 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.2238 Debug Targets for Microsoft.AspNetCore.Session.SessionMiddleware by level:
+2019-05-31 10:12:23.2238 Debug Trace => allfile
+2019-05-31 10:12:23.2238 Debug Debug => allfile
+2019-05-31 10:12:23.2413 Debug Info => allfile
+2019-05-31 10:12:23.2413 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.2413 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.2413 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.2578 Debug Targets for Microsoft.AspNetCore.CookiePolicy.CookiePolicyMiddleware by level:
+2019-05-31 10:12:23.2578 Debug Trace => allfile
+2019-05-31 10:12:23.2578 Debug Debug => allfile
+2019-05-31 10:12:23.2578 Debug Info => allfile
+2019-05-31 10:12:23.2733 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.2733 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.2733 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.2863 Debug Targets for Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware by level:
+2019-05-31 10:12:23.2863 Debug Trace => allfile
+2019-05-31 10:12:23.2863 Debug Debug => allfile
+2019-05-31 10:12:23.2863 Debug Info => allfile
+2019-05-31 10:12:23.3017 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.3017 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.3017 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.3017 Debug Targets for Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware by level:
+2019-05-31 10:12:23.3176 Debug Trace => allfile
+2019-05-31 10:12:23.3176 Debug Debug => allfile
+2019-05-31 10:12:23.3176 Debug Info => allfile
+2019-05-31 10:12:23.3176 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.3344 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.3344 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.3344 Debug Targets for Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware by level:
+2019-05-31 10:12:23.3344 Debug Trace => allfile
+2019-05-31 10:12:23.3495 Debug Debug => allfile
+2019-05-31 10:12:23.3495 Debug Info => allfile
+2019-05-31 10:12:23.3495 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.3495 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.3495 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.3684 Debug Targets for Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware by level:
+2019-05-31 10:12:23.3684 Debug Trace => allfile
+2019-05-31 10:12:23.3684 Debug Debug => allfile
+2019-05-31 10:12:23.3802 Debug Info => allfile
+2019-05-31 10:12:23.3802 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.3802 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.3802 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.3960 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor by level:
+2019-05-31 10:12:23.3960 Debug Trace => allfile
+2019-05-31 10:12:23.3960 Debug Debug => allfile
+2019-05-31 10:12:23.3960 Debug Info => allfile
+2019-05-31 10:12:23.4116 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.4116 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.4116 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.4116 Debug Targets for BCC.Core.BankManager by level:
+2019-05-31 10:12:23.4283 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:23.4283 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:23.4283 Debug Info => allfile ownFile-web
+2019-05-31 10:12:23.4283 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.4445 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.4445 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.7157 Debug Targets for Microsoft.EntityFrameworkCore.Infrastructure by level:
+2019-05-31 10:12:23.7157 Debug Trace => allfile
+2019-05-31 10:12:23.7241 Debug Debug => allfile
+2019-05-31 10:12:23.7241 Debug Info => allfile
+2019-05-31 10:12:23.7241 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.7241 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.7393 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.8082 Debug Targets for Microsoft.EntityFrameworkCore.ChangeTracking by level:
+2019-05-31 10:12:23.8082 Debug Trace => allfile
+2019-05-31 10:12:23.8082 Debug Debug => allfile
+2019-05-31 10:12:23.8220 Debug Info => allfile
+2019-05-31 10:12:23.8220 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.8220 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.8370 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.8747 Debug Targets for Microsoft.EntityFrameworkCore.Model by level:
+2019-05-31 10:12:23.8747 Debug Trace => allfile
+2019-05-31 10:12:23.8839 Debug Debug => allfile
+2019-05-31 10:12:23.8839 Debug Info => allfile
+2019-05-31 10:12:23.8839 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.8960 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.8960 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:23.8960 Debug Targets for Microsoft.EntityFrameworkCore.Model.Validation by level:
+2019-05-31 10:12:23.9113 Debug Trace => allfile
+2019-05-31 10:12:23.9113 Debug Debug => allfile
+2019-05-31 10:12:23.9113 Debug Info => allfile
+2019-05-31 10:12:23.9113 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:23.9320 Debug Error => allfile ownFile-web
+2019-05-31 10:12:23.9320 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:24.5489 Debug Targets for Microsoft.EntityFrameworkCore.Database.Transaction by level:
+2019-05-31 10:12:24.5534 Debug Trace => allfile
+2019-05-31 10:12:24.5534 Debug Debug => allfile
+2019-05-31 10:12:24.5534 Debug Info => allfile
+2019-05-31 10:12:24.5534 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:24.5696 Debug Error => allfile ownFile-web
+2019-05-31 10:12:24.5696 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:24.5696 Debug Targets for Microsoft.EntityFrameworkCore.Database.Connection by level:
+2019-05-31 10:12:24.5696 Debug Trace => allfile
+2019-05-31 10:12:24.5845 Debug Debug => allfile
+2019-05-31 10:12:24.5845 Debug Info => allfile
+2019-05-31 10:12:24.5982 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:24.5982 Debug Error => allfile ownFile-web
+2019-05-31 10:12:24.5982 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:24.6145 Debug Targets for Microsoft.EntityFrameworkCore.Query by level:
+2019-05-31 10:12:24.6145 Debug Trace => allfile
+2019-05-31 10:12:24.6145 Debug Debug => allfile
+2019-05-31 10:12:24.6145 Debug Info => allfile
+2019-05-31 10:12:24.6325 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:24.6325 Debug Error => allfile ownFile-web
+2019-05-31 10:12:24.6325 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:24.6571 Debug Targets for Microsoft.EntityFrameworkCore.Database.Command by level:
+2019-05-31 10:12:24.6611 Debug Trace => allfile
+2019-05-31 10:12:24.6611 Debug Debug => allfile
+2019-05-31 10:12:24.6611 Debug Info => allfile
+2019-05-31 10:12:24.6611 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:24.6611 Debug Error => allfile ownFile-web
+2019-05-31 10:12:24.6804 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:24.7515 Debug Targets for Microsoft.EntityFrameworkCore.Update by level:
+2019-05-31 10:12:24.7563 Debug Trace => allfile
+2019-05-31 10:12:24.7563 Debug Debug => allfile
+2019-05-31 10:12:24.7563 Debug Info => allfile
+2019-05-31 10:12:24.7786 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:24.7860 Debug Error => allfile ownFile-web
+2019-05-31 10:12:24.7860 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:25.4573 Debug Targets for BCC.Core.CNB.CNBank by level:
+2019-05-31 10:12:25.4614 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:25.4614 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:25.4763 Debug Info => allfile ownFile-web
+2019-05-31 10:12:25.4763 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:25.4763 Debug Error => allfile ownFile-web
+2019-05-31 10:12:25.4763 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:25.4915 Debug Targets for BCC.Core.KB.KBank by level:
+2019-05-31 10:12:25.4915 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:25.4915 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:25.5051 Debug Info => allfile ownFile-web
+2019-05-31 10:12:25.5051 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:25.5051 Debug Error => allfile ownFile-web
+2019-05-31 10:12:25.5051 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:25.5207 Debug Targets for BCC.Core.CSOB.CSOBank by level:
+2019-05-31 10:12:25.5207 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:25.5207 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:25.5207 Debug Info => allfile ownFile-web
+2019-05-31 10:12:25.5207 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:25.5395 Debug Error => allfile ownFile-web
+2019-05-31 10:12:25.5395 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:25.5534 Debug Targets for BCC.Core.RB.RBank by level:
+2019-05-31 10:12:25.5534 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:25.5534 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:25.5691 Debug Info => allfile ownFile-web
+2019-05-31 10:12:25.5691 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:25.5824 Debug Error => allfile ownFile-web
+2019-05-31 10:12:25.5824 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:25.5824 Debug No available HttpContext. Logging outside valid request context?
+2019-05-31 10:12:25.5991 Debug No available HttpContext. Logging outside valid request context?
+2019-05-31 10:12:25.7782 Debug Targets for Microsoft.AspNetCore.Session.DistributedSession by level:
+2019-05-31 10:12:25.7782 Debug Trace => allfile
+2019-05-31 10:12:25.7879 Debug Debug => allfile
+2019-05-31 10:12:25.7879 Debug Info => allfile
+2019-05-31 10:12:25.7879 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:25.8023 Debug Error => allfile ownFile-web
+2019-05-31 10:12:25.8023 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:25.8517 Debug Targets for Microsoft.AspNetCore.Routing.Matching.DfaMatcher by level:
+2019-05-31 10:12:25.8517 Debug Trace => allfile
+2019-05-31 10:12:25.8517 Debug Debug => allfile
+2019-05-31 10:12:25.8679 Debug Info => allfile
+2019-05-31 10:12:25.8679 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:25.8679 Debug Error => allfile ownFile-web
+2019-05-31 10:12:25.8815 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:25.9157 Debug Targets for Web.Controllers.HomeController by level:
+2019-05-31 10:12:25.9275 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:25.9430 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:25.9430 Debug Info => allfile ownFile-web
+2019-05-31 10:12:25.9655 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:25.9655 Debug Error => allfile ownFile-web
+2019-05-31 10:12:25.9917 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:26.1462 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor by level:
+2019-05-31 10:12:26.1462 Debug Trace => allfile
+2019-05-31 10:12:26.1462 Debug Debug => allfile
+2019-05-31 10:12:26.1637 Debug Info => allfile
+2019-05-31 10:12:26.1637 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:26.1637 Debug Error => allfile ownFile-web
+2019-05-31 10:12:26.1637 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:26.2342 Debug Targets for Microsoft.AspNetCore.Routing.DefaultLinkGenerator by level:
+2019-05-31 10:12:26.2422 Debug Trace => allfile
+2019-05-31 10:12:26.2422 Debug Debug => allfile
+2019-05-31 10:12:26.2422 Debug Info => allfile
+2019-05-31 10:12:26.2579 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:26.2579 Debug Error => allfile ownFile-web
+2019-05-31 10:12:26.2579 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:26.2757 Debug Targets for Microsoft.AspNetCore.Mvc.Routing.EndpointRoutingUrlHelper by level:
+2019-05-31 10:12:26.2757 Debug Trace => allfile
+2019-05-31 10:12:26.2757 Debug Debug => allfile
+2019-05-31 10:12:26.2880 Debug Info => allfile
+2019-05-31 10:12:26.2880 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:26.2880 Debug Error => allfile ownFile-web
+2019-05-31 10:12:26.2880 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:26.3039 Debug Targets for Microsoft.AspNetCore.Mvc.ViewComponents.DefaultViewComponentInvoker by level:
+2019-05-31 10:12:26.3039 Debug Trace => allfile
+2019-05-31 10:12:26.3039 Debug Debug => allfile
+2019-05-31 10:12:26.3039 Debug Info => allfile
+2019-05-31 10:12:26.3188 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:26.3188 Debug Error => allfile ownFile-web
+2019-05-31 10:12:26.3188 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:26.3334 Debug Targets for Microsoft.AspNetCore.Antiforgery.Internal.DefaultAntiforgery by level:
+2019-05-31 10:12:26.3334 Debug Trace => allfile
+2019-05-31 10:12:26.3334 Debug Debug => allfile
+2019-05-31 10:12:26.3334 Debug Info => allfile
+2019-05-31 10:12:26.3500 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:26.3500 Debug Error => allfile ownFile-web
+2019-05-31 10:12:26.3500 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:26.4261 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.TagHelpers.HeadTagHelper by level:
+2019-05-31 10:12:26.4308 Debug Trace => allfile
+2019-05-31 10:12:26.4308 Debug Debug => allfile
+2019-05-31 10:12:26.4308 Debug Info => allfile
+2019-05-31 10:12:26.4450 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:26.4450 Debug Error => allfile ownFile-web
+2019-05-31 10:12:26.4450 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:26.4766 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.TagHelpers.BodyTagHelper by level:
+2019-05-31 10:12:26.4766 Debug Trace => allfile
+2019-05-31 10:12:26.4766 Debug Debug => allfile
+2019-05-31 10:12:26.4766 Debug Info => allfile
+2019-05-31 10:12:26.4907 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:26.4907 Debug Error => allfile ownFile-web
+2019-05-31 10:12:26.4907 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:36.8833 Debug Targets for BCC.Core.PresentationManger by level:
+2019-05-31 10:12:36.8998 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:36.8998 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:36.8998 Debug Info => allfile ownFile-web
+2019-05-31 10:12:36.9145 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:36.9145 Debug Error => allfile ownFile-web
+2019-05-31 10:12:36.9145 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:36.9283 Debug Targets for Web.Controllers.ExchangeRateController by level:
+2019-05-31 10:12:36.9283 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:36.9283 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:36.9425 Debug Info => allfile ownFile-web
+2019-05-31 10:12:36.9425 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:36.9425 Debug Error => allfile ownFile-web
+2019-05-31 10:12:36.9583 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:43.4266 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder by level:
+2019-05-31 10:12:43.4781 Debug Trace => allfile
+2019-05-31 10:12:43.4781 Debug Debug => allfile
+2019-05-31 10:12:43.4781 Debug Info => allfile
+2019-05-31 10:12:43.4943 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:43.5207 Debug Error => allfile ownFile-web
+2019-05-31 10:12:43.5207 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:49.7580 Debug Targets for Web.Controllers.TicketGraphController by level:
+2019-05-31 10:12:49.7703 Debug Trace => allfile ownFile-web
+2019-05-31 10:12:49.7703 Debug Debug => allfile ownFile-web
+2019-05-31 10:12:49.7865 Debug Info => allfile ownFile-web
+2019-05-31 10:12:49.7865 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:49.7865 Debug Error => allfile ownFile-web
+2019-05-31 10:12:49.8033 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:49.8400 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.PartialViewResultExecutor by level:
+2019-05-31 10:12:49.8512 Debug Trace => allfile
+2019-05-31 10:12:49.8512 Debug Debug => allfile
+2019-05-31 10:12:49.8650 Debug Info => allfile
+2019-05-31 10:12:49.8650 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:49.8650 Debug Error => allfile ownFile-web
+2019-05-31 10:12:49.8808 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:49.9473 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder by level:
+2019-05-31 10:12:49.9473 Debug Trace => allfile
+2019-05-31 10:12:49.9473 Debug Debug => allfile
+2019-05-31 10:12:49.9622 Debug Info => allfile
+2019-05-31 10:12:49.9622 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:49.9622 Debug Error => allfile ownFile-web
+2019-05-31 10:12:49.9622 Debug Fatal => allfile ownFile-web
+2019-05-31 10:12:50.6218 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.Json.Internal.JsonResultExecutor by level:
+2019-05-31 10:12:50.6326 Debug Trace => allfile
+2019-05-31 10:12:50.6326 Debug Debug => allfile
+2019-05-31 10:12:50.6326 Debug Info => allfile
+2019-05-31 10:12:50.6326 Debug Warn => allfile ownFile-web
+2019-05-31 10:12:50.6471 Debug Error => allfile ownFile-web
+2019-05-31 10:12:50.6471 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:31.8757 Info Message Template Auto Format enabled
+2019-05-31 10:34:31.9031 Info Loading assembly: NLog.Web.AspNetCore
+2019-05-31 10:34:31.9141 Debug ScanAssembly('NLog.Web.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c')
+2019-05-31 10:34:31.9751 Debug Setting 'UppercaseLayoutRendererWrapper.uppercase' to 'true'
+2019-05-31 10:34:32.0352 Debug Setting 'FileTarget.name' to 'allfile'
+2019-05-31 10:34:32.0408 Debug Setting 'FileTarget.fileName' to './Logs/${shortdate}.log'
+2019-05-31 10:34:32.0408 Debug Setting 'FileTarget.layout' to '${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}'
+2019-05-31 10:34:32.0514 Debug Setting 'EventPropertiesLayoutRenderer.item' to 'EventId_Id'
+2019-05-31 10:34:32.0514 Debug Setting 'UppercaseLayoutRendererWrapper.Inner' to '${level}'
+2019-05-31 10:34:32.0796 Debug Setting 'ExceptionLayoutRenderer.format' to 'tostring'
+2019-05-31 10:34:32.0868 Info Adding target FileTarget(Name=allfile)
+2019-05-31 10:34:32.0868 Debug Registered target allfile: NLog.Targets.FileTarget
+2019-05-31 10:34:32.1013 Debug Setting 'UppercaseLayoutRendererWrapper.uppercase' to 'true'
+2019-05-31 10:34:32.1013 Debug Setting 'FileTarget.name' to 'ownFile-web'
+2019-05-31 10:34:32.1150 Debug Setting 'FileTarget.fileName' to './Logs/nlog-own-${shortdate}.log'
+2019-05-31 10:34:32.1150 Debug Setting 'FileTarget.layout' to '${longdate}|${event-properties:item=EventId_Id}|${uppercase:${level}}|${logger}|${message} ${exception:format=tostring}|url: ${aspnet-request-url}|action: ${aspnet-mvc-action}'
+2019-05-31 10:34:32.1150 Debug Setting 'EventPropertiesLayoutRenderer.item' to 'EventId_Id'
+2019-05-31 10:34:32.1307 Debug Setting 'UppercaseLayoutRendererWrapper.Inner' to '${level}'
+2019-05-31 10:34:32.1307 Debug Setting 'ExceptionLayoutRenderer.format' to 'tostring'
+2019-05-31 10:34:32.1530 Info Adding target FileTarget(Name=ownFile-web)
+2019-05-31 10:34:32.1530 Debug Registered target ownFile-web: NLog.Targets.FileTarget
+2019-05-31 10:34:32.1943 Debug Unused target checking is started... Rule Count: 3, Target Count: 2
+2019-05-31 10:34:32.2089 Debug Unused target checking is completed. Total Rule Count: 3, Total Target Count: 2, Unused Target Count: 0
+2019-05-31 10:34:32.2456 Debug Watching path 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2' filter 'nlog.config' for changes.
+2019-05-31 10:34:32.2456 Debug --- NLog configuration dump ---
+2019-05-31 10:34:32.2583 Debug Targets:
+2019-05-31 10:34:32.2583 Debug File Target[allfile]
+2019-05-31 10:34:32.2702 Debug File Target[ownFile-web]
+2019-05-31 10:34:32.2702 Debug Rules:
+2019-05-31 10:34:32.2702 Debug logNamePattern: (:All) levels: [ Trace Debug Info Warn Error Fatal ] appendTo: [ allfile ]
+2019-05-31 10:34:32.2884 Debug logNamePattern: (Microsoft.:StartsWith) levels: [ Trace Debug Info ] appendTo: [ ]
+2019-05-31 10:34:32.2884 Debug logNamePattern: (:All) levels: [ Trace Debug Info Warn Error Fatal ] appendTo: [ ownFile-web ]
+2019-05-31 10:34:32.2884 Debug --- End of NLog configuration dump ---
+2019-05-31 10:34:32.3115 Info Found 45 configuration items
+2019-05-31 10:34:32.3515 Debug Targets for Web.Program by level:
+2019-05-31 10:34:32.3515 Debug Trace => allfile ownFile-web
+2019-05-31 10:34:32.3515 Debug Debug => allfile ownFile-web
+2019-05-31 10:34:32.3649 Debug Info => allfile ownFile-web
+2019-05-31 10:34:32.3649 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:32.3649 Debug Error => allfile ownFile-web
+2019-05-31 10:34:32.3649 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:32.4211 Debug FileTarget(Name=allfile): Process file 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/2019-05-31.log' on startup
+2019-05-31 10:34:32.4321 Debug Creating file appender: C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/2019-05-31.log
+2019-05-31 10:34:32.4528 Debug Missing serviceProvider, so no HttpContext
+2019-05-31 10:34:32.4528 Debug Missing serviceProvider, so no HttpContext
+2019-05-31 10:34:32.4607 Debug FileTarget(Name=ownFile-web): Process file 'C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/nlog-own-2019-05-31.log' on startup
+2019-05-31 10:34:32.4607 Debug Creating file appender: C:\Users\Michael Melena\source\repos\BCC\Web\bin\Debug\netcoreapp2.2\./Logs/nlog-own-2019-05-31.log
+2019-05-31 10:34:33.5450 Debug ScanAssembly('NLog.Web.AspNetCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c')
+2019-05-31 10:34:34.0494 Debug Hide assemblies for callsite
+2019-05-31 10:34:34.0740 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.WebHost by level:
+2019-05-31 10:34:34.0740 Debug Trace => allfile
+2019-05-31 10:34:34.0834 Debug Debug => allfile
+2019-05-31 10:34:34.0834 Debug Info => allfile
+2019-05-31 10:34:34.0834 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.0834 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.1045 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.1181 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.ApplicationLifetime by level:
+2019-05-31 10:34:34.1181 Debug Trace => allfile
+2019-05-31 10:34:34.1181 Debug Debug => allfile
+2019-05-31 10:34:34.1314 Debug Info => allfile
+2019-05-31 10:34:34.1314 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.1314 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.1314 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.1495 Debug Targets for Microsoft.AspNetCore.Server.IIS.Core.IISHttpServer by level:
+2019-05-31 10:34:34.1495 Debug Trace => allfile
+2019-05-31 10:34:34.1495 Debug Debug => allfile
+2019-05-31 10:34:34.1629 Debug Info => allfile
+2019-05-31 10:34:34.1629 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.1629 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.1629 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.1819 Debug Targets for Microsoft.AspNetCore.DataProtection.TypeForwardingActivator by level:
+2019-05-31 10:34:34.1819 Debug Trace => allfile
+2019-05-31 10:34:34.1819 Debug Debug => allfile
+2019-05-31 10:34:34.1936 Debug Info => allfile
+2019-05-31 10:34:34.1936 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.1936 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.1936 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.2152 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager by level:
+2019-05-31 10:34:34.2152 Debug Trace => allfile
+2019-05-31 10:34:34.2234 Debug Debug => allfile
+2019-05-31 10:34:34.2234 Debug Info => allfile
+2019-05-31 10:34:34.2234 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.2234 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.2234 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.2427 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngGcmAuthenticatedEncryptorFactory by level:
+2019-05-31 10:34:34.2427 Debug Trace => allfile
+2019-05-31 10:34:34.2427 Debug Debug => allfile
+2019-05-31 10:34:34.2427 Debug Info => allfile
+2019-05-31 10:34:34.2568 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.2568 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.2704 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.2704 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory by level:
+2019-05-31 10:34:34.2704 Debug Trace => allfile
+2019-05-31 10:34:34.2704 Debug Debug => allfile
+2019-05-31 10:34:34.2704 Debug Info => allfile
+2019-05-31 10:34:34.2888 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.2888 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.2888 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.2888 Debug Targets for Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ManagedAuthenticatedEncryptorFactory by level:
+2019-05-31 10:34:34.3043 Debug Trace => allfile
+2019-05-31 10:34:34.3043 Debug Debug => allfile
+2019-05-31 10:34:34.3043 Debug Info => allfile
+2019-05-31 10:34:34.3043 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.3199 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.3199 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.3335 Debug Targets for Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlEncryptor by level:
+2019-05-31 10:34:34.3335 Debug Trace => allfile
+2019-05-31 10:34:34.3335 Debug Debug => allfile
+2019-05-31 10:34:34.3335 Debug Info => allfile
+2019-05-31 10:34:34.3512 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.3512 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.3512 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.3512 Debug Targets for Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository by level:
+2019-05-31 10:34:34.3668 Debug Trace => allfile
+2019-05-31 10:34:34.3668 Debug Debug => allfile
+2019-05-31 10:34:34.3668 Debug Info => allfile
+2019-05-31 10:34:34.3804 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.3804 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.3804 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.4509 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver by level:
+2019-05-31 10:34:34.4509 Debug Trace => allfile
+2019-05-31 10:34:34.4585 Debug Debug => allfile
+2019-05-31 10:34:34.4585 Debug Info => allfile
+2019-05-31 10:34:34.4585 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.4746 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.4746 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.4746 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider by level:
+2019-05-31 10:34:34.4746 Debug Trace => allfile
+2019-05-31 10:34:34.4926 Debug Debug => allfile
+2019-05-31 10:34:34.4926 Debug Info => allfile
+2019-05-31 10:34:34.4926 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.5074 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.5074 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.5074 Debug Targets for Microsoft.AspNetCore.DataProtection.Internal.DataProtectionStartupFilter by level:
+2019-05-31 10:34:34.5219 Debug Trace => allfile
+2019-05-31 10:34:34.5219 Debug Debug => allfile
+2019-05-31 10:34:34.5219 Debug Info => allfile
+2019-05-31 10:34:34.5369 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.5369 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.5369 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.6143 Debug Targets for Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor by level:
+2019-05-31 10:34:34.6143 Debug Trace => allfile
+2019-05-31 10:34:34.6143 Debug Debug => allfile
+2019-05-31 10:34:34.6296 Debug Info => allfile
+2019-05-31 10:34:34.6296 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.6296 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.6296 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.7036 Debug Targets for Microsoft.AspNetCore.Mvc.MvcJsonOptions by level:
+2019-05-31 10:34:34.7036 Debug Trace => allfile
+2019-05-31 10:34:34.7109 Debug Debug => allfile
+2019-05-31 10:34:34.7109 Debug Info => allfile
+2019-05-31 10:34:34.7109 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.7109 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.7262 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.7262 Debug Targets for Microsoft.AspNetCore.Mvc.MvcOptions by level:
+2019-05-31 10:34:34.7415 Debug Trace => allfile
+2019-05-31 10:34:34.7415 Debug Debug => allfile
+2019-05-31 10:34:34.7415 Debug Info => allfile
+2019-05-31 10:34:34.7552 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.7552 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.7552 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.7894 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.JsonPatchInputFormatter by level:
+2019-05-31 10:34:34.7894 Debug Trace => allfile
+2019-05-31 10:34:34.7894 Debug Debug => allfile
+2019-05-31 10:34:34.8047 Debug Info => allfile
+2019-05-31 10:34:34.8047 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.8047 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.8202 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.8202 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.JsonInputFormatter by level:
+2019-05-31 10:34:34.8202 Debug Trace => allfile
+2019-05-31 10:34:34.8202 Debug Debug => allfile
+2019-05-31 10:34:34.8368 Debug Info => allfile
+2019-05-31 10:34:34.8368 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.8368 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.8503 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.8503 Debug Targets for Microsoft.AspNetCore.Mvc.ApiBehaviorOptions by level:
+2019-05-31 10:34:34.8687 Debug Trace => allfile
+2019-05-31 10:34:34.8687 Debug Debug => allfile
+2019-05-31 10:34:34.8687 Debug Info => allfile
+2019-05-31 10:34:34.8835 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.8835 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.8835 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.9011 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions by level:
+2019-05-31 10:34:34.9011 Debug Trace => allfile
+2019-05-31 10:34:34.9011 Debug Debug => allfile
+2019-05-31 10:34:34.9140 Debug Info => allfile
+2019-05-31 10:34:34.9140 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.9140 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.9297 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.9297 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.RazorPagesOptions by level:
+2019-05-31 10:34:34.9297 Debug Trace => allfile
+2019-05-31 10:34:34.9469 Debug Debug => allfile
+2019-05-31 10:34:34.9469 Debug Info => allfile
+2019-05-31 10:34:34.9469 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:34.9589 Debug Error => allfile ownFile-web
+2019-05-31 10:34:34.9589 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:34.9892 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.Internal.RazorViewCompiler by level:
+2019-05-31 10:34:34.9892 Debug Trace => allfile
+2019-05-31 10:34:34.9892 Debug Debug => allfile
+2019-05-31 10:34:34.9892 Debug Info => allfile
+2019-05-31 10:34:35.0061 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.0061 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.0061 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.0218 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine by level:
+2019-05-31 10:34:35.0404 Debug Trace => allfile
+2019-05-31 10:34:35.0531 Debug Debug => allfile
+2019-05-31 10:34:35.0531 Debug Info => allfile
+2019-05-31 10:34:35.0531 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.0531 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.0714 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.0714 Debug Targets for Microsoft.AspNetCore.Mvc.MvcViewOptions by level:
+2019-05-31 10:34:35.0714 Debug Trace => allfile
+2019-05-31 10:34:35.0714 Debug Debug => allfile
+2019-05-31 10:34:35.0857 Debug Info => allfile
+2019-05-31 10:34:35.0857 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.0857 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.0857 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.1021 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.RazorProjectPageRouteModelProvider by level:
+2019-05-31 10:34:35.1021 Debug Trace => allfile
+2019-05-31 10:34:35.1021 Debug Debug => allfile
+2019-05-31 10:34:35.1143 Debug Info => allfile
+2019-05-31 10:34:35.1143 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.1143 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.1143 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.1291 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.CompiledPageRouteModelProvider by level:
+2019-05-31 10:34:35.1291 Debug Trace => allfile
+2019-05-31 10:34:35.1291 Debug Debug => allfile
+2019-05-31 10:34:35.1291 Debug Info => allfile
+2019-05-31 10:34:35.1452 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.1452 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.1452 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.1788 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderFactory by level:
+2019-05-31 10:34:35.1788 Debug Trace => allfile
+2019-05-31 10:34:35.1788 Debug Debug => allfile
+2019-05-31 10:34:35.2048 Debug Info => allfile
+2019-05-31 10:34:35.2090 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.2090 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.2090 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.2364 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder by level:
+2019-05-31 10:34:35.2410 Debug Trace => allfile
+2019-05-31 10:34:35.2410 Debug Debug => allfile
+2019-05-31 10:34:35.2410 Debug Info => allfile
+2019-05-31 10:34:35.2410 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.2563 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.2563 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.2702 Debug Targets for Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker by level:
+2019-05-31 10:34:35.2702 Debug Trace => allfile
+2019-05-31 10:34:35.2702 Debug Debug => allfile
+2019-05-31 10:34:35.2702 Debug Info => allfile
+2019-05-31 10:34:35.2702 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.2894 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.2894 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.2894 Debug Targets for Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingBasedDataProtector by level:
+2019-05-31 10:34:35.3023 Debug Trace => allfile
+2019-05-31 10:34:35.3023 Debug Debug => allfile
+2019-05-31 10:34:35.3023 Debug Info => allfile
+2019-05-31 10:34:35.3023 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.3023 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.3217 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.3217 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.CookieTempDataProvider by level:
+2019-05-31 10:34:35.3217 Debug Trace => allfile
+2019-05-31 10:34:35.3332 Debug Debug => allfile
+2019-05-31 10:34:35.3332 Debug Info => allfile
+2019-05-31 10:34:35.3332 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.3332 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.3489 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.3697 Debug Targets for Microsoft.AspNetCore.Mvc.RazorPages.Internal.PageActionInvoker by level:
+2019-05-31 10:34:35.3697 Debug Trace => allfile
+2019-05-31 10:34:35.3697 Debug Debug => allfile
+2019-05-31 10:34:35.3826 Debug Info => allfile
+2019-05-31 10:34:35.3826 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.3826 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.3826 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.5292 Debug Targets for Microsoft.AspNetCore.Routing.EndpointMiddleware by level:
+2019-05-31 10:34:35.5292 Debug Trace => allfile
+2019-05-31 10:34:35.5367 Debug Debug => allfile
+2019-05-31 10:34:35.5367 Debug Info => allfile
+2019-05-31 10:34:35.5367 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.5367 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.5518 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.5518 Debug Targets for Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware by level:
+2019-05-31 10:34:35.5518 Debug Trace => allfile
+2019-05-31 10:34:35.5518 Debug Debug => allfile
+2019-05-31 10:34:35.5698 Debug Info => allfile
+2019-05-31 10:34:35.5698 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.5698 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.5698 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.5883 Debug Targets for Microsoft.AspNetCore.Session.SessionMiddleware by level:
+2019-05-31 10:34:35.5883 Debug Trace => allfile
+2019-05-31 10:34:35.5883 Debug Debug => allfile
+2019-05-31 10:34:35.6012 Debug Info => allfile
+2019-05-31 10:34:35.6012 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.6012 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.6012 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.6195 Debug Targets for Microsoft.AspNetCore.CookiePolicy.CookiePolicyMiddleware by level:
+2019-05-31 10:34:35.6195 Debug Trace => allfile
+2019-05-31 10:34:35.6195 Debug Debug => allfile
+2019-05-31 10:34:35.6308 Debug Info => allfile
+2019-05-31 10:34:35.6308 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.6308 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.6308 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.6464 Debug Targets for Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware by level:
+2019-05-31 10:34:35.6464 Debug Trace => allfile
+2019-05-31 10:34:35.6464 Debug Debug => allfile
+2019-05-31 10:34:35.6464 Debug Info => allfile
+2019-05-31 10:34:35.6619 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.6619 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.6619 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.6619 Debug Targets for Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware by level:
+2019-05-31 10:34:35.6788 Debug Trace => allfile
+2019-05-31 10:34:35.6788 Debug Debug => allfile
+2019-05-31 10:34:35.6788 Debug Info => allfile
+2019-05-31 10:34:35.6931 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.6931 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.6931 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.7095 Debug Targets for Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware by level:
+2019-05-31 10:34:35.7095 Debug Trace => allfile
+2019-05-31 10:34:35.7095 Debug Debug => allfile
+2019-05-31 10:34:35.7234 Debug Info => allfile
+2019-05-31 10:34:35.7234 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.7234 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.7234 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.7400 Debug Targets for Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware by level:
+2019-05-31 10:34:35.7400 Debug Trace => allfile
+2019-05-31 10:34:35.7400 Debug Debug => allfile
+2019-05-31 10:34:35.7400 Debug Info => allfile
+2019-05-31 10:34:35.7559 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.7559 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.7559 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.7559 Debug Targets for Microsoft.AspNetCore.Hosting.Internal.HostedServiceExecutor by level:
+2019-05-31 10:34:35.7727 Debug Trace => allfile
+2019-05-31 10:34:35.7727 Debug Debug => allfile
+2019-05-31 10:34:35.7727 Debug Info => allfile
+2019-05-31 10:34:35.7727 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.7874 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.7874 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:35.7874 Debug Targets for BCC.Core.BankManager by level:
+2019-05-31 10:34:35.7874 Debug Trace => allfile ownFile-web
+2019-05-31 10:34:35.8024 Debug Debug => allfile ownFile-web
+2019-05-31 10:34:35.8024 Debug Info => allfile ownFile-web
+2019-05-31 10:34:35.8024 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:35.8024 Debug Error => allfile ownFile-web
+2019-05-31 10:34:35.8176 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:36.0840 Debug Targets for Microsoft.EntityFrameworkCore.Infrastructure by level:
+2019-05-31 10:34:36.0840 Debug Trace => allfile
+2019-05-31 10:34:36.0840 Debug Debug => allfile
+2019-05-31 10:34:36.0840 Debug Info => allfile
+2019-05-31 10:34:36.1033 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:36.1033 Debug Error => allfile ownFile-web
+2019-05-31 10:34:36.1033 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:36.1906 Debug Targets for Microsoft.EntityFrameworkCore.ChangeTracking by level:
+2019-05-31 10:34:36.1944 Debug Trace => allfile
+2019-05-31 10:34:36.1944 Debug Debug => allfile
+2019-05-31 10:34:36.1944 Debug Info => allfile
+2019-05-31 10:34:36.1944 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:36.2118 Debug Error => allfile ownFile-web
+2019-05-31 10:34:36.2118 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:36.2593 Debug Targets for Microsoft.EntityFrameworkCore.Model by level:
+2019-05-31 10:34:36.2593 Debug Trace => allfile
+2019-05-31 10:34:36.2593 Debug Debug => allfile
+2019-05-31 10:34:36.2744 Debug Info => allfile
+2019-05-31 10:34:36.2744 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:36.2744 Debug Error => allfile ownFile-web
+2019-05-31 10:34:36.2867 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:36.2867 Debug Targets for Microsoft.EntityFrameworkCore.Model.Validation by level:
+2019-05-31 10:34:36.2867 Debug Trace => allfile
+2019-05-31 10:34:36.3025 Debug Debug => allfile
+2019-05-31 10:34:36.3025 Debug Info => allfile
+2019-05-31 10:34:36.3025 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:36.3025 Debug Error => allfile ownFile-web
+2019-05-31 10:34:36.3197 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:36.9848 Debug Targets for Microsoft.EntityFrameworkCore.Database.Transaction by level:
+2019-05-31 10:34:36.9895 Debug Trace => allfile
+2019-05-31 10:34:36.9895 Debug Debug => allfile
+2019-05-31 10:34:36.9895 Debug Info => allfile
+2019-05-31 10:34:36.9895 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:37.0045 Debug Error => allfile ownFile-web
+2019-05-31 10:34:37.0045 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:37.0045 Debug Targets for Microsoft.EntityFrameworkCore.Database.Connection by level:
+2019-05-31 10:34:37.0045 Debug Trace => allfile
+2019-05-31 10:34:37.0045 Debug Debug => allfile
+2019-05-31 10:34:37.0234 Debug Info => allfile
+2019-05-31 10:34:37.0234 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:37.0234 Debug Error => allfile ownFile-web
+2019-05-31 10:34:37.0234 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:37.0424 Debug Targets for Microsoft.EntityFrameworkCore.Query by level:
+2019-05-31 10:34:37.0424 Debug Trace => allfile
+2019-05-31 10:34:37.0424 Debug Debug => allfile
+2019-05-31 10:34:37.0536 Debug Info => allfile
+2019-05-31 10:34:37.0536 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:37.0536 Debug Error => allfile ownFile-web
+2019-05-31 10:34:37.0536 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:37.0844 Debug Targets for Microsoft.EntityFrameworkCore.Database.Command by level:
+2019-05-31 10:34:37.0844 Debug Trace => allfile
+2019-05-31 10:34:37.0844 Debug Debug => allfile
+2019-05-31 10:34:37.0844 Debug Info => allfile
+2019-05-31 10:34:37.1003 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:37.1003 Debug Error => allfile ownFile-web
+2019-05-31 10:34:37.1003 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:37.1804 Debug Targets for Microsoft.EntityFrameworkCore.Update by level:
+2019-05-31 10:34:37.1804 Debug Trace => allfile
+2019-05-31 10:34:37.1925 Debug Debug => allfile
+2019-05-31 10:34:37.1925 Debug Info => allfile
+2019-05-31 10:34:37.1925 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:37.1925 Debug Error => allfile ownFile-web
+2019-05-31 10:34:37.2107 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:37.9219 Debug Targets for BCC.Core.CNB.CNBank by level:
+2019-05-31 10:34:37.9219 Debug Trace => allfile ownFile-web
+2019-05-31 10:34:37.9301 Debug Debug => allfile ownFile-web
+2019-05-31 10:34:37.9301 Debug Info => allfile ownFile-web
+2019-05-31 10:34:37.9301 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:37.9423 Debug Error => allfile ownFile-web
+2019-05-31 10:34:37.9423 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:37.9423 Debug Targets for BCC.Core.KB.KBank by level:
+2019-05-31 10:34:37.9423 Debug Trace => allfile ownFile-web
+2019-05-31 10:34:37.9594 Debug Debug => allfile ownFile-web
+2019-05-31 10:34:37.9594 Debug Info => allfile ownFile-web
+2019-05-31 10:34:37.9594 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:37.9594 Debug Error => allfile ownFile-web
+2019-05-31 10:34:37.9749 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:37.9749 Debug Targets for BCC.Core.CSOB.CSOBank by level:
+2019-05-31 10:34:37.9749 Debug Trace => allfile ownFile-web
+2019-05-31 10:34:37.9749 Debug Debug => allfile ownFile-web
+2019-05-31 10:34:37.9917 Debug Info => allfile ownFile-web
+2019-05-31 10:34:37.9917 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:37.9917 Debug Error => allfile ownFile-web
+2019-05-31 10:34:37.9917 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.0071 Debug Targets for BCC.Core.RB.RBank by level:
+2019-05-31 10:34:38.0071 Debug Trace => allfile ownFile-web
+2019-05-31 10:34:38.0071 Debug Debug => allfile ownFile-web
+2019-05-31 10:34:38.0071 Debug Info => allfile ownFile-web
+2019-05-31 10:34:38.0228 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.0228 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.0228 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.0364 Debug No available HttpContext. Logging outside valid request context?
+2019-05-31 10:34:38.0364 Debug No available HttpContext. Logging outside valid request context?
+2019-05-31 10:34:38.1993 Debug Targets for Microsoft.AspNetCore.Session.DistributedSession by level:
+2019-05-31 10:34:38.2092 Debug Trace => allfile
+2019-05-31 10:34:38.2092 Debug Debug => allfile
+2019-05-31 10:34:38.2092 Debug Info => allfile
+2019-05-31 10:34:38.2092 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.2276 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.2276 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.2765 Debug Targets for Microsoft.AspNetCore.Routing.Matching.DfaMatcher by level:
+2019-05-31 10:34:38.2765 Debug Trace => allfile
+2019-05-31 10:34:38.2858 Debug Debug => allfile
+2019-05-31 10:34:38.2858 Debug Info => allfile
+2019-05-31 10:34:38.2858 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.3019 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.3019 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.3486 Debug Targets for Web.Controllers.HomeController by level:
+2019-05-31 10:34:38.3486 Debug Trace => allfile ownFile-web
+2019-05-31 10:34:38.3486 Debug Debug => allfile ownFile-web
+2019-05-31 10:34:38.3486 Debug Info => allfile ownFile-web
+2019-05-31 10:34:38.3818 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.3818 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.4112 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.5879 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor by level:
+2019-05-31 10:34:38.5879 Debug Trace => allfile
+2019-05-31 10:34:38.5879 Debug Debug => allfile
+2019-05-31 10:34:38.5990 Debug Info => allfile
+2019-05-31 10:34:38.5990 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.5990 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.5990 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.6540 Debug Targets for Microsoft.AspNetCore.Routing.DefaultLinkGenerator by level:
+2019-05-31 10:34:38.6540 Debug Trace => allfile
+2019-05-31 10:34:38.6625 Debug Debug => allfile
+2019-05-31 10:34:38.6625 Debug Info => allfile
+2019-05-31 10:34:38.6625 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.6625 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.6770 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.6770 Debug Targets for Microsoft.AspNetCore.Mvc.Routing.EndpointRoutingUrlHelper by level:
+2019-05-31 10:34:38.6770 Debug Trace => allfile
+2019-05-31 10:34:38.6770 Debug Debug => allfile
+2019-05-31 10:34:38.6943 Debug Info => allfile
+2019-05-31 10:34:38.6943 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.6943 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.6943 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.7124 Debug Targets for Microsoft.AspNetCore.Mvc.ViewComponents.DefaultViewComponentInvoker by level:
+2019-05-31 10:34:38.7124 Debug Trace => allfile
+2019-05-31 10:34:38.7124 Debug Debug => allfile
+2019-05-31 10:34:38.7266 Debug Info => allfile
+2019-05-31 10:34:38.7266 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.7266 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.7266 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.7472 Debug Targets for Microsoft.AspNetCore.Antiforgery.Internal.DefaultAntiforgery by level:
+2019-05-31 10:34:38.7472 Debug Trace => allfile
+2019-05-31 10:34:38.7567 Debug Debug => allfile
+2019-05-31 10:34:38.7567 Debug Info => allfile
+2019-05-31 10:34:38.7567 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.7567 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.7732 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.8396 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.TagHelpers.HeadTagHelper by level:
+2019-05-31 10:34:38.8396 Debug Trace => allfile
+2019-05-31 10:34:38.8507 Debug Debug => allfile
+2019-05-31 10:34:38.8507 Debug Info => allfile
+2019-05-31 10:34:38.8507 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.8507 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.8663 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:38.8808 Debug Targets for Microsoft.AspNetCore.Mvc.Razor.TagHelpers.BodyTagHelper by level:
+2019-05-31 10:34:38.8808 Debug Trace => allfile
+2019-05-31 10:34:38.8808 Debug Debug => allfile
+2019-05-31 10:34:38.8808 Debug Info => allfile
+2019-05-31 10:34:38.8999 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:38.8999 Debug Error => allfile ownFile-web
+2019-05-31 10:34:38.8999 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:50.7392 Debug Targets for BCC.Core.PresentationManger by level:
+2019-05-31 10:34:50.7570 Debug Trace => allfile ownFile-web
+2019-05-31 10:34:50.7570 Debug Debug => allfile ownFile-web
+2019-05-31 10:34:50.7570 Debug Info => allfile ownFile-web
+2019-05-31 10:34:50.7723 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:50.7723 Debug Error => allfile ownFile-web
+2019-05-31 10:34:50.7723 Debug Fatal => allfile ownFile-web
+2019-05-31 10:34:50.7895 Debug Targets for Web.Controllers.ExchangeRateController by level:
+2019-05-31 10:34:50.7895 Debug Trace => allfile ownFile-web
+2019-05-31 10:34:50.7895 Debug Debug => allfile ownFile-web
+2019-05-31 10:34:50.8070 Debug Info => allfile ownFile-web
+2019-05-31 10:34:50.8070 Debug Warn => allfile ownFile-web
+2019-05-31 10:34:50.8070 Debug Error => allfile ownFile-web
+2019-05-31 10:34:50.8220 Debug Fatal => allfile ownFile-web
+2019-05-31 10:36:14.5698 Debug Targets for Web.Controllers.TicketGraphController by level:
+2019-05-31 10:36:14.5698 Debug Trace => allfile ownFile-web
+2019-05-31 10:36:14.5698 Debug Debug => allfile ownFile-web
+2019-05-31 10:36:14.5860 Debug Info => allfile ownFile-web
+2019-05-31 10:36:14.5860 Debug Warn => allfile ownFile-web
+2019-05-31 10:36:14.5860 Debug Error => allfile ownFile-web
+2019-05-31 10:36:14.6032 Debug Fatal => allfile ownFile-web
+2019-05-31 10:36:14.6484 Debug Targets for Microsoft.AspNetCore.Mvc.ViewFeatures.PartialViewResultExecutor by level:
+2019-05-31 10:36:14.6484 Debug Trace => allfile
+2019-05-31 10:36:14.6630 Debug Debug => allfile
+2019-05-31 10:36:14.6630 Debug Info => allfile
+2019-05-31 10:36:14.6630 Debug Warn => allfile ownFile-web
+2019-05-31 10:36:14.6630 Debug Error => allfile ownFile-web
+2019-05-31 10:36:14.6790 Debug Fatal => allfile ownFile-web
+2019-05-31 10:36:14.7393 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinder by level:
+2019-05-31 10:36:14.7393 Debug Trace => allfile
+2019-05-31 10:36:14.7565 Debug Debug => allfile
+2019-05-31 10:36:14.7565 Debug Info => allfile
+2019-05-31 10:36:14.7565 Debug Warn => allfile ownFile-web
+2019-05-31 10:36:14.7565 Debug Error => allfile ownFile-web
+2019-05-31 10:36:14.7723 Debug Fatal => allfile ownFile-web
+2019-05-31 10:36:15.4759 Debug Targets for Microsoft.AspNetCore.Mvc.Formatters.Json.Internal.JsonResultExecutor by level:
+2019-05-31 10:36:15.4759 Debug Trace => allfile
+2019-05-31 10:36:15.4759 Debug Debug => allfile
+2019-05-31 10:36:15.4759 Debug Info => allfile
+2019-05-31 10:36:15.4904 Debug Warn => allfile ownFile-web
+2019-05-31 10:36:15.4904 Debug Error => allfile ownFile-web
+2019-05-31 10:36:15.4904 Debug Fatal => allfile ownFile-web
+2019-05-31 10:56:33.8814 Debug Targets for Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder by level:
+2019-05-31 10:56:33.8814 Debug Trace => allfile
+2019-05-31 10:56:33.8968 Debug Debug => allfile
+2019-05-31 10:56:33.8968 Debug Info => allfile
+2019-05-31 10:56:33.8968 Debug Warn => allfile ownFile-web
+2019-05-31 10:56:33.9152 Debug Error => allfile ownFile-web
+2019-05-31 10:56:33.9152 Debug Fatal => allfile ownFile-web
+2019-05-31 10:56:34.1804 Debug Targets for Microsoft.AspNetCore.Mvc.StatusCodeResult by level:
+2019-05-31 10:56:34.1993 Debug Trace => allfile
+2019-05-31 10:56:34.1993 Debug Debug => allfile
+2019-05-31 10:56:34.2109 Debug Info => allfile
+2019-05-31 10:56:34.2109 Debug Warn => allfile ownFile-web
+2019-05-31 10:56:34.2109 Debug Error => allfile ownFile-web
+2019-05-31 10:56:34.2284 Debug Fatal => allfile ownFile-web
