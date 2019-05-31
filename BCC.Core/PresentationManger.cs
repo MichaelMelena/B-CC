@@ -139,7 +139,7 @@ namespace BCC.Core
                         }
                     }
                 }
-                labels.Add(ticket.Date);
+                labels.Add(new DateTime(ticket.Date.Year, ticket.Date.Month, ticket.Date.Day));
             }
         }
 
