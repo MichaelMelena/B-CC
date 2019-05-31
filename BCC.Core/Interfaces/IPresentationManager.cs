@@ -30,5 +30,7 @@ namespace BCC.Core
         string GetSellDateGraph(string isoName, DateTime date);
 
         TimelineDatasetModel CreateTimelineDataset(DateTime start, DateTime end, string currency, bool isBuy);
+
+        TimelineDatasetModel BankMargin(DateTime start, DateTime end, string bankName, string currency, bool isBuy);
     }
 }

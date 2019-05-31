@@ -15,7 +15,7 @@ namespace BCC.Core
 
         private readonly BCCContext _context;
         private readonly ILogger<PresentationManger> _logger;
-        public PresentationManger(BCCContext context,ILogger<PresentationManger> logger)
+        public PresentationManger(BCCContext context, ILogger<PresentationManger> logger)
         {
             _context = context;
             _logger = logger;
@@ -45,6 +45,9 @@ namespace BCC.Core
             HashSet<DateTime> labels = new HashSet<DateTime>();
             foreach (string name in bankNames)
             {
+                AddBankDataset(ref dataset, ref labels, name, start, end, currency, isBuy, false);
+
+                /*
                 dataset.Add(name, new Dictionary<string, double>());
                 var tickets = _context.Ticket.Where(x => x.Date >= start && x.Date <= end && x.BankShortName == name).ToList();
                 tickets.Sort(new TicketDateComparer());
@@ -69,6 +72,7 @@ namespace BCC.Core
                     }
                     labels.Add(ticket.Date);
                 }
+                */
             }
             var labelList = labels.ToList();
             labelList.Sort();
@@ -77,11 +81,66 @@ namespace BCC.Core
                 Currency = currency,
                 Dataset = dataset,
                 IsBuy = isBuy,
-                Labels = labels,
+                Labels = labelList,
                 Start = start,
                 End = end
             };
 
+        }
+
+        public TimelineDatasetModel BankMargin(DateTime start, DateTime end, string bankName, string currency, bool isBuy)
+        {
+
+
+            var cnbName = "CNB";
+            
+            var dataset = new Dictionary<string, Dictionary<string, double>>();
+            HashSet<DateTime> labels = new HashSet<DateTime>();
+
+
+            AddBankDataset(ref dataset, ref labels, cnbName, start, end, currency, isBuy, true);
+            AddBankDataset(ref dataset, ref labels, bankName, start, end, currency, isBuy, false);
+
+            var labelList = labels.ToList();
+            labelList.Sort();
+            return new TimelineDatasetModel()
+            {
+                Currency = currency,
+                Dataset = dataset,
+                IsBuy = isBuy,
+                Labels = labelList,
+                Start = start,
+                End = end
+            };
+
+        
+        }
+        private void AddBankDataset(ref Dictionary<string, Dictionary<string, double>> dataset,ref HashSet<DateTime> labels, string name, DateTime start, DateTime end, string currency, bool isBuy, bool includeCNBtoSell)
+        {
+            dataset.Add(name, new Dictionary<string, double>());
+            var tickets = _context.Ticket.Where(x => x.Date >= start && x.Date <= end && x.BankShortName == name).ToList();
+            tickets.Sort(new TicketDateComparer());
+            foreach (var ticket in tickets)
+            {
+                Currency selectedCurrency = _context.Currency.FirstOrDefault(x => x.TicketId == ticket.Id && x.IsoName == currency.ToUpperInvariant());
+                if (selectedCurrency != null)
+                {
+                    if (isBuy || includeCNBtoSell && name == "CNB")
+                    {
+                        dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"), selectedCurrency.Buy);
+
+                    }
+                    else
+                    {
+                        if (selectedCurrency.Sell.HasValue)
+                        {
+                            dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"), selectedCurrency.Sell.Value);
+
+                        }
+                    }
+                }
+                labels.Add(ticket.Date);
+            }
         }
 
         private class TicketDateComparer : IComparer<Ticket>
@@ -564,7 +623,6 @@ namespace BCC.Core
             errorTable.AcceptChanges();
             return errorTable;
         }
-
 
 
         private DataTable CreateRecomendationTable(string tableName, DateTime date, out bool err)

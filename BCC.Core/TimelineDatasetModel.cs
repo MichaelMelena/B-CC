@@ -9,7 +9,7 @@ namespace BCC.Core
     public class TimelineDatasetModel
     {
         [JsonProperty("labels")]
-        public HashSet<DateTime> Labels { get; set; }
+        public List<DateTime> Labels { get; set; }
 
         [JsonProperty("dataset")]
         public Dictionary<string, Dictionary<string, double>> Dataset { get; set; }

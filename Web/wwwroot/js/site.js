@@ -324,6 +324,17 @@ App.getPriceTimelineGraph = function (targetElement, startDate, endDate, currenc
     }, App.createBankPriceTimelineGraph);
 }
 
+//TODO: BankMargin
+App.getBankMarginGraph = function (targetElement, startDate, endDate, bankName, currency, isBuy) {
+    App.graphFactory(`/${App.GraphController}/BankMargin`, targetElement, {
+        start: startDate,
+        end: endDate,
+        bankName: bankName,
+        currency: currency,
+        isBuy: isBuy
+    }, App.createBankMarginTimelineGraph);
+}
+
 App.createBankPriceGraph = function (targetElement,graphData) {
 
     let datasets = [];
@@ -501,6 +512,112 @@ App.createBankPriceTimelineGraph = function (targetElement, graphData) {
                     borderColor: 'rgba(90, 90, 90, 0.6)',
                     borderWidth: 4
                 }]
+            }
+        }
+    });
+}
+
+
+App.createBankMarginTimelineGraph = function (targetElement, graphData) {
+    let startDate = new Date(graphData.start);
+    let endDate = new Date(graphData.end);
+    let datasets = [];
+
+    let data = [];
+    datasets.push(
+            {
+                label: "Margin",
+                backgroundColor: App.RGBACOLORS[0],
+                borderColor: App.COLORS[0],
+                borderWidth: 1,
+                data: data,
+                fill: false
+            }
+    );
+  
+
+    let lineValues = []
+
+    let cnb = graphData.dataset["CNB"];
+    delete graphData.dataset["CNB"];
+
+    let bankName = Object.keys(graphData.dataset)[0];
+    let otherBank = Object.values(graphData.dataset)[0];
+
+    let lastCnbValue = Number.NaN;
+    let lastBankValue = Number.NaN;
+    for (let label of graphData.labels) {
+        let labelDate = new Date(label);
+        let formatedDate = App.getFormatedDate(labelDate);
+        
+
+        let a = !(formatedDate in cnb);
+        let b = Number.isNaN(lastCnbValue);
+        let c = !(formatedDate in otherBank);
+        let d = Number.isNaN(lastBankValue);
+
+        ///cnb[formatedDate] === undefined  not checking properly
+        if ( a && b || c && d) {
+            data.push(Number.NaN);
+        }
+        else {
+
+            let tmpCnb = (cnb[formatedDate] !== undefined) ? cnb[formatedDate] : lastCnbValue;
+            let tmpOther = (otherBank[formatedDate] !== undefined) ? otherBank[formatedDate] : lastBankValue;
+            let result = 0;
+            if (graphData.isBuy) {
+
+                result = tmpCnb - tmpOther;
+            }
+            else {
+
+                result = tmpOther - tmpCnb;
+            }
+
+            result = Math.round(result * 10000) / 10000;
+            data.push(result);
+        }
+
+        if (cnb[formatedDate] !== undefined) {
+            lastCnbValue = cnb[formatedDate]; 
+        }
+        if (otherBank[formatedDate] !== undefined) {
+            lastBankValue = otherBank[formatedDate];
+        }
+    }
+   
+
+    let labels = [];
+    for (let j = 0; j < graphData.labels.length; j++) {
+        labels.push(App.PrettyPrintDate(new Date(graphData.labels[j])));
+    }
+
+
+    let barChartData = {
+        labels: labels,
+        datasets: datasets
+    }
+    let chart = new Chart(targetElement, {
+        type: 'line',
+        data: barChartData,
+        options: {
+            spanGaps: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        id: 'price',
+                        type: 'linear'
+                    }
+                }]
+            },
+            responsive: true,
+            responsiveAnimationDuration: 1000,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: ` ${graphData.currency} ${graphData.isBuy ? "buy" : "sell"} Margin from ${App.PrettyPrintDate(startDate)} to ${App.PrettyPrintDate(endDate)}`
             }
         }
     });

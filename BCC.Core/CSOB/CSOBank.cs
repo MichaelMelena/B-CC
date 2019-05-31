@@ -23,7 +23,7 @@ namespace BCC.Core.CSOB
         #region Helper methods
         private void ValidateDate(DateTime date)
         {
-            if (date < this.MIN_DATE || date > DateTime.Today)
+            if (date < this.MIN_DATE || date > DateTime.Now)
             {
                 throw new CSOBInvalidDate($"Invalid date. Minimum is {this.MIN_DATE}. Maximum is {DateTime.Today}(Current time)");
             }

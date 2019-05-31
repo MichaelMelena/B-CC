@@ -74,7 +74,7 @@ namespace Web.Controllers
             //if (IsDateInValid(ref end)) end = DateTime.Now;
             if (start == DateTime.MinValue || end == DateTime.MinValue || start > end)
             { 
-                start = DateTime.Now;
+                start = DateTime.Today;
                 end = DateTime.Now;
             }
             end = new DateTime(end.Year, end.Month, end.Day, 23, 59, 59);
@@ -83,8 +83,17 @@ namespace Web.Controllers
             return new JsonResult(_presentationManager.CreateTimelineDataset(start, end, currency, isBuy));
         }
         
-
-        
+        public JsonResult BankMargin([FromQuery] string currency,[FromQuery] string bankName, [FromQuery] DateTime start, [FromQuery] DateTime end, [FromQuery] bool isBuy = false)
+        {
+            if (start == DateTime.MinValue || end == DateTime.MinValue || start > end)
+            {
+                start = DateTime.Today;
+                end = DateTime.Now;
+            }
+            end = new DateTime(end.Year, end.Month, end.Day, 23, 59, 59);
+            if (string.IsNullOrWhiteSpace(currency)) currency = "AUD";
+            return new JsonResult(_presentationManager.BankMargin(start, end, bankName, currency, isBuy));
+        }        
 
         private bool IsDateInValid(ref DateTime date)
         {

@@ -130,8 +130,8 @@ namespace Web.Controllers
         {
             if(Enum.TryParse<TableTypes>(tableType,true,out TableTypes type))
             {
-                var start = DateTime.Now.Subtract(TimeSpan.FromDays(interval));
-                var end = DateTime.Now;
+                var start = DateTime.Today.Subtract(TimeSpan.FromDays(interval));
+                var end = DateTime.Today;
                 DataTable dataTable = null;
                 switch (type)
                 {
