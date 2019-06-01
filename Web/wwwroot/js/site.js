@@ -10,7 +10,8 @@ App.GraphController = "TicketGraph";
 App.ExchangeRateController = "ExchangeRate";
 App.SamllGraphWidth = 350;
 App.overviewMaxWidth = 734;
-App.activeOverviews = {}
+App.activeOverviews = {};
+App.activeMargins = {};
 
 const arrAvg = arr => arr.reduce((a, b) => a + b, 0) / arr.length
 const arrSum = arr => arr.reduce((a, b) => a + b, 0)
@@ -78,14 +79,19 @@ window.downloadFile.isSafari = navigator.userAgent.toLowerCase().indexOf('safari
 
 
 
-App.restoreFromSession = function (targetElement, json) {
+App.restoreOverviewFromSession = function (targetElement, json) {
 
     for (let settings of json) {
 
         App.getOverviewControl(targetElement, settings.currency, settings.interval, settings.isBuy);
     }
-    //App.activeOverviews = json;
-    //App.refreshOverviews(targetElement);
+}
+
+App.restoreMarginFromSession = function (targetElement, json) {
+
+    for (let settings of json) {
+        App.getBankMarginGraph(targetElement, settings.start, settings.end, settings.bankName, settings.currency, settings.isBuy);
+    }
 }
 
 App.updateSession = function () {
@@ -94,9 +100,29 @@ App.updateSession = function () {
         contentType: "application/json",
         url: `/${App.ExchangeRateController}/UpdateSession`,
         data: JSON.stringify(Object.values(App.activeOverviews)),
-        /*data: {
-            data: JSON.stringify(Object.values(App.activeOverviews))
-        },*/
+        error: err => console.log(err),
+    });
+}
+
+App.updateOverviewSession = function () {
+    $.ajax({
+        type: 'POST',
+        contentType: "application/json",
+        url: `/${App.ExchangeRateController}/UpdateOverviewSession`,
+        data: JSON.stringify(Object.values(App.activeOverviews)),
+        error: err => console.log(err),
+    });
+}
+
+App.updateMarginSession = function () {
+    $.ajax({
+        type: 'POST',
+        contentType: "application/json",
+        url: `/${App.ExchangeRateController}/UpdateBankMarginSession`,
+        data: JSON.stringify(Object.values(App.activeMargins)),
+        success: function () {
+            console.log("Updated margin session");
+        },
         error: err => console.log(err),
     });
 }
@@ -104,10 +130,17 @@ App.updateSession = function () {
 App.refreshOverviews = function (targetElement) {
     for (let key of Object.keys(App.activeOverviews)) {
 
-        settings = App.activeOverviews[key];
+        let settings = App.activeOverviews[key];
         App.getOverviewControl(targetElement, settings.currency, settings.interval, settings.isBuy);
         App.removeOverviewControl(key);
-        //App.getOverviewControl(targetElement)
+    }
+}
+
+App.refreshMargins = function (targetElement) {
+    for (let key of Object.keys(App.activeMargins)) {
+        let settings = App.activeMargins[key];
+        App.getBankMarginGraph(targetElement, settings.start, settings.end, settings.bankName, settings.currency, settings.isBuy);
+        App.removeBankMargin(key);
     }
 }
 
@@ -118,9 +151,20 @@ App.addActiveOverview = function (elementId,canvasId,currency, interval, isBuyTe
     App.activeOverviews[elementId] = { currency: currency, interval: interval, isBuy: isBuy, canvasId: canvasId };
 }
 
+App.addActiveMargin = function (elementId, canvasId, currency, bankName, isBuyText,start, end) {
+    let isBuy = false;
+    if (isBuyText === "True") isBuy = true;
+    App.activeMargins[elementId] = { currency: currency, canvasId: canvasId, bankName: bankName, isBuy: isBuy, start: start, end: end };
+}
+
 App.removeOverviewControl = function(elementId){
 
     delete App.activeOverviews[elementId];
+    $('#' + elementId).remove();
+}
+
+App.removeBankMargin = function (elementId) {
+    delete App.activeMargins[elementId];
     $('#' + elementId).remove();
 }
 
@@ -156,7 +200,6 @@ App.getOverviewControl = function (targetElement,currency,interval,isBuy) {
                     var elements = $(result);
                     var chr = elements.find('canvas');
                     $(window).resize(function () { App.updateOverviewSize(targetElement, chr.parent()); });
-
                     targetElement.append(elements).fadeIn(300, "linear");
                     App.createBankPriceTimelineGraph(chr[0], data);
                 },
@@ -377,6 +420,40 @@ App.graphFactory = function (url,targetElement, data, createFunction) {
     });
 }
 
+App.marginGraphFactory = function (url, targetElement, data, createFunction) {
+    $.get({
+        url: `/${App.GraphController}/BankMarginGraph`,
+        data: data,
+        success: function (content) {
+            $.get({
+                url: url,
+                data: data,
+                success: function (data) {
+                    var elements = $(content);
+                    var chr = elements.find('canvas');
+                    if (data.note !== undefined && data.note != null) {
+
+                        let equationButton = $(elements.find('.equationButton')[0]);
+                        equationButton.removeClass("d-none");
+                        equationButton.addClass("d-flex");
+                        $(elements.find('.noteText')[0]).html(data.note);
+                    }
+                    $(window).resize(function () { App.UpateGraphSize(chr.parent(), targetElement); });
+                    targetElement.append(elements);
+                    createFunction(chr[0], data);
+                },
+                error: function (err) {
+                    console.log(`failed to get a graph data:\n${err}`);
+                }
+
+            });
+        },
+        error: function (err) {
+            console.log(`failed to get a empty graph:\n${err}`);
+        }
+    });
+}
+
 App.getBankPriceGraph = function (targetElement, date, currency, isBuy) {
     App.graphFactory(`/${App.GraphController}/CurrencyPriceGraphData` ,targetElement, {
         graphDate: date,
@@ -393,9 +470,8 @@ App.getPriceTimelineGraph = function (targetElement, startDate, endDate, currenc
     }, App.createBankPriceTimelineGraph);
 }
 
-//TODO: BankMargin
 App.getBankMarginGraph = function (targetElement, startDate, endDate, bankName, currency, isBuy) {
-    App.graphFactory(`/${App.GraphController}/BankMargin`, targetElement, {
+    App.marginGraphFactory(`/${App.GraphController}/BankMargin`, targetElement, {
         start: startDate,
         end: endDate,
         bankName: bankName,
@@ -586,8 +662,10 @@ App.createBankPriceTimelineGraph = function (targetElement, graphData) {
     });
 }
 
-
 App.createBankMarginTimelineGraph = function (targetElement, graphData) {
+
+    //App.activeMargins[targetElement.attr('id')] = { start:  }
+
     let startDate = new Date(graphData.start);
     let endDate = new Date(graphData.end);
     let datasets = [];

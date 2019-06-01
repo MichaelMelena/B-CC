@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using BCC.Core;
 using Web.Models;
 using BCC.Model.Models;
+using Newtonsoft.Json;
 
 namespace Web.Controllers
 {
@@ -92,8 +93,23 @@ namespace Web.Controllers
             }
             end = new DateTime(end.Year, end.Month, end.Day, 23, 59, 59);
             if (string.IsNullOrWhiteSpace(currency)) currency = "AUD";
+
+            
             return new JsonResult(_presentationManager.BankMargin(start, end, bankName, currency, isBuy));
-        }        
+        } 
+        
+        [HttpGet]
+        public PartialViewResult BankMarginGraph([FromQuery] string currency, [FromQuery] string bankName, [FromQuery] DateTime start, [FromQuery] DateTime end, [FromQuery] bool isBuy = false)
+        {
+            var bankModel = new BankMarginModel() {
+                BankName = bankName,
+                Currency = currency,
+                Start = start,
+                End = end,
+                IsBuy = isBuy
+            };
+            return PartialView(viewName: "~/Views/TicketGraph/MarginGraph.cshtml", model: bankModel);
+        }
 
 
 

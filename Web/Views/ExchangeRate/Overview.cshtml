@@ -116,12 +116,13 @@
             App.refreshOverviews(container);        
         }, 3600000);//3600000
 
-        setInterval(App.updateSession, 100000);
-        App.restoreFromSession(container, @Html.Raw(Model.Item2));
+        setInterval(App.updateOverviewSession, 10000);
+        App.restoreOverviewFromSession(container, @Html.Raw(Model.Item2));
+
         $(window).on("beforeunload", function () {
-            App.updateSession();
-            console.log("Updated session");
-            console.log(App.activeOverviews);
+            App.updateOverviewSession();
+            console.log("Updated overview session");
+            
         });
     </script>
 }

@@ -1,4 +1,4 @@
-﻿@model Tuple<List<BCC.Model.Models.CurrencyMetadata>, List<BCC.Model.Models.BankConnector>>
+﻿@model Tuple<List<BCC.Model.Models.CurrencyMetadata>, List<BCC.Model.Models.BankConnector>, string>
 @{
     ViewData["Title"] = "Overview";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -142,5 +142,22 @@
             modal.modal('hide');
         });
 
+
+
+
+
+        setInterval(function () {
+            App.refreshMargins(container);        
+        }, 3600000);//3600000
+
+        setInterval(App.updateMarginSession, 10000);
+
+        App.restoreMarginFromSession(container, @Html.Raw(Model.Item3));
+
+
+        $(window).on("beforeunload", function () {
+            App.updateMarginSession();
+           
+        });
     </script>
 }

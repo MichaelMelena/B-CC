@@ -78,12 +78,21 @@ namespace Web.Controllers
         [HttpGet]
         public IActionResult Overview()
         {
-            string json = HttpContext.Session.GetString(HttpContext.Session.Id);
+            /*string json = HttpContext.Session.GetString(HttpContext.Session.Id);
             var sessionData = JsonConvert.DeserializeObject(json??"[]");
             string sesionJson = JsonConvert.SerializeObject(sessionData);
+            */
+
+            BCCSession session =  GetCurrentSession();
+            string overviewsJson = "[]";
+            if (session.OverviewModels != null)
+            {
+                overviewsJson = JsonConvert.SerializeObject(session.OverviewModels);
+            }
+            
             ViewBag.version = _version;
             List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
-            return View(viewName: "~/Views/ExchangeRate/Overview.cshtml", model: new Tuple<List<CurrencyMetadata>,string>( meta,sesionJson));
+            return View(viewName: "~/Views/ExchangeRate/Overview.cshtml", model: new Tuple<List<CurrencyMetadata>,string>( meta,overviewsJson));
         }
 
 
@@ -119,9 +128,16 @@ namespace Web.Controllers
         public IActionResult BankMargin()
         {
             ViewBag.version = _version;
+            BCCSession session = GetCurrentSession();
+            string marginsJson = "[]";
+
+            if(session.BankMarginModels != null)
+            {
+                marginsJson = JsonConvert.SerializeObject(session.BankMarginModels);
+            }
             List<CurrencyMetadata> meta = _context.CurrencyMetadata.ToList();
             List<BankConnector> banks = _context.BankConnector.Where(x=> x.BankShortName != "CNB" ).ToList();
-            return View(viewName: "~/Views/ExchangeRate/BankMargin.cshtml",model: new Tuple<List<CurrencyMetadata>, List<BankConnector>> (meta, banks));
+            return View(viewName: "~/Views/ExchangeRate/BankMargin.cshtml",model: new Tuple<List<CurrencyMetadata>, List<BankConnector>, string> (meta, banks,marginsJson));
         }
 
         [HttpPost]
@@ -132,6 +148,33 @@ namespace Web.Controllers
             HttpContext.Session.SetString(HttpContext.Session.Id, json);
 
             return Ok();
+        }
+
+        [HttpPost]
+        public OkResult UpdateOverviewSession([FromBody] List<OverviewModel> data)
+        {
+
+            var session = GetCurrentSession();
+            session.OverviewModels = data;
+            string sessionJson = JsonConvert.SerializeObject(session);
+            HttpContext.Session.SetString(HttpContext.Session.Id, sessionJson);
+            return Ok();
+        }
+
+        [HttpPost]
+        public OkResult UpdateBankMarginSession([FromBody] List<BankMarginModel> data)
+        {
+           
+            var session = GetCurrentSession();
+            session.BankMarginModels = data;
+            string sessionJson = JsonConvert.SerializeObject(session);
+            HttpContext.Session.SetString(HttpContext.Session.Id, sessionJson);
+            return Ok();
+        }
+
+        private BCCSession GetCurrentSession() {
+            string json = HttpContext.Session.GetString(HttpContext.Session.Id);
+            return JsonConvert.DeserializeObject<BCCSession>( string.IsNullOrWhiteSpace(json)? "{}": json, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore});
         }
        
 
