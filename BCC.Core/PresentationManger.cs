@@ -7,7 +7,6 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Dynamic;
 using Microsoft.Extensions.Logging;
-
 namespace BCC.Core
 {
     public class PresentationManger : IPresentationManager
@@ -46,34 +45,8 @@ namespace BCC.Core
             foreach (string name in bankNames)
             {
                 AddBankDataset(ref dataset, ref labels, name, start, end, currency, isBuy, false);
-
-                /*
-                dataset.Add(name, new Dictionary<string, double>());
-                var tickets = _context.Ticket.Where(x => x.Date >= start && x.Date <= end && x.BankShortName == name).ToList();
-                tickets.Sort(new TicketDateComparer());
-                foreach (var ticket in tickets)
-                {
-                    Currency selectedCurrency = _context.Currency.FirstOrDefault(x => x.TicketId == ticket.Id && x.IsoName == currency.ToUpperInvariant());
-                    if (selectedCurrency != null)
-                    {
-                        if (isBuy)
-                        {
-                            dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"), selectedCurrency.Buy);
-
-                        }
-                        else
-                        {
-                            if (selectedCurrency.Sell.HasValue)
-                            {
-                                dataset[ticket.BankShortName].Add(ticket.Date.ToString("yyyy-MM-dd"), selectedCurrency.Sell.Value);
-
-                            }
-                        }
-                    }
-                    labels.Add(ticket.Date);
-                }
-                */
             }
+
             var labelList = labels.ToList();
             labelList.Sort();
             return new TimelineDatasetModel()
@@ -103,6 +76,92 @@ namespace BCC.Core
 
             var labelList = labels.ToList();
             labelList.Sort();
+
+            
+
+            Dictionary<string, double> cnb = dataset["CNB"];
+            dataset.Remove("CNB");
+
+
+            Dictionary<string, double> otherBank = dataset[bankName];
+            dataset.Remove(bankName);
+
+            double lastCnbValue = double.NaN;
+            double lastBankValue = double.NaN;
+
+            string margin = "margin";
+            dataset[margin] = new Dictionary<string, double>();
+            foreach(DateTime label in labelList)
+            {
+
+                
+                string formatedDate = label.ToString("yyyy-MM-dd");
+
+
+                bool a = !(cnb.ContainsKey(formatedDate));
+                bool b = double.IsNaN(lastCnbValue);
+                bool c = !(otherBank.ContainsKey(formatedDate));
+                bool d = double.IsNaN(lastBankValue);
+
+                ///cnb[formatedDate] === undefined  not checking properly
+                if (a && b || c && d)
+                {
+                    dataset[margin][formatedDate]= double.NaN;
+                }
+                else
+                {
+
+                    double tmpCnb = (!a) ? cnb[formatedDate] : lastCnbValue;
+                    double tmpOther = (!c) ? otherBank[formatedDate] : lastBankValue;
+                    double result = 0;
+                    if (isBuy)
+                    {
+
+                        result = tmpCnb - tmpOther;
+                    }
+                    else
+                    {
+
+                        result = tmpOther - tmpCnb;
+                    }
+
+                    result = Math.Round(result * 10000) / 10000;
+                    dataset[margin][formatedDate] = result;
+                }
+
+                if (!a)
+                {
+                    lastCnbValue = cnb[formatedDate];
+                }
+                if (!c)
+                {
+                    lastBankValue = otherBank[formatedDate];
+                }
+            }
+
+
+
+            List<double> xList = new List<double>(dataset[margin].Count);
+            for (int i=0; i< dataset[margin].Count; i++)
+            {
+                xList.Add(i);
+            }
+            var spline = new CubicSpline(xList.Select(i => (Double.IsNaN(i))? 1 : (float)i).ToArray(), dataset[margin].Values.Select(i => (Double.IsNaN(i)) ? 1 : (float)i).ToArray());
+            string note = spline.ToEquation();
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append($"Equation for {(isBuy ? "buy" : "sell")} price margin of the {currency} from {start.ToShortDateString()} to {end.ToShortDateString()}");
+            sb.Append("<br>");
+            for ( int i = 0; i < labelList.Count;i++)
+            {
+                sb.Append(i);
+                sb.Append("=");
+                sb.Append(labelList[i].ToShortDateString());
+                sb.Append("<br>");
+            }
+            sb.Append("<br>");
+            sb.Append(note);
+            note = sb.ToString();
             return new TimelineDatasetModel()
             {
                 Currency = currency,
@@ -110,7 +169,8 @@ namespace BCC.Core
                 IsBuy = isBuy,
                 Labels = labelList,
                 Start = start,
-                End = end
+                End = end,
+                Note = note,
             };
 
         

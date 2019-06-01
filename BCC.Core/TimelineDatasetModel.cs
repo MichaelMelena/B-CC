@@ -25,5 +25,8 @@ namespace BCC.Core
 
         [JsonProperty("end")]
         public DateTime End { get; set; }
+
+        [JsonProperty("note")]
+        public string Note { get; set; }
     }
 }

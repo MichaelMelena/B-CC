@@ -3,9 +3,10 @@
 
 // Write your JavaScript code.
 
+
 let App = {};
 App.TableController = "TicketTable";
-App.GraphController = "TicketGraph"; 
+App.GraphController = "TicketGraph";
 App.ExchangeRateController = "ExchangeRate";
 App.SamllGraphWidth = 350;
 App.overviewMaxWidth = 734;
@@ -16,6 +17,65 @@ const arrSum = arr => arr.reduce((a, b) => a + b, 0)
 const arrMax = arr => Math.max(...arr);
 const arrMin = arr => Math.min(...arr);
 //setup
+
+
+
+// Source: http://pixelscommander.com/en/javascript/javascript-file-download-ignore-content-type/
+window.downloadFile = function (sUrl) {
+
+    //iOS devices do not support downloading. We have to inform user about this.
+    if (/(iP)/g.test(navigator.userAgent)) {
+        //alert('Your device does not support files downloading. Please try again in desktop browser.');
+        window.open(sUrl, '_blank');
+        return false;
+    }
+
+    //If in Chrome or Safari - download via virtual link click
+    if (window.downloadFile.isChrome || window.downloadFile.isSafari) {
+        //Creating new link node.
+        var link = document.createElement('a');
+
+        sUrl = sUrl.replace(/<br>/g, '\n');
+        link.href = "data:text/plain;charset=UTF-8," + sUrl;
+        link.setAttribute('target', '_blank');
+
+        if (link.download !== undefined) {
+            //Set HTML5 download attribute. This will prevent file from opening if supported.
+            var fileName = "equation.txt";
+            link.download = fileName;
+            
+        }
+
+        //Dispatching click event.
+        if (document.createEvent) {
+            var e = document.createEvent('MouseEvents');
+            e.initEvent('click', true, true);
+            link.dispatchEvent(e);
+            return true;
+        }
+    }
+
+    // Force file download (whether supported by server).
+    if (sUrl.indexOf('?') === -1) {
+        sUrl += '?download';
+    }
+
+    window.open(sUrl, '_blank');
+    return true;
+}
+
+window.downloadFile.isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+window.downloadFile.isSafari = navigator.userAgent.toLowerCase().indexOf('safari') > -1;
+
+
+
+
+
+
+
+
+
+
 
 
 App.restoreFromSession = function (targetElement, json) {
@@ -279,6 +339,10 @@ App.updateOverviewSize = function (parent, chartParent) {
     
 }
 
+App.downloadEquation = function (text) {
+    window.location.href += "data:text/plain;charset=UTF-8," + encodeURIComponent(text);
+}
+
 
 App.graphFactory = function (url,targetElement, data, createFunction) {
     $.get({
@@ -290,6 +354,13 @@ App.graphFactory = function (url,targetElement, data, createFunction) {
                 success: function (data) {
                     var elements = $(content);
                     var chr = elements.find('canvas');
+                    if (data.note !== undefined && data.note != null) {
+
+                        let equationButton = $(elements.find('.equationButton')[0]);
+                        equationButton.removeClass("d-none");
+                        equationButton.addClass("d-flex");
+                        $(elements.find('.noteText')[0]).html(data.note);
+                    }
                     $(window).resize(function () { App.UpateGraphSize(chr.parent(), targetElement); });
                     targetElement.append(elements);
                     createFunction(chr[0], data);
@@ -521,68 +592,23 @@ App.createBankMarginTimelineGraph = function (targetElement, graphData) {
     let endDate = new Date(graphData.end);
     let datasets = [];
 
-    let data = [];
+    
     datasets.push(
             {
                 label: "Margin",
                 backgroundColor: App.RGBACOLORS[0],
                 borderColor: App.COLORS[0],
                 borderWidth: 1,
-                data: data,
+                data: [],
                 fill: false
             }
     );
   
 
-    let lineValues = []
 
-    let cnb = graphData.dataset["CNB"];
-    delete graphData.dataset["CNB"];
 
-    let bankName = Object.keys(graphData.dataset)[0];
-    let otherBank = Object.values(graphData.dataset)[0];
-
-    let lastCnbValue = Number.NaN;
-    let lastBankValue = Number.NaN;
-    for (let label of graphData.labels) {
-        let labelDate = new Date(label);
-        let formatedDate = App.getFormatedDate(labelDate);
-        
-
-        let a = !(formatedDate in cnb);
-        let b = Number.isNaN(lastCnbValue);
-        let c = !(formatedDate in otherBank);
-        let d = Number.isNaN(lastBankValue);
-
-        ///cnb[formatedDate] === undefined  not checking properly
-        if ( a && b || c && d) {
-            data.push(Number.NaN);
-        }
-        else {
-
-            let tmpCnb = (cnb[formatedDate] !== undefined) ? cnb[formatedDate] : lastCnbValue;
-            let tmpOther = (otherBank[formatedDate] !== undefined) ? otherBank[formatedDate] : lastBankValue;
-            let result = 0;
-            if (graphData.isBuy) {
-
-                result = tmpCnb - tmpOther;
-            }
-            else {
-
-                result = tmpOther - tmpCnb;
-            }
-
-            result = Math.round(result * 10000) / 10000;
-            data.push(result);
-        }
-
-        if (cnb[formatedDate] !== undefined) {
-            lastCnbValue = cnb[formatedDate]; 
-        }
-        if (otherBank[formatedDate] !== undefined) {
-            lastBankValue = otherBank[formatedDate];
-        }
-    }
+    datasets[0].data  = Object.values(graphData.dataset["margin"]);
+       
    
 
     let labels = [];
